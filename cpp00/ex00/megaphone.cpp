@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <string>
+#include <cctype>
 
 inline void	print_nl(void) {std::cout << std::endl;}
 
@@ -20,7 +21,7 @@ inline void	print_default(void) {std::cout << "* LOUD AND UNBEARABLE FEEDBACK NO
 inline void	print_upper_str(const std::string& str)
 {
 	for (unsigned long i = 0; i <= str.size() -1 ; i++)
-		std::cout << static_cast<char>(str[i]);
+		std::cout << static_cast<char>(toupper(str[i]));
 }
 
 int	main(int argc, char **argv)

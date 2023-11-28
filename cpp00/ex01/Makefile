@@ -2,18 +2,19 @@
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 
-SRCS_NAME 	=	megaphone.cpp
+HEADERS		=	
+SRCS_NAME 	=	truc.cpp
 
 SRCS		= 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
-NAME		=	megaphone
+NAME		=	truc
 CC			=	c++
 CFLAGS		=	-Wall -Wextra -Werror -std=c++98
 
 ###		RULES		###
-$(BUILD_DIR)/%.o: %.cpp
+$(BUILD_DIR)/%.o: %.cpp ${HEADERS}
 			@mkdir -p $(dir $@)
 			@echo "\033[32m\c"
 			${CC} ${CFLAGS} -c $< -o $@

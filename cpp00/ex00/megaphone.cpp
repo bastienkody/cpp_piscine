@@ -20,7 +20,7 @@ inline void	print_default(void) {std::cout << "* LOUD AND UNBEARABLE FEEDBACK NO
 
 inline void	print_upper_str(const std::string& str)
 {
-	for (unsigned long i = 0; i <= str.size() -1 ; i++)
+	for (unsigned long i = 0; i < str.size() ; i++)
 		std::cout << static_cast<char>(toupper(str[i]));
 }
 

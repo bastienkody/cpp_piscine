@@ -14,22 +14,35 @@
 # define CONTACT_HPP
 
 #include <string>
+#include <iostream>
+
+#define NEW_CONTACT_INTRO "New phonebook contact entry. Please fill in all the \
+following fields (empty strings are not accepted)"
+#define LINE_SEP "-------------------------------------------------------------\
+----------------------------------------"
+#define EMPTY_STR "empty string are not accepted!"
 
 class Contact
 {
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_nb;
-		std::string darkest_secret;
+	private:
+		std::string _first_name;
+		std::string _last_name;
+		std::string _nick_name;
+		std::string _phone_nb;
+		std::string _darkest_secret;
 	public:
-		Contact(std::string arg1, std::string arg2, std::string arg3, \
-std::string arg4, std::string arg5);
-		std::string get_first_name();
-		std::string get_last_name();
-		std::string get_nick_name();
-		std::string get_phone_nb();
-		std::string get_darkest_secret();
+		std::string	get_first_name() const;
+		std::string	get_last_name() const;
+		std::string	get_nick_name() const;
+		std::string	get_phone_nb() const;
+		std::string	get_darkest_secret() const;
+		void		set_first_name();
+		void		set_last_name();
+		void		set_nick_name();
+		void		set_phone_nb();
+		void		set_darkest_secret();
+		void		full_display();
+		void		sort_display();
 };
 
 #endif

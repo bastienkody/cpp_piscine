@@ -15,8 +15,8 @@
 
 int	main(void)
 {
-	Contact Bastos ("bastien", "guillaume", "kody", "+33", "love bash");
+	Contact contactos[3];
 
-	std::cout << Bastos.get_first_name() << " has a secret : " ;
-	std::cout << Bastos.get_darkest_secret () << std::endl ;
+	for (int i = 0; i < 3; i++)
+		contactos[i].full_display();
 }

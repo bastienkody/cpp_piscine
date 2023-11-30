@@ -17,14 +17,12 @@
 
 class PhoneBook
 {
-		Contact	array[8];
-		static int	saved_contact; // shared by all object
+		Contact		_array[8];
+		static int	_contacts_nb;
 	public:
-		PhoneBook();
-		void search();
-		void add();
-		Contact *get_contacts();
-		void print_contacts_to_file(std::string file_path);
+		void 	search() const;
+		void 	add();
+		void	run();
 };
 
 #endif

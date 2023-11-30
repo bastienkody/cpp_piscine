@@ -1,5 +1,12 @@
 #! /bin/bash
 
+# if the user tried to add a 9th, replace the oldest 
+# not the first actually :
+# if its the 9th, you replace first,
+# but after 9th added as 1st
+# a 10 th contact might replace the 2nd on so on
+
+
 #turn bool_ to 0 to skip specific tests
 bool_makefile=1
 

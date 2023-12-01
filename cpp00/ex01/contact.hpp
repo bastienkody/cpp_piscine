@@ -41,8 +41,8 @@ class Contact
 		void		set_nick_name();
 		void		set_phone_nb();
 		void		set_darkest_secret();
-		void		full_display();
-		void		sort_display();
+		void		full_display() const;
+		void		short_display() const;
 };
 
 #endif

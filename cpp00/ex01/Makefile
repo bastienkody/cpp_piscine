@@ -3,9 +3,10 @@ BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 
 HEADERS		=	contact.hpp\
-				#phonebook.hpp
+				phonebook.hpp
 SRCS_NAME 	=	main.cpp\
-				contact.cpp
+				contact.cpp\
+				phonebook.cpp
 
 SRCS		= 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}

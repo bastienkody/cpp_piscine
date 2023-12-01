@@ -72,7 +72,7 @@ void Contact::set_darkest_secret()
 }
 
 /*	display	*/
-void	Contact::full_display()
+void	Contact::full_display() const
 {
 	std::cout << "First name:\t " << this->_first_name << std::endl;
 	std::cout << "Last name:\t " << this->_last_name << std::endl;

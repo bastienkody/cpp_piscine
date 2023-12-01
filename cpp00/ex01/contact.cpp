@@ -21,57 +21,72 @@ std::string	Contact::get_phone_nb() const {return (_phone_nb);}
 std::string	Contact::get_darkest_secret() const {return (_darkest_secret);}
 
 /*	setters	*/
-void Contact::set_first_name()
+int	Contact::set_first_name()
 {
 	do 
 	{
 		std::cout << "First name: \t";
 		std::getline(std::cin, this->_first_name);
+		if (std::cin.eof())
+			return (std::cout << std::endl << EOF_FOUND << std::endl, 0);
 	}
 	while (this->_first_name.size() == 0 && std::cout << EMPTY_STR << std::endl);
+	return (1);
 }
 
-void Contact::set_last_name()
+int	Contact::set_last_name()
 {
 	do 
 	{
 		std::cout << "Last name: \t";
 		std::getline(std::cin, this->_last_name);
+		if (std::cin.eof())
+			return (std::cout << std::endl << EOF_FOUND << std::endl, 0);
 	}
 	while (this->_last_name.size() == 0 && std::cout << EMPTY_STR << std::endl);
+	return (1);
 }
 
-void Contact::set_nick_name()
+int	Contact::set_nick_name()
 {
 	do 
 	{
 		std::cout << "Nick name: \t";
 		std::getline(std::cin, this->_nick_name);
+		if (std::cin.eof())
+			return (std::cout << std::endl << EOF_FOUND << std::endl, 0);
 	}
 	while (this->_nick_name.size() == 0 && std::cout << EMPTY_STR << std::endl);
+	return (1);
 }
 
-void Contact::set_phone_nb()
+int	Contact::set_phone_nb()
 {
 	do 
 	{
 		std::cout << "Phone number: \t";
 		std::getline(std::cin, this->_phone_nb);
+		if (std::cin.eof())
+			return (std::cout << std::endl << EOF_FOUND << std::endl, 0);
 	}
 	while (this->_phone_nb.size() == 0 && std::cout << EMPTY_STR << std::endl);
+	return (1);
 }
 
-void Contact::set_darkest_secret()
+int	Contact::set_darkest_secret()
 {
 	do 
 	{
 		std::cout << "Darkest secret: \t";
 		std::getline(std::cin, this->_darkest_secret);
+		if (std::cin.eof())
+			return (std::cout << std::endl << EOF_FOUND << std::endl, 0);
 	}
 	while (this->_darkest_secret.size() == 0 && std::cout << EMPTY_STR << std::endl);
+	return (1);
 }
 
-/*	display	*/
+/*	display	a full contact	*/
 void	Contact::full_display() const
 {
 	std::cout << "First name:\t " << this->_first_name << std::endl;

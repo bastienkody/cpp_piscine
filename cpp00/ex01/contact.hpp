@@ -16,8 +16,7 @@
 #include <string>
 #include <iostream>
 
-#define NEW_CONTACT_INTRO "New phonebook contact entry. Please fill in all the \
-following fields (empty strings are not accepted)"
+#define NEW_CONTACT_INTRO "New contact entry. Please fill in all the fields:"
 #define LINE_SEP "-------------------------------------------------------------\
 ----------------------------------------"
 #define EMPTY_STR "empty string are not accepted!"
@@ -36,13 +35,12 @@ class Contact
 		std::string	get_nick_name() const;
 		std::string	get_phone_nb() const;
 		std::string	get_darkest_secret() const;
-		void		set_first_name();
-		void		set_last_name();
-		void		set_nick_name();
-		void		set_phone_nb();
-		void		set_darkest_secret();
+		int			set_first_name();
+		int			set_last_name();
+		int			set_nick_name();
+		int			set_phone_nb();
+		int			set_darkest_secret();
 		void		full_display() const;
-		void		short_display() const;
 };
 
 #endif

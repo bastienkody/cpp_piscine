@@ -66,9 +66,6 @@ else make >/dev/null ; fi
 # ------------------------------------------------------------------------------
 # 					------- EX 01 -------
 # ------------------------------------------------------------------------------
-echo -e "${YEL_BG}EX 01${END}"
 
-
-echo -e "${BLU_BG}./phonebook${END}\t"
-./phonebook
-echo "----------------------------------------------------------------"
+#flemme d'ecrire proprement sur stdin ca risque d'etre chiant je suis bh dans 
+# 18 jours on va avancer un peu

@@ -10,7 +10,6 @@
 #define WARNING_M "Harl's messages are not interesting at all, really"
 #define ERROR_M "Harl's messages are so stupid I refused to replicate them"
 
-/*	sans le typedef j'y arrive pas c pas normal !!!!	*/
 class	Harl
 {
 	private:

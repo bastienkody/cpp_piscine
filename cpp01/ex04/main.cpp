@@ -23,12 +23,16 @@ std::string	do_replacement(const std::string input, const std::string s1, const 
 	return (output + input.substr(start));
 }
 
-/*	buffer len	*/
+/*	buffer len yc. testing if it fits in a string	*/
 unsigned long	infilen(std::ifstream& infile)
 {
 	infile.seekg(0, std::ios_base::end);	// tete lecture dernier char
 	unsigned long	size = infile.tellg();	// Get the offset
 	infile.seekg(std::ios_base::beg); 		// tete de lecture premier char
+
+	std::string string;
+	if (size > string.max_size())
+		return (0);
 	return (size);
 }
 

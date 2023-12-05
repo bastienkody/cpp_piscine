@@ -123,6 +123,11 @@ echo "----------------------------------------------------------------"
 
 echo -e "${YEL_BG}Special tests${END}"
 
+echo -e "${BLU_BG}./sed_ifl emptyfile yo yi${END}\t"
+touch ${dir}emptyfile
+./sed_ifl ${dir}emptyfile yo yi
+echo "----------------------------------------------------------------"
+
 echo -e "${BLU_BG}./sed_ifl file4 s1 s2${END}\t"
 echo -e "s2s\n1s2" > ${dir}file4
 ./sed_ifl ${dir}file4 s1 s2
@@ -155,6 +160,9 @@ echo "----------------------------------------------------------------"
 echo -e "${BLU_BG}./sed_ifl largefile.replace Galileo \"Kany West ft. Sunday Service\"${END}\t"
 echo -e "${ITA}It should be ${oc_nb} occurences in largefile.replace.replace${END}"
 ./sed_ifl ${dir}largefile.replace Galileo "Kany West ft. Sunday Service"
+oc_nb_replace=$(cat ${dir}largefile.replace.replace | grep "Kany West ft. Sunday Service" -c)
+echo -e "${ITA}Found ${oc_nb_replace} occurences of \"Kany West ft. Sunday Service\" in largefile.replace${END}"
+echo "----------------------------------------------------------------"
 
 
 # ------------------------------------------------------------------------------

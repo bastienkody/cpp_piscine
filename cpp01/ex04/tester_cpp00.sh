@@ -54,11 +54,13 @@ grep -sq -- "-std=c++98" Makefile && echo -ne "${GREEN}OK (std c++98)${END}" || 
 echo ""
 
 
-else make -C ../ >/dev/null ; fi
+else make >/dev/null ; fi
 
 # ------------------------------------------------------------------------------
 # 					------- EX 00 -------
 # ------------------------------------------------------------------------------
+rm -rf testfiles && mkdir testfiles && dir=testfiles/
+
 echo -e "${YEL_BG}Arg error tests${END}"
 
 echo -e "${BLU_BG}./sed_ifl${END}\t"
@@ -86,7 +88,13 @@ rm -rf filename
 echo "----------------------------------------------------------------"
 
 echo -e "${BLU_BG}./sed_ifl filename (chmod u-r) s1 s2${END}\t"
-cat hello > filename ; chmod u-r filename
+echo hello > filename ; chmod u-r filename
+./sed_ifl filename s1 s2
+rm -f filename
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl filename s1 s2 (outfile no w right)${END}\t"
+echo hello > filename ; touch filename.replace ; chmod u-w filename.replace
 ./sed_ifl filename s1 s2
 echo "----------------------------------------------------------------"
 
@@ -94,25 +102,63 @@ echo "----------------------------------------------------------------"
 echo -e "${YEL_BG}Normal tests${END}"
 
 echo -e "${BLU_BG}./sed_ifl file1 s1 s2${END}\t"
-echo s1 > file1
-./sed_ifl file1 s1 s2
+echo s1 > ${dir}file1
+./sed_ifl ${dir}file1 s1 s2
 echo "----------------------------------------------------------------"
 
-echo -e "${BLU_BG}./sed_ifl file2 (no \n) s1 s2${END}\t"
-echo -n s1 > file2
-./sed_ifl file2 s1 s2
+echo -e "${BLU_BG}./sed_ifl file2 (no linefeed) s1 s2${END}\t"
+echo -n s1 > ${dir}file2
+./sed_ifl ${dir}file2 s1 s2
 echo "----------------------------------------------------------------"
 
 echo -e "${BLU_BG}./sed_ifl file3 s1 s2${END}\t"
-echo s2s1s2 > file3
-./sed_ifl file3 s1 s2
-echo "----------------------------------------------------------------"
-
-echo -e "${BLU_BG}./sed_ifl file4 s1 s2${END}\t"
-echo -e "s1s\n1s1" > file4
-./sed_ifl file4 s1 s2
+echo s2s1s2 > ${dir}file3
+./sed_ifl ${dir}file3 s1 s2
 echo "----------------------------------------------------------------"
 
 echo -e "${BLU_BG}./sed_ifl Makefile \'\$\' one_million_dollar ${END}\t"
 ./sed_ifl Makefile \$ one_million_dollar
 echo "----------------------------------------------------------------"
+
+
+echo -e "${YEL_BG}Special tests${END}"
+
+echo -e "${BLU_BG}./sed_ifl file4 s1 s2${END}\t"
+echo -e "s2s\n1s2" > ${dir}file4
+./sed_ifl ${dir}file4 s1 s2
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl file5 \"\" s2${END}\t"
+echo -e "   \n\n salut s2, ca va?" > ${dir}file5
+./sed_ifl ${dir}file5 \"\" s2
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl file6 salut \"\"${END}\t"
+echo -e "   \n\n salut salut sal ut SALUT sAlUt, ca va?" > ${dir}file6
+./sed_ifl ${dir}file6 salut ""
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl largefile Gutenberg Galileo${END}\t"
+curl -s "https://www.gutenberg.org/cache/epub/41815/pg41815-images.html" >${dir}largefile
+oc_nb=$(cat ${dir}largefile | grep Gutenberg -c)
+if [[ ${oc_nb} -lt 90 ]]; then
+	curl -s "https://www.gutenberg.org/cache/epub/41815/pg41815-images.html" >${dir}largefile
+	oc_nb=$(cat ${dir}largefile | grep Gutenberg -c)
+	[[ $oc_nb -lt 90 ]] && { echo "Pb curling Gutenberg file ; tester exiting"; exit 3; }
+fi
+echo -e "${ITA}Note that Gutenberg has ${oc_nb} occurences in largefile${END}"
+./sed_ifl ${dir}largefile Gutenberg Galileo
+oc_nb_replace=$(cat ${dir}largefile.replace | grep Galileo -c)
+echo -e "${ITA}Found ${oc_nb_replace} occurences of Galileo in largefile.replace${END}"
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl largefile.replace Galileo \"Kany West ft. Sunday Service\"${END}\t"
+echo -e "${ITA}It should be ${oc_nb} occurences in largefile.replace.replace${END}"
+./sed_ifl ${dir}largefile.replace Galileo "Kany West ft. Sunday Service"
+
+
+# ------------------------------------------------------------------------------
+#				-----		OUTRO		-----
+# ------------------------------------------------------------------------------
+make fclean &>/dev/null
+rm -f filename filename.replace

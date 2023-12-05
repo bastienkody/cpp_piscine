@@ -11,5 +11,6 @@
 
 #define BAR_ARG_NB "Unexpected number of argument. Usage : ./sed_ifl <filename> <s1> <s2>."
 #define INFILE_PB "Could not open infile. Please check file existence and reading rights"
+#define OUTFILE_PB "Could not open outfile. Please check writing rights (ls -l; chmod u+w outfile)"
 
 #endif

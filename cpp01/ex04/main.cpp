@@ -49,8 +49,7 @@ int	main(int ac, char **av)
 
 	// read, replace, and write
 	char	*inString = new char [infile_size];
-	if (infile_size > 0)
-		while (infile.read((inString), infile_size))
+	if (infile_size > 0 && infile.read((inString), infile_size))
 			outfile << do_replacement(inString, S1, S2);
 
 	// outro

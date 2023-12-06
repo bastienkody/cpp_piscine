@@ -2,10 +2,10 @@
 
 /*	no default constructor (most prob forbidden)	*/
 
-/*	assign constructor	*/
+/*	param constructor	*/
 HumanA::HumanA(std::string name, Weapon &weapon):_name(name),_weapon(weapon)
 {
-	std::cout << "\033[32mHumanA: assign constructor for ";
+	std::cout << "\033[32mHumanA: param constructor for ";
 	std::cout << this->_name << " with weapon ";
 	std::cout << _weapon.getType() << "\033[0m" << std::endl;
 }

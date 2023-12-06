@@ -2,10 +2,10 @@
 
 /*	no default constructor (most prob forbidden)	*/
 
-/*	assign constructor	*/
+/*	param constructor	*/
 HumanB::HumanB(std::string name):_name(name)
 {
-	std::cout << "\033[32mHumanB: assign constructor for ";
+	std::cout << "\033[32mHumanB: parametized constructor for ";
 	std::cout << this->_name << " with no weapon yet" << "\033[0m" << std::endl;
 }
 

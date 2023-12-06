@@ -6,10 +6,10 @@ Weapon::Weapon()
 	std::cout << "\033[32mWeapon: default constructor\033[0m" << std::endl;
 }
 
-/*	assign constructor	*/
+/*	param constructor	*/
 Weapon::Weapon(std::string type): _type(type)
 {
-	std::cout << "\033[32mWeapon: assign constructor called with type ";
+	std::cout << "\033[32mWeapon: parametized constructor called with type ";
 	std::cout << this->_type << "\033[0m" <<std::endl;
 }
 

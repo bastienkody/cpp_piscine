@@ -6,6 +6,7 @@ void	Harl::info(void) {std::cout << INFO_M << std::endl;}
 void	Harl::warning(void) {std::cout << WARNING_M << std::endl;}
 void	Harl::error(void) {std::cout << ERROR_M << std::endl;}
 
+/*	default constructor	*/
 Harl::Harl()
 {
 	array[0] = &Harl::debug;

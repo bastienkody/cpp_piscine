@@ -23,10 +23,10 @@ Zombie::Zombie()
 	std::cout << std::endl;
 }
 
-/*	assign constructor with init list, but case be used to init an array	*/
+/*	param constructor with init list, but case be used to init an array	*/
 Zombie::Zombie(std::string name): _name(name)
 {
-	std::cout << "\033[32mAssign constructor called for zombie " << this->_name;
+	std::cout << "\033[32mParametized constructor called for zombie " << this->_name;
 	std::cout << "\033[0m" << std::endl;
 }
 

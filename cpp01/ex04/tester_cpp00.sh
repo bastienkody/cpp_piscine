@@ -116,7 +116,7 @@ echo s2s1s2 > ${dir}file3
 ./sed_ifl ${dir}file3 s1 s2
 echo "----------------------------------------------------------------"
 
-echo -e "${BLU_BG}./sed_ifl Makefile \'\$\' one_million_dollar ${END}\t"
+echo -e "${BLU_BG}./sed_ifl Makefile '\$' one_million_dollar ${END}\t"
 ./sed_ifl Makefile \$ one_million_dollar
 echo "----------------------------------------------------------------"
 
@@ -126,6 +126,16 @@ echo -e "${YEL_BG}Special tests${END}"
 echo -e "${BLU_BG}./sed_ifl emptyfile yo yi${END}\t"
 touch ${dir}emptyfile
 ./sed_ifl ${dir}emptyfile yo yi
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl empty_everything \"\" \"\"${END}\t"
+touch ${dir}empty_everything
+./sed_ifl ${dir}empty_everything yo yi
+echo "----------------------------------------------------------------"
+
+echo -e "${BLU_BG}./sed_ifl f yo yi (outfile to be trunc)${END}\t"
+echo yoyoYOyi > ${dir}f ; echo "this has to be truncated" > ${dir}f.replace
+./sed_ifl ${dir}f yo yi
 echo "----------------------------------------------------------------"
 
 echo -e "${BLU_BG}./sed_ifl file4 s1 s2${END}\t"

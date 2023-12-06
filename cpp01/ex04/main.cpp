@@ -1,9 +1,26 @@
 #include "main.hpp"
+#include "SedIFL.hpp"
 
-/*	create the outfile name	*/
+int	main(int ac, char **av)
+{
+	if (ac != 4)
+		return (std::cout << BAR_ARG_NB << std::endl, 2);
+
+	SedIFL	sedifl;
+	if (sedifl.init(FILENAME, ".replace"))
+	{
+		sedifl.run(S1, S2);
+		return (0);
+	}
+
+	return (1);
+}
+
+/*	SCRIPT VERSION THAT I TURNED INTO A NICER CPP CLASS	
+
+
 std::string	outfileName(std::string infile) {return (infile + ".replace");}
 
-/*	the real work	*/
 std::string	do_replacement(const std::string input, const std::string s1, const std::string s2)
 {
 	std::string		output;
@@ -23,7 +40,6 @@ std::string	do_replacement(const std::string input, const std::string s1, const 
 	return (output + input.substr(start));
 }
 
-/*	buffer len yc. testing if it fits in a string	*/
 unsigned long	infilen(std::ifstream& infile)
 {
 	infile.seekg(0, std::ios_base::end);	// tete lecture dernier char
@@ -62,3 +78,6 @@ int	main(int ac, char **av)
 	outfile.close();
 	return (0);
 }
+
+
+END OF SCRIPT VERSION */

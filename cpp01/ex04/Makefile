@@ -2,8 +2,9 @@
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 
-HEADERS		=
-SRCS_NAME 	=	main.cpp
+HEADERS		=	SedIFL.hpp
+SRCS_NAME 	=	main.cpp\
+				SedIFL.cpp
 
 SRCS		= 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}

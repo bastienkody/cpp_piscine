@@ -1,7 +1,5 @@
 #include "HumanA.hpp"
 
-/*	no default constructor (most prob forbidden)	*/
-
 /*	param constructor	*/
 HumanA::HumanA(std::string name, Weapon &weapon):_name(name),_weapon(weapon)
 {

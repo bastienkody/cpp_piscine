@@ -9,7 +9,7 @@ Zombie*	newZombie(std::string name)
 	return (zombie);
 }
 
-/* or simply via the constructor	*/
+/* or simply via the param constructor	*/
 Zombie*	newZombie2(std::string name)
 {
 	return (new Zombie(name));

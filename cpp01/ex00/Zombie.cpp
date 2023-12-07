@@ -6,15 +6,9 @@ void Zombie::announce(void) const
 	std::cout << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }
 
-void	Zombie::setName(std::string name)
-{
-	this->_name = name;
-}
+void	Zombie::setName(std::string name) {this->_name = name;}
 
-std::string	Zombie::getName() const
-{
-	return (this->_name);
-}
+std::string	Zombie::getName() const {return (this->_name);}
 
 /*	def constructor	*/
 Zombie::Zombie()
@@ -23,7 +17,7 @@ Zombie::Zombie()
 	std::cout << std::endl;
 }
 
-/*	param constructor with init list, but I wont use here	*/
+/*	param constructor with init list	*/
 Zombie::Zombie(std::string name): _name(name)
 {
 	std::cout << "\033[32mParametized constructor called for zombie " << this->_name;

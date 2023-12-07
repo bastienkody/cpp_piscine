@@ -25,7 +25,7 @@ std::string		SedIFL::doReplacement(const std::string input, const std::string s1
 	unsigned long	start = 0;
 	unsigned long	found;
 
-	// find return 'npos' with not found
+	// find return 'npos' if no match
 	while ((found = input.find(s1, start)) != std::string::npos)
 	{
 		// append input to output until s1
@@ -54,10 +54,7 @@ bool	SedIFL::init(const std::string Filename, const std::string ReplaceExtension
 	return (true);
 }
 
-/*
-I think I could stack alloc instring bc we already check if the whole file
-fits into a string, but let me still be deeply afraid of VLA
-*/
+/*	Could I stack alloc inString bc we checked fileSize < string.max() ; but VLA	*/
 void	SedIFL::run(const std::string s1, const std::string s2)
 {
 	char	*inString = new char [_infileSize];

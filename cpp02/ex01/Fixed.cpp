@@ -27,7 +27,7 @@ second: round that to a integer : any remaining decimal from the float is discar
 third: storing in in our fixed point make the 23msb int part and 8lsb decimal! Nice
 No warning for decimal rounded bc i would need std::modf (only round authorized from cmath)
 */
-Fixed::Fixed(const float &nb): _value(static_cast<int>(round(nb * (1 << _binaryPoint))))
+Fixed::Fixed(const float &nb): _value(static_cast<int>(roundf(nb * (1 << _binaryPoint))))
 {
 	std::cout << "Float constructor called" << std::endl;
 	if (nb > INT_24_MAX || nb < INT_24_MIN)

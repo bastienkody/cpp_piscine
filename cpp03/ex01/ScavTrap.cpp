@@ -60,7 +60,10 @@ void	ScavTrap::attack(const std::string& target)
 }
 
 /*	scavtrap special fct	*/
-void	ScavTrap::guarGate() const
+void	ScavTrap::guardGate() const
 {
-	std::cout << "ScavTrap " << _name << " is now in Gate keeper mode" << std::endl;
+	if (this->checkHitPoints())
+		std::cout << "ScavTrap " << _name << " is now in Gate keeper mode (no energy point needed)" << std::endl;
+	else
+		std::cout << "ScavTrap " << _name << " is dead, he can't guard anything" << std::endl;
 }

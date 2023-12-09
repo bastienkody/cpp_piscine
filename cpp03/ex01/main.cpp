@@ -26,8 +26,8 @@ int	main(void)
 
 	print(a, b, c);
 
-	b.setName("b");
-	c.setName("c");
+	b.setName("B");
+	c.setName("C");
 
 	print(a, b, c);
 
@@ -41,4 +41,8 @@ int	main(void)
 	c.beRepaired(3);
 
 	print(a, b, c);
+
+	a.guardGate();
+	b.guardGate();
+	c.guardGate();
 }

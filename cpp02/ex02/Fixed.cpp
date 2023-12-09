@@ -71,52 +71,103 @@ std::ostream& operator<<(std::ostream& os, const Fixed &rhs)
 }
 
 /*	comparison operators	*/
-bool	Fixed::operator>(const Fixed &rhs)
+bool	Fixed::operator>(const Fixed &rhs) const
 {
 	return (this->getRawBits() > rhs.getRawBits());
 }
 
-bool	Fixed::operator>=(const Fixed &rhs)
+bool	Fixed::operator>=(const Fixed &rhs)  const
 {
 	return (this->getRawBits() >= rhs.getRawBits());
 }
 
-bool	Fixed::operator<(const Fixed &rhs)
+bool	Fixed::operator<(const Fixed &rhs) const
 {
 	return (this->getRawBits() < rhs.getRawBits());
 }
 
-bool	Fixed::operator<=(const Fixed &rhs)
+bool	Fixed::operator<=(const Fixed &rhs) const
 {
 	return (this->getRawBits() <= rhs.getRawBits());
 }
 
-bool	Fixed::operator==(const Fixed &rhs)
+bool	Fixed::operator==(const Fixed &rhs) const
 {
 	return (this->getRawBits() == rhs.getRawBits());
 }
 
-bool	Fixed::operator!=(const Fixed &rhs)
+bool	Fixed::operator!=(const Fixed &rhs) const
 {
 	return (this->getRawBits() != rhs.getRawBits());
 }
 
-bool	Fixed::operator+(const Fixed &rhs)
+/*	maths operators	*/
+Fixed	Fixed::operator+(const Fixed &rhs) const
 {
 	return (this->getRawBits() + rhs.getRawBits());
 }
 
-bool	Fixed::operator-(const Fixed &rhs)
+Fixed	Fixed::operator-(const Fixed &rhs) const
 {
 	return (this->getRawBits() - rhs.getRawBits());
 }
 
-bool	Fixed::operator*(const Fixed &rhs)
+Fixed	Fixed::operator*(const Fixed &rhs) const
 {
 	return (this->toFloat() * rhs.toFloat());
 }
 
-bool	Fixed::operator/(const Fixed &rhs)
+Fixed	Fixed::operator/(const Fixed &rhs) const
 {
-	return (this->toFloat() * rhs.toFloat());
+	if (rhs._value == 0)
+		std::cout << "Warning : division by zero is about to happen" << std::endl;
+	return (this->toFloat() / rhs.toFloat());
+}
+
+/*	increment operators (postfixe overload via a int dummy)	*/
+Fixed	Fixed::operator++(int)
+{
+	Fixed	tmp = *this;
+	this->_value++;
+	return (tmp);
+}
+
+Fixed &	Fixed::operator++()
+{
+	this->_value++;
+	return (*this);
+}
+
+Fixed	Fixed::operator--(int)
+{
+	Fixed	tmp = *this;
+	this->_value--;
+	return (tmp);
+}
+
+Fixed &	Fixed::operator--()
+{
+	this->_value--;
+	return (*this);
+}
+
+/*	min / max */
+Fixed&	Fixed::min(Fixed& a, Fixed& b) const
+{
+	return ((a < b) ? a : b);
+}
+
+Fixed const&	Fixed::min(Fixed const& a, Fixed const& b) const
+{
+	return ((a < b) ? a : b);
+}
+
+Fixed&	Fixed::max(Fixed& a, Fixed& b) const
+{
+	return ((a < b) ? b : a);
+}
+
+Fixed const&	Fixed::max(Fixed const& a, Fixed const& b) const
+{
+	return ((a < b) ? b : a);
 }

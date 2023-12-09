@@ -12,7 +12,7 @@ SRCS		= 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
-NAME		=	clapTrap
+NAME		=	scavTrap
 CC			=	c++
 CFLAGS		=	-Wall -Wextra -Werror -std=c++98
 

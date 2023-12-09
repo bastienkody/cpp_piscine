@@ -5,8 +5,56 @@
 //	However, its more obvious to WRITE it down in the initialisation list,
 //	(where you might also put specific data assignement for the derived class)
 //	but NEVER in the body : it creates a new object!!!!
-//	For operator definition (and maybe any other memb function?), you can't
-//	have it in init list, you need to put it in the body
+
+//	For operator definition (and generally any other memb function), you can't
+//	have it in init list, you need to call it in the body via referring to the
+//	parent class
+
+//	Redefinition of parents function : if derived has a same named fonction as
+//	its parent, it would overwrite the parent one. You can choose to call the
+//	parents one via scope operator (ClapTrap::attack). 
+//	Furthermore, in the parent you may add a "virtual" type for the function,
+//	this would enable polymorphism and dynamic dispatch (what function to be 
+//	called is deciding at runtime). If you don't, derived class function would 
+//	still overwrite parents, but with static dispatch (done at compile time).
+
+/*CHATGPT : The decision to declare a function as virtual or not depends on the
+design goals and requirements of your application. Here are some considerations 
+to help you decide:
+	>> Use virtual when :  
+Polymorphism is needed:
+If you want to achieve polymorphism, allowing object of different derived classe
+to be treated uniformly through a common interface, declare functions as virtual.
+Overriding behavior is expected:
+When you expect or desire derived classes to provide their own implementations 
+of a function, use virtual. This allows for method overriding.
+Base class pointers/references will be used:
+If you plan to use pointers or references to the base class to refer to objects 
+of derived classes, virtual functions are necessary to achieve polymorphic behavior.
+	>> Avoid virtual when :
+No polymorphism is needed:
+If you don't need polymorphism and all objects are known at compile-time, using 
+virtual functions might add unnecessary complexity.
+Performance is a concern:
+Virtual functions come with a small performance overhead due to the need for
+dynamic dispatch. In performance-critical scenarios, this overhead might be a concern.
+Avoiding potential pitfalls:
+If you don't need the flexibility that polymorphism provides, and you want to 
+avoid potential pitfalls such as accidental overriding or unintended dynamic 
+dispatch, you might choose not to use virtual functions.
+	>> Best Practices :
+Design for flexibility:
+If your design requires flexibility and extensibility, use virtual functions to
+allow for future derived classes without modifying existing code.
+Document your design decisions:
+Clearly document whether a function is intended to be overridden or not. This
+helps other developers understand your design intentions.
+Performance considerations:
+If performance crucial and polymorphism is not necessary, consider alternatives
+like function ptr or templates for achieving flexibility without virtual fct
+Review and maintainability:
+Regularly review your design decisions based on evolving requirements.
+Ensure that the use of virtual functions aligns with your project's goals.	*/
 
 ScavTrap::~ScavTrap()
 {
@@ -46,7 +94,7 @@ ScavTrap & ScavTrap::operator=(ScavTrap &rhs)
 	return (*this);			
 }
 
-/*	redefinition of attack : this one will be selected over the parent ones	*/
+/*	fct redefinition : overwrites parent (dynamic if virtual in parent; else static)	*/
 void	ScavTrap::attack(const std::string& target)
 {
 	if (!this->checkHitPoints())

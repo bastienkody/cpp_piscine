@@ -10,7 +10,6 @@ void	announceHorde(int size, Zombie *horde)
 
 int	main(void)
 {
-	Zombie	*zombies_minus_1 = zombieHorde(-1, "Arghhhhhhhh");
 	Zombie	*zombies_0 = zombieHorde(0, "Joe");
 	Zombie	*zombies_1 = zombieHorde(1, "OzdenAkca");
 	Zombie	*zombies_2 = zombieHorde(2, "MariaTambien");
@@ -20,7 +19,6 @@ int	main(void)
 	announceHorde(2, zombies_2);
 	announceHorde(10, zombies_10);
 
-	delete [] zombies_minus_1;
 	delete [] zombies_0;
 	delete [] zombies_1;
 	delete [] zombies_2;

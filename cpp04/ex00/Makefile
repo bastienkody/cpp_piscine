@@ -1,11 +1,19 @@
 ##		SOURCE FILES	###
 BUILD_DIR	=	./build
-SRC_DIR 	= 	./
+SRC_DIR 	=
 
-HEADERS		=	Animal.hpp
+HEADERS		=	Animal.hpp\
+				WrongAnimal.hpp\
+				Cat.hpp\
+				WrongCat.hpp\
+				Dog.hpp
 
 SRCS_NAME 	=	main.cpp\
-				Animal.cpp
+				Animal.cpp\
+				WrongAnimal.cpp\
+				Cat.cpp\
+				WrongCat.cpp\
+				Dog.cpp
 
 SRCS		= 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}

@@ -7,15 +7,17 @@ class Animal
 {
 	public:
 		Animal();
-		~Animal();
-		Animal(std::string type);
+		virtual ~Animal();
 		Animal(const Animal &src);
+		Animal(const std::string type);
 		Animal & operator=(const Animal &rhs);
 		std::string		getType() const;
 		void			setType(std::string type);
-		virtual void	makeSound();
-	private:
+		virtual void	makeSound() const;
+	protected:
 		std::string _type;
 };
+
+std::ostream& operator<<(std::ostream& os, const Animal &rhs);
 
 #endif

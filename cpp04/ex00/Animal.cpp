@@ -1,9 +1,8 @@
 #include "Animal.hpp"
 
 /*	constructors / destructor	*/
-Animal::Animal()
+Animal::Animal() : _type("type animal")
 {
-	_type = "";
 	std::cout << "Animal default constructor" << std::endl;
 }
 
@@ -12,14 +11,14 @@ Animal::~Animal()
 	std::cout << "Animal default destructor" << std::endl;
 }
 
-Animal::Animal(std::string type) : _type(type)
+Animal::Animal(const std::string type): _type(type)
 {
-	std::cout << "Animal param constructor" << std::endl;
+	std::cout << "Animal param destructor" << std::endl;
 }
 
 Animal::Animal(const Animal &src)
 {
-		*this = src;
+	*this = src;
 	std::cout << "Animal copy destructor" << std::endl;
 }
 
@@ -34,18 +33,18 @@ Animal & Animal::operator=(const Animal &rhs)
 }
 
 /*	setter / getter	*/
-std::string	Animal::getType() const
-{
-	return (this->_type);
-}
+std::string	Animal::getType() const { return (this->_type); }
 
-void		Animal::setType(std::string type)
+void	Animal::setType(std::string type) { this->_type = type; }
+
+/*	<< stream redefinition	*/
+std::ostream& operator<<(std::ostream& os, const Animal &rhs)
 {
-	this->_type = type;
+	return (os << rhs.getType());
 }
 
 /*	other	*/
-void	Animal::makeSound()
+void	Animal::makeSound() const
 {
 	std::cout << "** Animal sound **" << std::endl;
 }

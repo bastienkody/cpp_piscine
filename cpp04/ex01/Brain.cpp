@@ -3,7 +3,6 @@
 Brain::Brain() : _ideasCurrentLen(0)
 {
 	std::cout << "Brain default constructor" << std::endl;
-	_ideas[0] = "";
 }
 
 Brain::~Brain()

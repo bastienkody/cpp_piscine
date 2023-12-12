@@ -23,4 +23,20 @@ int	main(void)
 	for (unsigned int i = 0; i < 100; ++i)
 		std::cout << brain.getIdea(i) << std::endl;
 
+
+	Brain	anotherBrain;
+	anotherBrain = brain;
+
+	anotherBrain.setIdea("this sohuld not work");
+	for (unsigned int i = 0; i < 100; ++i)
+		std::cout << anotherBrain.getIdea(i) << std::endl;
+
+	
+	Brain	yetAnotherBrain(brain);
+
+	yetAnotherBrain.setIdea("this sohuld not work");
+	for (unsigned int i = 0; i < 100; ++i)
+		std::cout << yetAnotherBrain.getIdea(i) << std::endl;
+
+
 }

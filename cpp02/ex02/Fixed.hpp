@@ -43,10 +43,10 @@ class Fixed
 		Fixed &	operator++();
 		Fixed	operator--(int);
 		Fixed &	operator--();
-		Fixed&			min(Fixed& a, Fixed& b) const;
-		Fixed const&	min(Fixed const& a, Fixed const& b) const;
-		Fixed &			max(Fixed& a, Fixed& b) const;
-		Fixed const &	max(Fixed const& a, Fixed const& b) const;
+		static Fixed&			min(Fixed& a, Fixed& b);
+		static Fixed const&	min(Fixed const& a, Fixed const& b);
+		static Fixed &			max(Fixed& a, Fixed& b);
+		static Fixed const &	max(Fixed const& a, Fixed const& b);
 		};
 
 /*	outside*/

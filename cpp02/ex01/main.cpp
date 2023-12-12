@@ -1,6 +1,4 @@
 #include "Fixed.hpp"
-#include <bitset>
-
 
 int	main(void)
 {

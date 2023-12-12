@@ -1,5 +1,4 @@
 #include "Fixed.hpp"
-#include <bitset>
 
 void	print_fixed(Fixed fixed, std::string name)
 {

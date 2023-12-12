@@ -3,6 +3,7 @@
 int	main(void)
 {
 	DiamondTrap	a("A");
+	a.fullDisplay();
 	a.attack("enemy");
 	a.whoAmI();
 	a.guardGate();
@@ -13,8 +14,9 @@ int	main(void)
 	b.whoAmI();
 	
 	b = a;
-	b.attack("oponent");
 	b.whoAmI();
+	b.fullDisplay();
+	b.attack("oponent");
 	b.guardGate();
 	b.highFivesGuys();
 	std::cout << "------------------------------------------------" << std::endl;

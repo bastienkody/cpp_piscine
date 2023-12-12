@@ -31,7 +31,6 @@ class ClapTrap
 		unsigned int	_attackDamage;
 		bool			checkHitPoints() const;
 		bool			checkEnergyPoints() const;
-
 };
 
 #endif

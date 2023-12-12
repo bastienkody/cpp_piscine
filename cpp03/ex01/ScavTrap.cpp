@@ -88,8 +88,6 @@ ScavTrap::ScavTrap(ScavTrap &src) : ClapTrap(src)
 ScavTrap & ScavTrap::operator=(ScavTrap &rhs)
 {
 	ClapTrap::operator=(rhs); 
-// calling the parent definition of an operator (class scope needed)
-// seems like no pb with the return of ClapTrap::operator=, above code is read
 	std::cout << "Scav Copy operator" << std::endl;
 	return (*this);			
 }

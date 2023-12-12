@@ -35,6 +35,13 @@ FragTrap & FragTrap::operator=(FragTrap &rhs)
 	return (*this);			
 }
 
+/*
+	Scav has the same attack function than its parent class Clap.
+	No need to define a special attack for scav like : 
+	Scav::attack() {Clap::attack();}
+	because it automatically inherits from Clap.attack()
+*/
+
 /*	scavtrap special fct	*/
 void	FragTrap::highFivesGuys(void) const
 {

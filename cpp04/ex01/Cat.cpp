@@ -5,6 +5,7 @@ Cat::Cat(void) : Animal()
 {
 	std::cout << "Cat default constructor" << std::endl;
 	_type = "type cat";
+	_brain = new Brain;
 }
 
 Cat::~Cat(void)

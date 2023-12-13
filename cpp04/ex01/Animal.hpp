@@ -2,6 +2,7 @@
 #define ANIMAL_HPP
 
 #include <iostream>
+#include "Brain.hpp"
 
 class Animal
 {
@@ -16,6 +17,7 @@ class Animal
 		virtual void	makeSound() const;
 	protected:
 		std::string _type;
+		//Brain	_brain;
 };
 
 std::ostream& operator<<(std::ostream& os, const Animal &rhs);

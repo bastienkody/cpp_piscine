@@ -3,7 +3,7 @@
 #include "Cat.hpp"
 #include "Dog.hpp"
 
-
+/* MAIN POUR BRAIN SOLO
 int	main(void)
 {
 	Brain		brain;
@@ -37,6 +37,12 @@ int	main(void)
 	yetAnotherBrain.setIdea("this sohuld not work");
 	for (unsigned int i = 0; i < 100; ++i)
 		std::cout << yetAnotherBrain.getIdea(i) << std::endl;
+}
+*/
 
+int	main(void)
+{
+	Animal *ptr	= new Cat();
 
+	std::cout << ptr->_brain.getIdeasCurrentLen() << std::endl;
 }

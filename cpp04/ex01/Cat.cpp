@@ -11,6 +11,7 @@ Cat::Cat(void) : Animal()
 Cat::~Cat(void)
 {
 	std::cout << "Cat default destructor" << std::endl;
+	delete [] _brain;
 }
 
 Cat::Cat(const std::string type) : Animal(type)

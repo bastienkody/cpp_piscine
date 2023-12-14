@@ -31,7 +31,7 @@ int	main(void)
 	std::cout << b << std::endl;
 	std::cout << Fixed::max( a, b ) << std::endl;
 }
-{
+/*{
 	std::cout << "\033[4mCustom main example:\033[0m" << std::endl;
 
 	Fixed	a(2000000);
@@ -61,5 +61,5 @@ int	main(void)
 	std::cout << "\033[32mmax(b, c) : \033[m" << Fixed::max(b, c) << std::endl;
 	std::cout << "\033[32mmin(const b, const c) : \033[m" << Fixed::min((const Fixed)b, (const Fixed)c) << std::endl;
 
-}
+}*/
 }

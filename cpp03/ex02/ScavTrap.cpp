@@ -7,7 +7,6 @@ ScavTrap::~ScavTrap()
 
 ScavTrap::ScavTrap() : ClapTrap()
 {
-	_name = "";
 	_hitPoints = 100;
 	_energyPoints = 50;
 	_attackDamage = 20;

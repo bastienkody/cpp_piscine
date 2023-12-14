@@ -63,7 +63,7 @@ ScavTrap::~ScavTrap()
 
 ScavTrap::ScavTrap() : ClapTrap()
 {
-	_name = ""; 		// this is not needed bc ClapTrap does it already
+						// _name = ""; this is not needed bc ClapTrap does it already
 	_hitPoints = 100;	// this is needed bc ClapTrap set it a 10
 	_energyPoints = 50;
 	_attackDamage = 20;

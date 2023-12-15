@@ -11,25 +11,33 @@ Cat::Cat(void) : Animal()
 Cat::~Cat(void)
 {
 	std::cout << "Cat default destructor" << std::endl;
-	delete [] _brain;
+	delete _brain;
 }
 
 Cat::Cat(const std::string type) : Animal(type)
 {
 	std::cout << "Cat param constructor" << std::endl;
+	_brain = new Brain;
 }
 
 Cat::Cat(const Cat &src) : Animal()
 {
-	*this = src;
 	std::cout << "Cat copy constructor" << std::endl;
+	_type = src.getType();
+	_brain = new Brain;			// alloc for deep copy	
+	*_brain = *(src._brain);	// value copy using Brain::operator=
 }
 
 Cat & Cat::operator=(const Cat &rhs)
 {
 	std::cout << "Cat copy operator" << std::endl;
 	if (this != &rhs)
-		this->_type = rhs.getType();
+	{
+		_type = rhs.getType();
+		delete _brain; 
+		_brain = new Brain;			// alloc for deep copy	
+		*(_brain) = *(rhs._brain);	// value copy using Brain::operator=
+	}
 	return (*this);
 }
 
@@ -37,4 +45,10 @@ Cat & Cat::operator=(const Cat &rhs)
 void	Cat::makeSound() const
 {
 	std::cout << "** Miaou Miaou **" << std::endl;
+}
+
+/*	getter on _brain	*/
+Brain	*Cat::getBrain() const
+{
+	return (_brain);
 }

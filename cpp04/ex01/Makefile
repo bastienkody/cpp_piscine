@@ -17,7 +17,7 @@ SRCS		= 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
-NAME		=	animal00
+NAME		=	animal01
 CC			=	c++
 CFLAGS		=	-Wall -Wextra -Werror -std=c++98
 

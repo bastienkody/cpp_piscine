@@ -13,13 +13,13 @@ Animal::~Animal()
 
 Animal::Animal(const std::string type): _type(type)
 {
-	std::cout << "Animal param destructor" << std::endl;
+	std::cout << "Animal param constructor" << std::endl;
 }
 
 Animal::Animal(const Animal &src)
 {
 	*this = src;
-	std::cout << "Animal copy destructor" << std::endl;
+	std::cout << "Animal copy constructor" << std::endl;
 }
 
 Animal & Animal::operator=(const Animal &rhs)

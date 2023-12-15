@@ -42,7 +42,52 @@ int	main(void)
 
 int	main(void)
 {
+	std::cout << "\033[1mPTR ANIMAL ON CAT\033[m" << std::endl;
 	Animal *ptr	= new Cat();
+	
+	ptr->getBrain()->setIdea("first ever idea for a Cat");
+	std::cout << ptr->getBrain()->getIdea(0) << std::endl;
+	ptr->getBrain()->setIdea("second idea of a Cat");
+	std::cout << ptr->getBrain()->getIdea(1) << std::endl;
+	delete ptr;
+	std::cout << SEP_80 << std::endl;
+////////////////////////////////////////////////////////////////////////////////
+	std::cout << "\033[1mPTR ANIMAL ON DOG\033[m" << std::endl;
+	Animal *ptr2	= new Dog();
+	
+	ptr2->getBrain()->setIdea("first ever idea for a Dog");
+	std::cout << ptr2->getBrain()->getIdea(0) << std::endl;
+	ptr2->getBrain()->setIdea("second idea for a Dog");
+	std::cout << ptr2->getBrain()->getIdea(1) << std::endl;
+	delete ptr2;
+	std::cout << SEP_80 << std::endl;
+////////////////////////////////////////////////////////////////////////////////
+	std::cout << "\033[1mCOPY CONSTRUCTOR WITH DIFFERENT BRAINS\033[m" << std::endl;
+	Cat	cat;
+	cat.getBrain()->setIdea("first idea");
+	cat.getBrain()->setIdea("second idea");
 
-	std::cout << ptr->_brain.getIdeasCurrentLen() << std::endl;
+	Cat	copycat(cat);
+	std::cout << copycat.getBrain()->getIdea(0) << std::endl;
+	std::cout << copycat.getBrain()->getIdea(1) << std::endl;
+
+	cat.getBrain()->setIdea("here is another idea for cat that copy cat wont know");
+	copycat.getBrain()->setIdea("this is specific to copycat");
+
+	std::cout << "Third idea of cat : " << cat.getBrain()->getIdea(2) << std::endl;
+	std::cout << "Third idea of copycat : " << copycat.getBrain()->getIdea(2) << std::endl;
+	std::cout << SEP_80 << std::endl;
+////////////////////////////////////////////////////////////////////////////////
+	std::cout << "\033[1mCOPY OPERATOR WITH DIFFERENT BRAINS\033[m" << std::endl;
+	Dog dog;
+	dog.getBrain()->setIdea("first idea (might appear for dog and copy dog !)");
+	dog.getBrain()->setIdea("second idea (might appear for dog and copy dog !)");
+
+	Dog	copydog;
+	copydog.getBrain()->setIdea("This should be overwriten by copy just below");
+	copydog = dog;
+	std::cout << copydog.getBrain()->getIdea(0) << std::endl;
+	std::cout << copydog.getBrain()->getIdea(1) << std::endl;
+
+	//std::cout << SEP_80 << std::endl;
 }

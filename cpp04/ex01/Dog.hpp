@@ -13,6 +13,7 @@ class Dog: public Animal
 		Dog(const Dog &src);
 		Dog & operator=(const Dog &rhs);
 		void	makeSound() const;
+		Brain	*getBrain() const;
 	private:
 		Brain	*_brain; // a new dans les constructeurs et delete destructeurs !
 };

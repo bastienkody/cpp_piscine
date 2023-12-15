@@ -13,6 +13,7 @@ class Cat: public Animal
 		Cat(const std::string type);
 		Cat & operator=(const Cat &rhs);
 		void	makeSound() const;
+		Brain	*getBrain() const;
 	private:
 		Brain	*_brain;
 };

@@ -14,8 +14,11 @@ class	Brain
 		~Brain();
 		Brain(const Brain &src);
 		Brain & operator=(const Brain &rhs);
+
+		/*	specific idea get/setters */
 		std::string	getIdea(unsigned int index) const;
 		bool		setIdea(std::string newIdea);
+
 		unsigned int	getIdeasCurrentLen() const;
 	private:
 		std::string		_ideas[100];

@@ -13,13 +13,13 @@ WrongAnimal::~WrongAnimal()
 
 WrongAnimal::WrongAnimal(const std::string type): _type(type)
 {
-	std::cout << "WrongAnimal param destructor" << std::endl;
+	std::cout << "WrongAnimal param constructor" << std::endl;
 }
 
 WrongAnimal::WrongAnimal(const WrongAnimal &src)
 {
 	*this = src;
-	std::cout << "WrongAnimal copy destructor" << std::endl;
+	std::cout << "WrongAnimal copy constructor" << std::endl;
 }
 
 WrongAnimal & WrongAnimal::operator=(const WrongAnimal &rhs)

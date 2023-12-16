@@ -24,8 +24,7 @@ Cat::Cat(const Cat &src) : Animal()
 {
 	std::cout << "Cat copy constructor" << std::endl;
 	_type = src.getType();
-	_brain = new Brain;			// alloc for deep copy	
-	*_brain = *(src._brain);	// value copy using Brain::operator=
+	_brain = new Brain(*src.getBrain());	// alloc for deep copy	+ use of copy construct
 }
 
 Cat & Cat::operator=(const Cat &rhs)
@@ -35,8 +34,7 @@ Cat & Cat::operator=(const Cat &rhs)
 	{
 		_type = rhs.getType();
 		delete _brain; 
-		_brain = new Brain;			// alloc for deep copy	
-		*(_brain) = *(rhs._brain);	// value copy using Brain::operator=
+		_brain = new Brain(*rhs.getBrain());	
 	}
 	return (*this);
 }

@@ -15,17 +15,18 @@ MateriaSource::~MateriaSource()
 			delete _knowledge[i]; 
 }
 
-// copy (using copy operator)
+// copy deep
 MateriaSource::MateriaSource(const MateriaSource &src)
 {
-	*this = src;
+	for (int i = 0; i < MAX_SLOTS; ++i)
+		_knowledge[i] = src._knowledge[i]->clone();
 }
 
-// copy operator (no deep copy required in the subject)
+// copy operator (deep)
 MateriaSource & MateriaSource::operator=(const MateriaSource & rhs)
 {
 	for (int i = 0; i < MAX_SLOTS; ++i)
-		_knowledge[i] = rhs._knowledge[i];
+		_knowledge[i] = rhs._knowledge[i]->clone();
 	return (*this);
 }
 
@@ -46,7 +47,7 @@ AMateria* MateriaSource::createMateria(std::string const & type)
 {
 	int i = 0;
 	for (; i < MAX_SLOTS + 1; ++i)
-		if (!type.compare(_knowledge[i]->getType()))
+		if (_knowledge[i] && !type.compare(_knowledge[i]->getType()))
 			break;
 	if (i > 3 || (type.compare("ice") && type.compare("cure")))
 		return (std::cout << "Unknown Materia" << std::endl, static_cast<AMateria*>(NULL));

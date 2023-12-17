@@ -6,12 +6,14 @@ HEADERS		=	AMateria.hpp\
 				IMateriaSource.hpp\
 				MateriaSource.hpp\
 				Ice.hpp\
+				Cure.hpp\
 				ICharacter.hpp\
 				Character.hpp
 
 SRCS_NAME 	=	main.cpp\
 				AMateria.cpp\
 				Ice.cpp\
+				Cure.cpp\
 				Character.cpp\
 				MateriaSource.cpp
 

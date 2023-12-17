@@ -6,7 +6,11 @@
 
 
 
-//	CUSTOM MAIN, with param constructor and ostream<< overload
+/*	
+	CUSTOM MAIN, using param constructor and ostream << overload redefinition
+	Allocation are protected with catching std::bad_alloc + using std::exit()
+*/
+
 int	main(void)
 {
 {
@@ -16,30 +20,76 @@ int	main(void)
 	std::cout << animal << std::endl;
 }
 	std::cout << "-----------------------------------" << std::endl;
-{
-	const Animal *ptrCat = new Cat("Le petit chaton trop mignon");
 
-	ptrCat->makeSound();
-	std::cout << *ptrCat << std::endl; // using Animal ostream<< redefinition !!
-	delete ptrCat;
-}
-	std::cout << "-----------------------------------" << std::endl;
-{
-	const Animal *ptrDog = new Dog("Snoop doggy dog");
 
-	ptrDog->makeSound();
-	std::cout << *ptrDog << std::endl; // using Animal ostream<< redefinition !!
-	delete ptrDog;
-}
-	std::cout << "-----------------------------------" << std::endl;
-{
-	const WrongAnimal *ptrWrong = new WrongCat();
+	try
+	{
+		const Animal *ptrCat = new Cat("Le petit chaton trop mignon");
 
-	ptrWrong->makeSound();
-	std::cout << *ptrWrong << std::endl; // using Animal ostream<< redefinition !!
-	delete ptrWrong;
+		ptrCat->makeSound();
+		std::cout << *ptrCat << std::endl; // using Animal ostream<< redefinition !!
+		delete ptrCat;
+		std::cout << "-----------------------------------" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::exit(EXIT_FAILURE);
+	}
+	
+
+	try
+	{
+		const Animal *ptrDog = new Dog("Snoop doggy dog");
+
+		ptrDog->makeSound();
+		std::cout << *ptrDog << std::endl;
+		delete ptrDog;
+		std::cout << "-----------------------------------" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
+	
+	
+	try
+	{
+		const WrongAnimal *ptrWrong = new WrongCat();
+
+		ptrWrong->makeSound();
+		std::cout << *ptrWrong << std::endl;
+		delete ptrWrong;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
-}
+
+
+/*	
+	Alloc failure 
+	try
+	{
+		unsigned long long int size = 21474836479999999;
+		const Animal *ptrDog = new Dog [size];
+
+		ptrDog->makeSound();
+		std::cout << *ptrDog << std::endl;
+		delete [] ptrDog;
+		std::cout << "-----------------------------------" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	} 
+*/
+
+
 
 //	SUBJECT MAIN	
 /*

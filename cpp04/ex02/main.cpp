@@ -19,23 +19,39 @@ int	main(void)
 
 	std::cout << "\033[1mPointer AAnimal to a Cat\033[m" << std::endl;
 {
-	AAnimal *ptr	= new Cat();
-	ptr->getBrain()->setIdea("first ever idea for a Cat");
-	std::cout << ptr->getBrain()->getIdea(0) << std::endl;
-	ptr->getBrain()->setIdea("second idea of a Cat");
-	std::cout << ptr->getBrain()->getIdea(1) << std::endl;
-	delete ptr;
+	try
+	{
+		AAnimal *ptr	= new Cat();
+		ptr->getBrain()->setIdea("first ever idea for a Cat");
+		std::cout << ptr->getBrain()->getIdea(0) << std::endl;
+		ptr->getBrain()->setIdea("second idea of a Cat");
+		std::cout << ptr->getBrain()->getIdea(1) << std::endl;
+		delete ptr;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 	std::cout << SEP_80 << std::endl;
 	std::cout << "\033[1mPointer AAnimal to a Dog\033[m" << std::endl;
-{	
-	AAnimal *ptr2	= new Dog();
-	ptr2->getBrain()->setIdea("first ever idea for a Dog");
-	std::cout << ptr2->getBrain()->getIdea(0) << std::endl;
-	ptr2->getBrain()->setIdea("second idea for a Dog");
-	std::cout << ptr2->getBrain()->getIdea(1) << std::endl;
-	delete ptr2;
+{
+	try
+	{
+		AAnimal *ptr2	= new Dog();
+		ptr2->getBrain()->setIdea("first ever idea for a Dog");
+		std::cout << ptr2->getBrain()->getIdea(0) << std::endl;
+		ptr2->getBrain()->setIdea("second idea for a Dog");
+		std::cout << ptr2->getBrain()->getIdea(1) << std::endl;
+		delete ptr2;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 	std::cout << SEP_80 << std::endl;
@@ -68,20 +84,27 @@ int	main(void)
 	copydog = dog;
 	std::cout << copydog.getBrain()->getIdea(0) << std::endl;
 	std::cout << copydog.getBrain()->getIdea(1) << std::endl;
-
 }
+
 	std::cout << SEP_80 << std::endl;
 	std::cout << "\033[1mAAnimal array\033[m" << std::endl;
-
 {
-	AAnimal *array[6];
-	for (int i = 0; i < 3; ++i)
-		array[i] = new Cat();	// cat filling
-	for (int i = 3; i < 6; ++i)
-		array[i] = new Dog();	// dog filling
-	for (int i = 0; i < 6; ++i)
-		array[i]->makeSound();	// use specific memb function
-	for (int i = 0; i < 6; ++i)
-		delete array[i];		// delete as animal
+	try
+	{
+		AAnimal *array[6];
+		for (int i = 0; i < 3; ++i)
+			array[i] = new Cat();
+		for (int i = 3; i < 6; ++i)
+			array[i] = new Dog();
+		for (int i = 0; i < 6; ++i)
+			array[i]->makeSound();
+		for (int i = 0; i < 6; ++i)
+			delete array[i];
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 }

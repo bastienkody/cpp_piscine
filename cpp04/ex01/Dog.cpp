@@ -5,7 +5,15 @@ Dog::Dog() : Animal()
 {
 	std::cout << "Dog default constructor" << std::endl;
 	_type = "type dog";
-	_brain = new Brain;
+	try
+	{
+		_brain = new Brain;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << " in Dog def constructor" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 Dog::~Dog()
@@ -17,14 +25,30 @@ Dog::~Dog()
 Dog::Dog(const std::string type) : Animal(type)
 {
 	std::cout << "Dog param constructor" << std::endl;
-	_brain = new Brain;
+	try
+	{
+		_brain = new Brain;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << " in Dog param constructor" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 Dog::Dog(const Dog &src) : Animal()
 {
 	std::cout << "Dog copy constructor" << std::endl;
 	_type = src.getType();
-	_brain = new Brain;			// alloc for deep copy using default constructor	
+	try
+	{
+		_brain = new Brain;			// alloc for deep copy using default constructor	
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << " in Dog copy constructor" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 	*_brain = *(src._brain);	// value copy using Brain::operator=
 }
 
@@ -35,7 +59,15 @@ Dog & Dog::operator=(const Dog &rhs)
 	{
 		_type = rhs.getType();
 		delete _brain;
-		_brain = new Brain;				// alloc for deep copy
+		try
+		{
+			_brain = new Brain;				// alloc for deep copy
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << " in Dog copy operator" << std::endl;
+			std::exit(EXIT_FAILURE);
+		}
 		*(_brain) = *(rhs._brain);		// value copy using Brain::operator=
 	}
 	return (*this);

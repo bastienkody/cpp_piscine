@@ -5,7 +5,15 @@ Cat::Cat(void) : Animal()
 {
 	std::cout << "Cat default constructor" << std::endl;
 	_type = "type cat";
-	_brain = new Brain;
+	try
+	{
+		_brain = new Brain;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << " in Cat def constructor" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 Cat::~Cat(void)
@@ -17,14 +25,30 @@ Cat::~Cat(void)
 Cat::Cat(const std::string type) : Animal(type)
 {
 	std::cout << "Cat param constructor" << std::endl;
-	_brain = new Brain;
+	try
+	{
+		_brain = new Brain;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << " in Cat param constructor" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 Cat::Cat(const Cat &src) : Animal()
 {
 	std::cout << "Cat copy constructor" << std::endl;
 	_type = src.getType();
-	_brain = new Brain(*src.getBrain());	// alloc for deep copy	+ use of copy construct
+	try
+	{
+		_brain = new Brain(*src.getBrain());	// alloc for deep copy	+ use of copy construct
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << " in Cat copy constructor" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
 }
 
 Cat & Cat::operator=(const Cat &rhs)
@@ -34,7 +58,15 @@ Cat & Cat::operator=(const Cat &rhs)
 	{
 		_type = rhs.getType();
 		delete _brain; 
-		_brain = new Brain(*rhs.getBrain());	
+		try
+		{
+			_brain = new Brain(*rhs.getBrain());
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << " in Cat copy operator" << std::endl;
+			std::exit(EXIT_FAILURE);
+		}
 	}
 	return (*this);
 }

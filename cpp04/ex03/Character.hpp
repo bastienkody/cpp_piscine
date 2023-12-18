@@ -2,6 +2,7 @@
 #define CHARACTER_HPP
 
 #include <iostream>
+#include <cstdlib>
 #include "ICharacter.hpp"
 
 #define MAX_SLOTS 4

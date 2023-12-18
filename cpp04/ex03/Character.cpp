@@ -33,6 +33,7 @@ Character::Character(const Character &src)
 // copy operator (deep on slots)
 Character & Character::operator=(const Character &rhs)
 {
+	std::cerr << "copy operator charatcer" << std::endl;
 	this->_name = rhs.getName();				// name
 	for (int i = 0; i < MAX_SLOTS; ++i)
 		if (_inventory[i])
@@ -73,7 +74,7 @@ void Character::unequip(int idx)
 // use ; subject does not want : std::cout << "Bad index" << std::endl;
 void Character::use(int idx, ICharacter& target)
 {
-	if (idx < 0 || ! _inventory[idx])
+	if (idx < 0 || idx > 3 || ! _inventory[idx])
 		return ;
 	_inventory[idx]->use(target);
 }

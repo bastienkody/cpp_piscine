@@ -24,7 +24,7 @@ OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 ###		DEFINITIONS		###
 NAME		=	materia
 CC			=	c++
-CFLAGS		=	-Wall -Wextra -Werror -std=c++98
+CFLAGS		=	-Wall -Wextra -Werror -std=c++98 -g3
 
 ###		RULES		###
 $(BUILD_DIR)/%.o: %.cpp ${HEADERS}

@@ -2,6 +2,7 @@
 #include "Brain.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include <cstdlib>
 
 
 // Main idem ex01 + try to instanciate AAnimal

@@ -2,6 +2,7 @@
 #define CAT_HPP
 
 #include <iostream>
+#include <cstdlib>
 #include "AAnimal.hpp"
 
 //	virtual makesound() or getBrain() -> by convention to see that it also

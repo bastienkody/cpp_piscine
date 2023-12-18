@@ -2,6 +2,7 @@
 #define MATERIASOURCE_HPP
 
 #include <iostream>
+#include <cstdlib>
 #include "IMateriaSource.hpp"
 #include "AMateria.hpp"
 

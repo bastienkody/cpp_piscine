@@ -2,6 +2,7 @@
 #include "Brain.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include <cstdlib>
 
 // MAIN POUR BRAIN SOLO
 /*int	main(void)

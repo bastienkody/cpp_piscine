@@ -2,6 +2,7 @@
 #define CAT_HPP
 
 #include <iostream>
+#include <cstdlib>
 #include "Animal.hpp"
 
 class Cat: public Animal

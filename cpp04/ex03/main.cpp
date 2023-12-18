@@ -53,13 +53,14 @@ int	main(void)
 	me->equip(tmp);
 	tmp = src->createMateria("cure");
 	me->equip(tmp);
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
 	tmp = src->createMateria("dont exist");
 	if (tmp)
 		me->equip(tmp);
 	else
 		std::cerr << "Create Materia on smthg unrecognized did not work" << std::endl;
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
+
 	std::cout << "-----------------------------" << std::endl;
 
 	ICharacter* bob = new Character("bob");
@@ -67,16 +68,29 @@ int	main(void)
 	me->use(1, *bob);
 	me->use(2, *bob);
 	me->use(3, *bob);
-	me->use(4, *bob); // out of range but no msg error
+	me->use(4, *bob);		// out of range but no msg error
 	std::cout << "-----------------------------" << std::endl;
 
-	me->unequip(0);
-	me->use(0, *bob);
+
+	me->unequip(3);
+	me->use(3, *bob);		// no equipment in slot 3, but no error msg (cf subject)
 	std::cout << "-----------------------------" << std::endl;
+
+	ICharacter* copyme = new Character(reinterpret_cast<const Character&>(*me));
+	*copyme = *me;			// deep copy for _inventory
+	copyme->use(0, *bob);
+	copyme->use(1, *bob);
+	copyme->use(2, *bob);
+	copyme->use(3, *bob);
+	copyme->use(4, *bob);	// out of range but no msg error
+	std::cout << "-----------------------------" << std::endl;
+
 	
 	delete bob;
 	delete me;
+	delete copyme;
 	delete src;
+	delete tmp;
 
 	return 0;
 }

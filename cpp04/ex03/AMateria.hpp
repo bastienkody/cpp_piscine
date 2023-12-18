@@ -2,6 +2,7 @@
 #define AMATERIA_HPP
 
 #include <iostream>
+#include <cstdlib>
 #include "ICharacter.hpp"
 
 class ICharacter;

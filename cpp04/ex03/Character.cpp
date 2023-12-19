@@ -33,7 +33,6 @@ Character::Character(const Character &src)
 // copy operator (deep on slots)
 Character & Character::operator=(const Character &rhs)
 {
-	std::cerr << "copy operator charatcer" << std::endl;
 	this->_name = rhs.getName();				// name
 	for (int i = 0; i < MAX_SLOTS; ++i)
 		if (_inventory[i])

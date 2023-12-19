@@ -38,8 +38,11 @@ int main()
 
 int	main(void)
 {
+	// FIRST PART
+	std::cout << "\033[4mFIRST PART\033[m" << std::endl;
+
 	IMateriaSource* src = new MateriaSource();
-	
+
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
 	src->learnMateria(NULL);
@@ -71,26 +74,52 @@ int	main(void)
 	me->use(4, *bob);		// out of range but no msg error
 	std::cout << "-----------------------------" << std::endl;
 
-
 	me->unequip(3);
 	me->use(3, *bob);		// no equipment in slot 3, but no error msg (cf subject)
 	std::cout << "-----------------------------" << std::endl;
 
-	ICharacter* copyme = new Character(reinterpret_cast<const Character&>(*me));
-	*copyme = *me;			// deep copy for _inventory
-	copyme->use(0, *bob);
-	copyme->use(1, *bob);
-	copyme->use(2, *bob);
-	copyme->use(3, *bob);
-	copyme->use(4, *bob);	// out of range but no msg error
-	std::cout << "-----------------------------" << std::endl;
-
-	
 	delete bob;
 	delete me;
-	delete copyme;
 	delete src;
 	delete tmp;
 
-	return 0;
+
+	// SECOND PART (deep copy test)
+	std::cout << "\033[4mSECOND PART\033[m" << std::endl;
+
+	Character	*scadirac = new Character("Scadirac");
+	Character	*vigier = new Character("Vigier");
+	Character	*niel = new Character("Niel");
+
+	scadirac->equip(new Ice());
+	scadirac->equip(new Ice());
+	scadirac->equip(new Cure());
+	scadirac->equip(new Cure());
+
+	*vigier = *scadirac;
+
+	vigier->use(0, *niel);
+	vigier->use(1, *niel);
+	vigier->use(2, *niel);
+	vigier->use(3, *niel);
+	std::cout << "-----------------------------" << std::endl;
+
+	Character	*bocal= new Character(*scadirac);
+	delete scadirac; // deleting scadirac let us test deep copy operator of Materia by vigier, and also via copy constructor for bocal
+
+	vigier->use(0, *niel);
+	vigier->use(1, *niel);
+	vigier->use(2, *niel);
+	vigier->use(3, *niel);
+	std::cout << "-----------------------------" << std::endl;
+
+	bocal->use(0, *niel);
+	bocal->use(1, *niel);
+	bocal->use(2, *niel);
+	bocal->use(3, *niel);
+	std::cout << "-----------------------------" << std::endl;
+
+	delete vigier;
+	delete bocal;
+	delete niel;
 }

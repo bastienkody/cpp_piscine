@@ -4,7 +4,7 @@ BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS_NAME 	=	Bureaucrat.cpp main.cpp
+SRCS		=	Bureaucrat.cpp main.cpp
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###

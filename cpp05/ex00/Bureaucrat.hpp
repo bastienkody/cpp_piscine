@@ -4,18 +4,27 @@
 #include<iostream>
 #include<string>
 
+/*	
+	Default constructor is in PRIVATE
+	It is not UNUSABLE : we need to provide
+	name and grade to construct a bureaucrat
+*/
+
 class Bureaucrat
 {
 	public:
-		Bureaucrat();
 		~Bureaucrat();
-		Bureaucrat(const std::string name);
+		Bureaucrat(std::string const name, int grade);
 		Bureaucrat(const Bureaucrat & src);
 		Bureaucrat & operator=(const Bureaucrat & rhs);
-		void		setName(std::string name);
 		std::string getName() const;
+		int			getGrade() const;
+		void 		inCrementGrade();
+		void 		deCrementGrade();
 	private:
-		std::string _name;
+		Bureaucrat();
+		std::string const	_name;
+		int					_grade;
 };
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat &rhs);

@@ -1,14 +1,23 @@
 #include"Bureaucrat.hpp"
 
+//	Default constructor
+Bureaucrat::Bureaucrat()
+{
+}
+
 //	Default destructor
 Bureaucrat::~Bureaucrat()
 {
 }
 
 //	Param constructor
-Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name), _grade(grade)
+Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name)
 {
-
+	if (grade < 1)
+		throw GradeTooHighException();
+	if (grade > 150)
+		throw GradeTooLowException();
+	_grade = grade;
 }
 
 //	Copy constructor (via copy operator)
@@ -49,11 +58,27 @@ std::ostream & operator<<(std::ostream& os, const Bureaucrat &rhs)
 // Increment grade
 void Bureaucrat::inCrementGrade()
 {
-	++(this->_grade);
+	if (this->_grade - 1 < 1)
+		throw GradeTooHighException();
+	--(this->_grade);
 }
 
 // Decrement grade
 void Bureaucrat::deCrementGrade()
 {
-	--(this->_grade);
+	if (this->_grade + 1 > 150)
+		throw GradeTooLowException();
+	++(this->_grade);
+}
+
+
+/*	Exceptions	*/
+const char* Bureaucrat::GradeTooLowException::  what() const throw()
+{
+	return ("Grade too low");
+}
+
+const char* Bureaucrat::GradeTooHighException::  what() const throw()
+{
+	return ("Grade too high");
 }

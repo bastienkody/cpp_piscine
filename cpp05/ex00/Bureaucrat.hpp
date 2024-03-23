@@ -4,6 +4,8 @@
 #include<iostream>
 #include<string>
 
+#define SEP "----------------------------------------------------------"
+
 /*	
 	Default constructor is in PRIVATE
 	It is not UNUSABLE : we need to provide

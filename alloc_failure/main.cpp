@@ -1,5 +1,9 @@
 #include <iostream>
 
+/*	NOTE THAT std::exit, std::abort etc are C++11 defined 
+	--> cant use is at 42 commoncore cause we might compil with C++98
+*/
+
 /*	TESTS ON MAC INTEL for now.
 	I replace std::abort by std::exit() because abort might not call destructors
 	of stack allocated variable, according to cppref. 

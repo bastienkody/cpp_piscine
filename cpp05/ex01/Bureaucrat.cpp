@@ -1,14 +1,10 @@
 #include"Bureaucrat.hpp"
 
 //	Default constructor
-Bureaucrat::Bureaucrat()
-{
-}
+Bureaucrat::Bureaucrat() {}
 
 //	Default destructor
-Bureaucrat::~Bureaucrat()
-{
-}
+Bureaucrat::~Bureaucrat() {}
 
 //	Param constructor
 Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name)
@@ -37,17 +33,9 @@ Bureaucrat & Bureaucrat::operator=(const Bureaucrat & rhs)
 	return (*this);
 }
 
-//	Getter on _name
-std::string Bureaucrat::getName() const
-{
-	return (_name);
-}
-
-//	Getter on _grade
-int Bureaucrat::getGrade() const
-{
-	return (_grade);
-}
+//	Getters
+std::string Bureaucrat::getName() const {return (_name);}
+int 		Bureaucrat::getGrade() const {return (_grade);}
 
 //	os stream << redefinition
 std::ostream & operator<<(std::ostream& os, const Bureaucrat &rhs)
@@ -55,7 +43,7 @@ std::ostream & operator<<(std::ostream& os, const Bureaucrat &rhs)
 	return (os << rhs.getName() << ", bureaucrat grade " << rhs.getGrade());
 } 
 
-// Increment grade
+// Grades
 void Bureaucrat::inCrementGrade()
 {
 	if (this->_grade - 1 < 1)
@@ -63,7 +51,6 @@ void Bureaucrat::inCrementGrade()
 	--(this->_grade);
 }
 
-// Decrement grade
 void Bureaucrat::deCrementGrade()
 {
 	if (this->_grade + 1 > 150)
@@ -71,14 +58,23 @@ void Bureaucrat::deCrementGrade()
 	++(this->_grade);
 }
 
-
-/*	Exceptions	*/
+//	Exceptions
 const char* Bureaucrat::GradeTooLowException::what() const throw()
-{
-	return ("Bureaucrat::GradeTooLowException");
-}
+{return ("Bureaucrat::GradeTooLowException");}
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
+{return ("Bureaucrat::GradeTooHighException");}
+
+//	SignForm
+void	Bureaucrat::signForm(Form form)
 {
-	return ("Bureaucrat::GradeTooHighException");
+	std::cout << "Bureaucrat " << getName();
+	if (_grade <= form.getSignGrade())
+		std::cout << " signed form " << form.getName() << std::endl;
+	else 
+		std::cout << " could not signed Form " << form.getName() \
+		<< " because of grading : (bur=" << _grade << " vs form= " \
+		<< form.getSignGrade() << ")" << std::endl;
 }
+
+

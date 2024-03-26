@@ -1,95 +1,101 @@
 #include "Bureaucrat.hpp"
+#include "sub_form_classes/ShrubberyCreationForm.hpp"
+#include "sub_form_classes/RobotomyRequestForm.hpp"
+#include "sub_form_classes/PresidentialPardonForm.hpp"
 
 inline void	print_sep(void) {std::cout << SEP << std::endl;}
 inline void	print_sep2(void) {std::cout << SEP2 << std::endl;}
 inline void	print_bur(const Bureaucrat & bur) {std::cout << bur << std::endl;}
-inline void	print_form(const Form & form) {std::cout << form << std::endl;}
+inline void	print_form(const AForm & form) {std::cout << form << std::endl;}
 
 /*
-	The signing is checked before the grading : if a form is unsigned
-	I wont be checking the grading so the exception would only be unsigned
-	We could have it both but it does not make sense to me. 
+
 */
-
-void	bad_grades_at_construct(void)
-{
-	try
-	{
-		std::cout << "Form 151, 150 : " ;
-		Form form = Form("form1", 151, 50);
-	}	
-	catch(const std::exception & e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	print_sep();
-	try
-	{
-		std::cout << "Form 150, 151 : " ;
-		Form form = Form("form1", 150, 151);
-	}	
-	catch(const std::exception & e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	print_sep();
-	try
-	{
-		std::cout << "Form 0, 100 : " ;
-		Form form = Form("form1", 0, 100);
-	}	
-	catch(const std::exception & e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	print_sep();
-	try
-	{
-		std::cout << "Form 100, 0 : " ;
-		Form form = Form("form1", 100, 0);
-	}	
-	catch(const std::exception & e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	print_sep();
-}
-
-void	too_low_to_sign()
-{
-	Form 		form = Form("form", 5, 100);
-	Bureaucrat	bur = Bureaucrat("bur", 12);
-
-	try
-		{ form.beSigned(bur); }
-	catch(const std::exception& e)
-		{ std::cerr << e.what() << '\n'; }
-	bur.signForm(form);
-}
-
-void	too_low_to_sign_incr()
-{
-	Form 		form = Form("form", 10, 100);
-	Bureaucrat	bur = Bureaucrat("bur", 12);
-
-	for (int i = 0; i<4; ++i)
-	{
-		try
-			{ form.beSigned(bur); }
-		catch(const std::exception& e)
-			{ std::cerr << e.what() << '\n'; }
-		bur.signForm(form);
-		bur.inCrementGrade();
-		print_sep();
-	}
-}
 
 int	main(void)
 {
-	bad_grades_at_construct();
+	Bureaucrat	bur1 = Bureaucrat("level1", 1);
+	Bureaucrat	bur6 = Bureaucrat("level6", 6);
+	Bureaucrat	bur48 = Bureaucrat("level48", 48);
+	Bureaucrat	bur138 = Bureaucrat("level138", 138);
+
+	PresidentialPardonForm	pres = PresidentialPardonForm("Arthur Dent");	// sign : 25 - exec : 5
+	RobotomyRequestForm		robot = RobotomyRequestForm("Arthur Dent");		// sign : 72 - exec : 45
+	ShrubberyCreationForm	shrub = ShrubberyCreationForm("Mars");			// sign : 145 - exec : 137
+
 	print_sep2();
-	too_low_to_sign();
+	// 1. too low to sign
+	std::cout << "1. too low to sign :" << std::endl;
+	try								{ pres.beSigned(bur138); bur138.signForm(pres); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
 	print_sep2();
-	too_low_to_sign_incr();
+
+	//2. too low to sign
+	std::cout << "2. too low to sign :" << std::endl;
+	try								{ pres.beSigned(bur48); bur48.signForm(pres); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 3. ok to sign
+	std::cout << "3. ok to sign :" << std::endl;
+	try 							{ pres.beSigned(bur6); bur6.signForm(pres); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 4. ko to sign an already signed
+	std::cout << "4. ko to sign an already signed :" << std::endl;
+	try 							{ pres.beSigned(bur6); bur6.signForm(pres); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 5. cant exec because unsigned (exec grade ko)
+	std::cout << "5. cant exec because unsigned (exec grade ko) :" << std::endl;
+	try 							{ robot.execute(bur48); bur48.executeForm(robot); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 6. cant exec because unsigned (exec grade ok!)
+	std::cout << "6. cant exec because unsigned (exec grade ok) :" << std::endl;
+	try 							{ robot.execute(bur6); bur6.executeForm(robot); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 7. cant exec because exec grade
+	std::cout << "7. cant exec because exec grade :" << std::endl;
+	try 							{ pres.execute(bur48); bur48.executeForm(pres); }
+	catch(const std::exception& e)	{ std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 8. signing remaining forms
+	std::cout << "8. signing remaining forms :" << std::endl;
+	try
+	{
+		shrub.beSigned(bur138); bur138.signForm(shrub);
+		robot.beSigned(bur48); bur48.signForm(robot);
+	}
+	catch(const std::exception& e)	{std::cerr << e.what() << std::endl; }
+	print_sep2();
+
+	// 9. exec presidential form
+	std::cout << "9. exec presidential form" << std::endl;
+	pres.execute(bur1); bur1.executeForm(pres);
+	print_sep2();
+
+	// 10. exec shrubbery form
+	std::cout << "10. exec shrubbery form (no output, please check *_shrubbery files)" << std::endl;
+	shrub.execute(bur48); bur48.executeForm(shrub);
+	print_sep2();
+
+	// 11. exec several times robotomy (should be 50/50)
+	std::cout << "11. exec several times robotomy (should be 50/50)" << std::endl;
+	robot.execute(bur1); bur1.executeForm(robot); print_sep();
+	robot.execute(bur1); bur1.executeForm(robot); print_sep();
+	robot.execute(bur1); bur1.executeForm(robot); print_sep();
+	robot.execute(bur1); bur1.executeForm(robot); print_sep();
+	robot.execute(bur6); bur6.executeForm(robot); print_sep();
+	robot.execute(bur6); bur6.executeForm(robot); print_sep();
+	robot.execute(bur6); bur6.executeForm(robot); print_sep();
+	robot.execute(bur6); bur6.executeForm(robot); print_sep();
+ 	print_sep2();
 
 }

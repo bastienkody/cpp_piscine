@@ -64,11 +64,16 @@ const char* AForm::GradeTooLowException::what() const throw()
 const char* AForm::UnsignedFormException::what() const throw()
 {return("UnsignedFormException");}
 
+const char* AForm::AlreadySignedFormException::what() const throw()
+{return("AlreadySignedFormException");}
+
 //	beSigned
 void	AForm::beSigned(Bureaucrat bur)
 {
 	if (bur.getGrade() > this->getSignGrade())
 		throw GradeTooLowException();
+	if (_isSigned == true)
+		throw AlreadySignedFormException(); 
 	_isSigned = true;
 }
 
@@ -79,11 +84,11 @@ void	AForm::execute(Bureaucrat const & executor) const
 		throw UnsignedFormException();
 	if (executor.getGrade() > _execGrade)
 		throw GradeTooLowException();
-	executeForReal(executor);
+	executeForReal();
 }
 
 //	execute for real (to be overidden by child classes)
-void	AForm::executeForReal(Bureaucrat const & executor) const
+void	AForm::executeForReal() const
 {
 
 }

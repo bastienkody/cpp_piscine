@@ -3,7 +3,7 @@
 
 #include<iostream>
 #include<string>
-#include "Bureaucrat.hpp"
+#include "../Bureaucrat.hpp"
 
 /*
 	Attributes grades only exist on the parent class AForm as private
@@ -28,7 +28,7 @@ class PresidentialPardonForm : public AForm
 
 		std::string getTarget() const;
 
-		virtual void executeForReal(Bureaucrat const & executor) const;
+		virtual void executeForReal() const;
 
 	private:
 		PresidentialPardonForm();

@@ -25,6 +25,11 @@ class AForm
 			public:
 				virtual const char* what() const throw();
 		};
+		class AlreadySignedFormException : public std::exception
+		{
+			public:
+				virtual const char* what() const throw();
+		};
 
 		AForm();
 		~AForm();
@@ -37,9 +42,9 @@ class AForm
 		virtual int			getExecGrade() const;
 		virtual int			getIsSigned() const;
 
-		virtual void		beSigned(Bureaucrat bur) = 0;
-		virtual void		execute(Bureaucrat const & executor) const = 0;
-		virtual void		executeForReal(Bureaucrat const & executor) const;
+		virtual void		beSigned(Bureaucrat bur);
+		virtual void		execute(Bureaucrat const & executor) const;
+		virtual void		executeForReal() const = 0;
 
 	private:
 		const std::string	_name;

@@ -5,7 +5,11 @@ SRC_DIR 	= 	./
 SUB_DIR		=	sub_form_classes
 vpath %.cpp ${SRCS_DIR} ${SUB_DIR}
 
-SRCS		=	Bureaucrat.cpp AForm.cpp main.cpp
+SRCS		=	Bureaucrat.cpp AForm.cpp main.cpp \
+				RobotomyRequestForm.cpp \
+				PresidentialPardonForm.cpp \
+				ShrubberyCreationForm.cpp
+
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###

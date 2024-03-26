@@ -11,7 +11,7 @@ PresidentialPardonForm::PresidentialPardonForm(const std::string target) : AForm
 { _target = target; }
 
 //	Copy constructor (via copy operator)
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm & src) : AForm(const AForm & src)
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm & src) : AForm(src)
 { *this = src; }
 
 //	Copy operator
@@ -35,7 +35,7 @@ std::ostream & operator<<(std::ostream& os, const PresidentialPardonForm &rhs)
 } 
 
 //	exec for real
-void PresidentialPardonForm::executeForReal(Bureaucrat const & executor) const
+void PresidentialPardonForm::executeForReal() const
 {
 	std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }

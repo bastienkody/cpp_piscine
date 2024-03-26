@@ -11,7 +11,7 @@ RobotomyRequestForm::RobotomyRequestForm(const std::string target) : AForm("Robo
 { _target = target; }
 
 //	Copy constructor (via copy operator)
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm & src) : AForm(const AForm & src)
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm & src) : AForm(src)
 { *this = src; }
 
 //	Copy operator
@@ -35,14 +35,22 @@ std::ostream & operator<<(std::ostream& os, const RobotomyRequestForm &rhs)
 }
 
 //	exec for real
-void RobotomyRequestForm::executeForReal(Bureaucrat const & executor) const
+void RobotomyRequestForm::executeForReal() const
 {
-	std::cout << "... Drrriiil Drrriiil Drrriiil ..." << std::endl;
-	srand(time(NULL));
-	if (rand() % 2)
-		std::cout << this->getTarget() << " has been robotomized";
-	else
-		std::cout << "Robotomy failed for " << this->getTarget();
-	std::cout << std::endl;
+	try
+	{
+		std::cout << "... Drrriiil Drrriiil Drrriiil ..." << std::endl;
+		std::srand(time(NULL));
+		if (std::rand() % 2)
+			std::cout << this->getTarget() << " has been robotomized";
+		else
+			std::cout << "Robotomy failed for " << this->getTarget();
+		std::cout << std::endl;
+	}
+	catch (const std::exception & e)
+	{
+		std::cerr << "Could not perform robotomy on " + _target + " because of " << e.what() << std::endl;
+	}
+
 }
 

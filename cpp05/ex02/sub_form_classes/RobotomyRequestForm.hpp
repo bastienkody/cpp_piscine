@@ -3,8 +3,9 @@
 
 #include<iostream>
 #include<string>
-#include "Bureaucrat.hpp"
-
+#include <cstdlib>
+#include "../Bureaucrat.hpp"
+ 
 /*
 	Attributes grades only exist on the parent class AForm as private
 	They are not inherited here.
@@ -28,7 +29,7 @@ class RobotomyRequestForm : public AForm
 
 		std::string getTarget() const;
 
-		virtual void executeForReal(Bureaucrat const & executor) const;
+		virtual void executeForReal() const;
 	private:
 		RobotomyRequestForm();
 		std::string _target;

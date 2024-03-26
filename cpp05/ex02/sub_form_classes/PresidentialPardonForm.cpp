@@ -1,54 +1,41 @@
 #include"PresidentialPardonForm.hpp"
 
 //	Default constructor
-PresidentialPardonForm::PresidentialPardonForm()
-{
-	_name = "";
-}
+PresidentialPardonForm::PresidentialPardonForm() : AForm() {}
 
 //	Default destructor
-PresidentialPardonForm::~PresidentialPardonForm()
-{
-
-}
+PresidentialPardonForm::~PresidentialPardonForm() {}
 
 //	Param constructor
-PresidentialPardonForm::PresidentialPardonForm(const std::string name)
-{
-	_name = name;
-}
+PresidentialPardonForm::PresidentialPardonForm(const std::string target) : AForm("PresidentialPardonForm", 25, 5)
+{ _target = target; }
 
 //	Copy constructor (via copy operator)
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm & src)
-{
-	*this = src;
-}
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm & src) : AForm(const AForm & src)
+{ *this = src; }
 
 //	Copy operator
 PresidentialPardonForm & PresidentialPardonForm::operator=(const PresidentialPardonForm & rhs)
 {
 	if(this != &rhs)
 	{
-		_name = rhs.getName();
+		_target = rhs._target;
 	}
 	return (*this);
 }
 
-//	Getter on _name
-std::string PresidentialPardonForm::getName() const
-{
-	return (_name);
-}
-
-//	Setter on _name
-void PresidentialPardonForm::setName(std::string name)
-{
-	_name = name;
-}
+//	getter
+std::string PresidentialPardonForm::getTarget() const
+{ return(_target); }
 
 //	os stream << redefinition
 std::ostream & operator<<(std::ostream& os, const PresidentialPardonForm &rhs)
 {
-	return (os << rhs.getName());
+	return (os << rhs.getName() << " has targeted " << rhs.getTarget() << std::endl);
 } 
 
+//	exec for real
+void PresidentialPardonForm::executeForReal(Bureaucrat const & executor) const
+{
+	std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+}

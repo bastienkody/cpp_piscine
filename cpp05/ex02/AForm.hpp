@@ -26,6 +26,7 @@ class AForm
 				virtual const char* what() const throw();
 		};
 
+		AForm();
 		~AForm();
 		AForm(const std::string name, const int signGrade, const int execGrade);
 		AForm(const AForm & src);
@@ -41,7 +42,6 @@ class AForm
 		virtual void		executeForReal(Bureaucrat const & executor) const;
 
 	private:
-		AForm();
 		const std::string	_name;
 		const int			_signGrade;
 		const int			_execGrade;

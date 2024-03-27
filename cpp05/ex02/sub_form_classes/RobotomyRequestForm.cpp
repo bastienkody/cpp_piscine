@@ -40,7 +40,7 @@ void RobotomyRequestForm::executeForReal() const
 	try
 	{
 		std::cout << "... Drrriiil Drrriiil Drrriiil ..." << std::endl;
-		std::srand(time(NULL));
+		std::srand(clock());
 		if (std::rand() % 2)
 			std::cout << this->getTarget() << " has been robotomized";
 		else
@@ -51,6 +51,10 @@ void RobotomyRequestForm::executeForReal() const
 	{
 		std::cerr << "Could not perform robotomy on " + _target + " because of " << e.what() << std::endl;
 	}
-
 }
 
+/*
+	srand(clock()) is here more random than a srand(time(NULL))
+	it uses the inernal ticks (cpu time)
+	if program sleeps a lot it might not be as interesting
+*/

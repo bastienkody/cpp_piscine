@@ -1,11 +1,19 @@
 #ifndef ROBOTOMYREQUESTFORM_HPP
 #define ROBOTOMYREQUESTFORM_HPP
 
+/*
+	Cstdlib for srand() and rand()
+	Note that we use clock() as a seed instead of time(NULL)
+	wich give way more random results
+	clock() is prototyped in <time> or <time.h>
+	which is included by <iostream>
+*/
+
 #include<iostream>
 #include<string>
 #include <cstdlib>
 #include "../Bureaucrat.hpp"
- 
+
 /*
 	Attributes grades only exist on the parent class AForm as private
 	They are not inherited here.

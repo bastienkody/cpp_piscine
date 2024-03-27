@@ -8,9 +8,6 @@ inline void	print_sep2(void) {std::cout << SEP2 << std::endl;}
 inline void	print_bur(const Bureaucrat & bur) {std::cout << bur << std::endl;}
 inline void	print_form(const AForm & form) {std::cout << form << std::endl;}
 
-/*
-
-*/
 
 int	main(void)
 {
@@ -97,5 +94,4 @@ int	main(void)
 	robot.execute(bur6); bur6.executeForm(robot); print_sep();
 	robot.execute(bur6); bur6.executeForm(robot); print_sep();
  	print_sep2();
-
 }

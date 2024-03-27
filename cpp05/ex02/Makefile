@@ -13,7 +13,7 @@ SRCS		=	Bureaucrat.cpp AForm.cpp main.cpp \
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
-NAME		=	Form_ex02	
+NAME		=	Form_ex02
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 

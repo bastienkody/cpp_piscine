@@ -32,7 +32,7 @@ class AForm
 		};
 
 		AForm();
-		~AForm();
+		virtual ~AForm();
 		AForm(const std::string name, const int signGrade, const int execGrade);
 		AForm(const AForm & src);
 		AForm & operator=(const AForm & rhs);

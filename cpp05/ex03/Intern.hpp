@@ -27,7 +27,7 @@ class Intern
 		Intern(const Intern & src);
 		Intern & operator=(const Intern & rhs);
 
-		AForm *makeForm(const std::string & form, const std::string & target) const;
+		AForm *makeForm(std::string form, const std::string & target) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Intern &rhs);

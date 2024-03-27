@@ -4,12 +4,6 @@
 #include "sub_form_classes/RobotomyRequestForm.hpp"
 #include "sub_form_classes/PresidentialPardonForm.hpp"
 
-inline void	print_sep(void) {std::cout << SEP << std::endl;}
-inline void	print_sep2(void) {std::cout << SEP2 << std::endl;}
-inline void	print_bur(const Bureaucrat & bur) {std::cout << bur << std::endl;}
-inline void	print_form(const AForm & form) {std::cout << form << std::endl;}
-
-
 int	main(void)
 {
 	Intern intern = Intern();
@@ -26,6 +20,26 @@ int	main(void)
 	{
 		AForm * form3 = intern.makeForm("euh c koi sa??", "Arthur Dent");
 		std::cout << form3->getName() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	try
+	{
+		AForm * form4 = intern.makeForm("", "Arthur Dent");
+		std::cout << form4->getName() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	try
+	{
+		AForm * form5 = intern.makeForm("robotomyrequest", "");
+		std::cout << form5->getName() << std::endl;
 	}
 	catch(const std::exception& e)
 	{

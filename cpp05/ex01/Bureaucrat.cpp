@@ -18,9 +18,7 @@ Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name)
 
 //	Copy constructor (via copy operator)
 Bureaucrat::Bureaucrat(const Bureaucrat & src) : _name(src._name)
-{
-	*this = src;
-}
+{ *this = src; }
 
 //	Copy operator (IMPOSSIBLE TO ASSIGN _name SINCE IT IS CONST)
 Bureaucrat & Bureaucrat::operator=(const Bureaucrat & rhs)
@@ -73,8 +71,6 @@ void	Bureaucrat::signForm(Form form)
 		std::cout << " signed form " << form.getName() << std::endl;
 	else 
 		std::cout << " could not signed Form " << form.getName() \
-		<< " because of grading : (bur=" << _grade << " vs form= " \
+		<< " because of grading : (bur=" << _grade << " vs form=" \
 		<< form.getSignGrade() << ")" << std::endl;
 }
-
-

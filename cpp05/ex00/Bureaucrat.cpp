@@ -1,14 +1,10 @@
 #include"Bureaucrat.hpp"
 
 //	Default constructor
-Bureaucrat::Bureaucrat()
-{
-}
+Bureaucrat::Bureaucrat() {}
 
 //	Default destructor
-Bureaucrat::~Bureaucrat()
-{
-}
+Bureaucrat::~Bureaucrat() {}
 
 //	Param constructor
 Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name)
@@ -22,16 +18,13 @@ Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name)
 
 //	Copy constructor (via copy operator)
 Bureaucrat::Bureaucrat(const Bureaucrat & src) : _name(src._name)
-{
-	*this = src;
-}
+{ *this = src; }
 
 //	Copy operator (IMPOSSIBLE TO ASSIGN _name SINCE IT IS CONST)
 Bureaucrat & Bureaucrat::operator=(const Bureaucrat & rhs)
 {
 	if(this != &rhs)
 	{
-		//_name = rhs.getName();
 		_grade = rhs.getGrade();
 	}
 	return (*this);
@@ -39,15 +32,11 @@ Bureaucrat & Bureaucrat::operator=(const Bureaucrat & rhs)
 
 //	Getter on _name
 std::string Bureaucrat::getName() const
-{
-	return (_name);
-}
+{ return (_name); }
 
 //	Getter on _grade
 int Bureaucrat::getGrade() const
-{
-	return (_grade);
-}
+{ return (_grade); }
 
 //	os stream << redefinition
 std::ostream & operator<<(std::ostream& os, const Bureaucrat &rhs)
@@ -71,14 +60,9 @@ void Bureaucrat::deCrementGrade()
 	++(this->_grade);
 }
 
-
 /*	Exceptions	*/
 const char* Bureaucrat::GradeTooLowException::what() const throw()
-{
-	return ("Bureaucrat::GradeTooLowException");
-}
+{ return ("Bureaucrat::GradeTooLowException"); }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
-{
-	return ("Bureaucrat::GradeTooHighException");
-}
+{ return ("Bureaucrat::GradeTooHighException"); }

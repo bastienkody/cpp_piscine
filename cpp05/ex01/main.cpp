@@ -66,7 +66,7 @@ void	too_low_to_sign_incr()
 	Form 		form = Form("form", 10, 100);
 	Bureaucrat	bur = Bureaucrat("bur", 12);
 
-	for (int i = 0; i<4; ++i)
+	for (int i = 0; i<3; ++i)
 	{
 		try
 			{ form.beSigned(bur); }

@@ -21,10 +21,10 @@ std::ostream & operator<<(std::ostream& os, const Intern &rhs)
 
 //	exceptions
 const char* Intern::EmptyTargetException::what() const throw()
-{ return ("I wont create a form for an empty target stupid Bureaucrat (EmptyTargetException)"); }
+{ return ("Intern : I wont create a form for an empty target (EmptyTargetException)"); }
 
 const char* Intern::UnrecognizedFormException::what() const throw()
-{ return ("I wont create a unrecognized form stupid Bureaucrat (UnrecognizedFormException)"); }
+{ return ("Intern : I wont create a unrecognized form (UnrecognizedFormException)"); }
 
 
 /*	Create forms
@@ -61,8 +61,7 @@ AForm *Intern::makeForm(std::string form, const std::string & target) const
 		if (form_normalized.compare(okForms[i]) == 0)
 		{
 			std::cout << "Intern creates form " + okForms[i] << std::endl;
-			AForm *form = constructors[i](target);
-			return (form);
+			return (constructors[i](target));
 		}
 	}
 	throw UnrecognizedFormException();

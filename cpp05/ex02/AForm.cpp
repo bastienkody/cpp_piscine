@@ -24,9 +24,7 @@ AForm::AForm(const std::string name, const int signGrade, const int execGrade)
 //	Copy constructor (via copy operator)
 AForm::AForm(const AForm & src) 
 : _name(src._name), _signGrade(src._signGrade), _execGrade(src._execGrade)
-{
-	*this = src;
-}
+{ *this = src; }
 
 //	Copy operator
 AForm & AForm::operator=(const AForm & rhs)
@@ -70,10 +68,10 @@ const char* AForm::AlreadySignedFormException::what() const throw()
 //	beSigned
 void	AForm::beSigned(Bureaucrat bur)
 {
+	if (_isSigned == true)
+		throw AlreadySignedFormException();
 	if (bur.getGrade() > this->getSignGrade())
 		throw GradeTooLowException();
-	if (_isSigned == true)
-		throw AlreadySignedFormException(); 
 	_isSigned = true;
 }
 

@@ -24,9 +24,7 @@ Form::Form(const std::string name, const int signGrade, const int execGrade)
 //	Copy constructor (via copy operator)
 Form::Form(const Form & src) 
 : _name(src._name), _signGrade(src._signGrade), _execGrade(src._execGrade)
-{
-	*this = src;
-}
+{ *this = src; }
 
 //	Copy operator
 Form & Form::operator=(const Form & rhs)

@@ -22,6 +22,7 @@ class Intern
 			public:
 				virtual const char* what() const throw();
 		};
+
 		Intern();
 		~Intern();
 		Intern(const Intern & src);

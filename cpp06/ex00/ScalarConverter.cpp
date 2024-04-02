@@ -1,16 +1,10 @@
 #include"ScalarConverter.hpp"
 
-//	Default constructor
+//	Unusable cons/des - tructors
 ScalarConverter::ScalarConverter() {}
-
-//	Default destructor
 ScalarConverter::~ScalarConverter() {}
-
-//	Copy constructor (via copy operator)
 ScalarConverter::ScalarConverter(const ScalarConverter & src) {*this = src;}
-
-//	Copy operator
-ScalarConverter & ScalarConverter::operator=(const ScalarConverter & rhs) {return (*this);}
+ScalarConverter & ScalarConverter::operator=(__attribute__((unused)) const ScalarConverter & rhs) {return (*this);}
 
 /* Convert (FULL PARSING, c-ish style, unfinished but almost, not tested)
 void ScalarConverter::convertFullParsing(std::string lit)
@@ -70,34 +64,31 @@ bool	ScalarConverter::isStringOnly(std::string str, size_t offset, int(*fct)(int
 */
 
 // Convert (mix sstream and parsing)
-void ScalarConverter::convert(std::string lit)
+DataType ScalarConverter::convert(std::string lit)
 {
-	if (lit.empty())
-		std::cerr << "EMPTY ARG" << std::endl;
-	else if (lit.size() == 1 && !isdigit(lit[0]) && isprint(lit[0])) 
-		std::cout << "CHAR" << std::endl;
-	else if (!lit.compare("-inff") || !lit.compare("+inff"))
-		std::cout << "FLOAT" << std::endl;
+	if (lit.size() == 1 && !isdigit(lit[0]) && isprint(lit[0])) 
+		return CHAR;
+	else if (!lit.compare("-inff") || !lit.compare("+inff")|| !lit.compare("nanf"))
+		return FLOAT;
 	else if (!lit.compare("-inf") || !lit.compare("+inf") || !lit.compare("nan"))
-		std::cout << "DOUBLE" << std::endl;
-	else if (lit.find('.'))
+		return DOUBLE;
+	else if (lit.find('.') != std::string::npos)
 	{
 		if (lit.back() == 'f' && isFloat(lit))
-			std::cout << "FLOAT" << std::endl;
+			return FLOAT;
 		else if (lit.back() != 'f' && isDouble(lit))
-			std::cout << "DOUBLE" << std::endl;
+			return DOUBLE;
 	}
 	else if (isInt(lit))
-		std::cout << "INT" << std::endl;
-	else
-		std::cerr << "BAD ARG" << std::endl;
+		return INT;
+	return INVALID;
 }
 
 // FLOAT : need to remove trailing f for sstream conversion
 bool	ScalarConverter::isFloat(std::string lit)
 {
 	std::string	litTrailingFRemoved;
-	for (int i = 0; i < lit.size() - 1; ++i)
+	for (unsigned long int i = 0; i < lit.size() - 1; ++i)
 		litTrailingFRemoved += lit[i];
 
 	std::stringstream	ss_float(litTrailingFRemoved);
@@ -131,4 +122,19 @@ bool	ScalarConverter::isInt(std::string lit)
 	if (!ss_int.fail() && ss_int.eof())
 		return true;
 	return false;
+}
+
+// print DataType
+void printDataType(DataType dataType)
+{
+	switch (dataType)
+	{
+		case INT:		{ std::cout << "INT"; break; }
+		case CHAR:		{ std::cout << "CHAR"; break; }
+		case FLOAT:		{ std::cout << "FLOAT"; break; }
+		case DOUBLE:	{ std::cout << "DOUBLE"; break; }
+		case INVALID:	{ std::cout << "INVALID"; break; }
+		default:		{ std::cout << "UNKNOWN"; break; }
+	}
+	std::cout << std::endl;
 }

@@ -17,12 +17,13 @@
 
 /*	CHOICES
 	- a single digit is reco as an int, not a char (ie: "1" == (int)1 not (int)49)
-	- except single space (=char), spaces are forbidden
-	- a leading single '-' is accepted
-	- no '+' sign, except is only 1 char ('+' == char)
+		this can easily be changed is the parsing (lit.size==1 && isprint(lit[0]))
+	- spaces not manually handled, might get accepted via sstream flush but probably not
+	- leading '-' or '+' are handled via sstream conv ('-' ok, '+' nsp)
+
 */
 
-/*	TYPE RECOGNITION for convert(string lit) strategy :
+/*	TYPE RECOGNITION algo for a PARSING METHOD :
 	- if lit.size() == 0 : BAD ARG
 	- if lit.size() == 1
 		- if isdigit : INT
@@ -42,19 +43,26 @@
 				- else if (isdigit(lit.end())) : DOUBLE
 				- else : BAD ARG
 		- else : BAD ARG
-
-
 */
+
+enum DataType {
+	INT,
+	CHAR,
+	FLOAT,
+	DOUBLE,
+	INVALID,
+};
+void printDataType(DataType dataType);
 
 class ScalarConverter
 {
 	public:
 		//static void convertFullParsing(std::string lit);
-		static void convert(std::string lit);
+		static DataType convert(std::string lit);
 	private:
 		ScalarConverter();
 		~ScalarConverter();
-		ScalarConverter(const ScalarConverter & src);
+		ScalarConverter(__attribute__((unused)) const ScalarConverter & src);
 		ScalarConverter & operator=(const ScalarConverter & rhs);
 
 		//static bool	isStringOnly(std::string str, size_t offset, int(*fct)(int));

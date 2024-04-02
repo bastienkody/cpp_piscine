@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<string>
+#include <sstream>
 
 
 /*
@@ -48,6 +49,7 @@
 class ScalarConverter
 {
 	public:
+		//static void convertFullParsing(std::string lit);
 		static void convert(std::string lit);
 	private:
 		ScalarConverter();
@@ -55,7 +57,11 @@ class ScalarConverter
 		ScalarConverter(const ScalarConverter & src);
 		ScalarConverter & operator=(const ScalarConverter & rhs);
 
-		static bool	isStringOnly(std::string str, size_t offset, int(*fct)(int));
+		//static bool	isStringOnly(std::string str, size_t offset, int(*fct)(int));
+		
+		static bool	isFloat(std::string lit);
+		static bool	isDouble(std::string lit);
+		static bool	isInt(std::string lit);
 };
 
 #endif

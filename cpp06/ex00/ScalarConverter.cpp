@@ -12,8 +12,8 @@ ScalarConverter::ScalarConverter(const ScalarConverter & src) {*this = src;}
 //	Copy operator
 ScalarConverter & ScalarConverter::operator=(const ScalarConverter & rhs) {return (*this);}
 
-// Convert
-void ScalarConverter::convert(std::string lit)
+/* Convert (FULL PARSING, c-ish style, unfinished but almost, not tested)
+void ScalarConverter::convertFullParsing(std::string lit)
 {
 	if (lit.empty())
 		std::cerr << "EMPTY ARG" << std::endl;
@@ -66,4 +66,69 @@ bool	ScalarConverter::isStringOnly(std::string str, size_t offset, int(*fct)(int
 		if (!fct(*it))
 			return false;
 	return true;
+}
+*/
+
+// Convert (mix sstream and parsing)
+void ScalarConverter::convert(std::string lit)
+{
+	if (lit.empty())
+		std::cerr << "EMPTY ARG" << std::endl;
+	else if (lit.size() == 1 && !isdigit(lit[0]) && isprint(lit[0])) 
+		std::cout << "CHAR" << std::endl;
+	else if (!lit.compare("-inff") || !lit.compare("+inff"))
+		std::cout << "FLOAT" << std::endl;
+	else if (!lit.compare("-inf") || !lit.compare("+inf") || !lit.compare("nan"))
+		std::cout << "DOUBLE" << std::endl;
+	else if (lit.find('.'))
+	{
+		if (lit.back() == 'f' && isFloat(lit))
+			std::cout << "FLOAT" << std::endl;
+		else if (lit.back() != 'f' && isDouble(lit))
+			std::cout << "DOUBLE" << std::endl;
+	}
+	else if (isInt(lit))
+		std::cout << "INT" << std::endl;
+	else
+		std::cerr << "BAD ARG" << std::endl;
+}
+
+// FLOAT : need to remove trailing f for sstream conversion
+bool	ScalarConverter::isFloat(std::string lit)
+{
+	std::string	litTrailingFRemoved;
+	for (int i = 0; i < lit.size() - 1; ++i)
+		litTrailingFRemoved += lit[i];
+
+	std::stringstream	ss_float(litTrailingFRemoved);
+	float				f;
+
+	ss_float >> f;
+	if (!ss_float.fail() && ss_float.eof())
+		return true;
+	return false;
+}
+
+// DOUBLE : overflows handled (giga big), but not loose of precision ...
+bool	ScalarConverter::isDouble(std::string lit)
+{
+	std::stringstream	ss_double(lit);
+	double				d;
+
+	ss_double >> d;
+	if (!ss_double.fail() && ss_double.eof())
+		return true;
+	return false;
+}
+
+// INT : overflows handled
+bool	ScalarConverter::isInt(std::string lit)
+{
+	std::stringstream	ss_int(lit);
+	int					i;
+
+	ss_int >> i;
+	if (!ss_int.fail() && ss_int.eof())
+		return true;
+	return false;
 }

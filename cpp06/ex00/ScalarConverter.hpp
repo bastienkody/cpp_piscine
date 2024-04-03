@@ -2,7 +2,9 @@
 #define SCALARCONVERTER_HPP
 
 #include<iostream>
+#include<iomanip>
 #include<string>
+#include<limits>
 #include <sstream>
 
 
@@ -45,7 +47,10 @@
 		- else : BAD ARG
 */
 
-enum DataType {
+#define BAD_TYPE "Input type is not recognized"
+
+enum DataType
+{
 	INT,
 	CHAR,
 	FLOAT,
@@ -54,22 +59,38 @@ enum DataType {
 };
 void printDataType(DataType dataType);
 
+struct number
+{
+	std::string	literal;
+	DataType	l_type;
+	char		l_char;
+	int			l_int;
+	float		l_float;
+	double		l_double;
+};
+
 class ScalarConverter
 {
 	public:
-		//static void convertFullParsing(std::string lit);
-		static DataType convert(std::string lit);
+		
+		static void		convert(std::string lit);
 	private:
 		ScalarConverter();
 		~ScalarConverter();
 		ScalarConverter(__attribute__((unused)) const ScalarConverter & src);
 		ScalarConverter & operator=(const ScalarConverter & rhs);
 
-		//static bool	isStringOnly(std::string str, size_t offset, int(*fct)(int));
-		
-		static bool	isFloat(std::string lit);
-		static bool	isDouble(std::string lit);
-		static bool	isInt(std::string lit);
+		//	check for input type recog
+		static DataType findDataType(std::string lit);
+		static bool		isFloat(std::string lit);
+		static bool		isDouble(std::string lit);
+		static bool		isInt(std::string lit);
+
+		//	prints converted input if possible, else err msg
+		static void		toFloat(number val);
+		static void		toDouble(number val);
+		static void		toInt(number val);
+		static void		toChar(number val);
 };
 
 #endif

@@ -1,23 +1,18 @@
 ##		SOURCE FILES	###
-HEADERS		=	ScalarConverter.hpp
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS		=	ScalarConverter.cpp \
-				ScalarConverterUtils.cpp \
-				ScalarConverterPrintBits.cpp \
-				main.cpp
-				
+SRCS		=	main.cpp
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
-NAME		=	scalar
+NAME		=	strings
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 ###		RULES		###
-$(BUILD_DIR)/%.o: %.cpp ${HEADERS}
+$(BUILD_DIR)/%.o: %.cpp
 			@mkdir -p $(dir $@)
 			@echo "\033[32m\c"
 			${CXX} ${CXXFLAGS} -c $< -o $@

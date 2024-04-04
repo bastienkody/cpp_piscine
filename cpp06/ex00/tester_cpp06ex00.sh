@@ -12,7 +12,7 @@ RED="\033[31m"
 YEL="\033[33m"
 END="\033[m"
 BLU_BG="\033[44m"
-YEL_BG="\033[43;1m"
+YEL_BG="\033[1m"
 RED_BG="\033[41;1m"
 
 # exec name

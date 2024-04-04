@@ -7,26 +7,34 @@
 		--> str "2147483647.f" -> float 2147483648 -> int -2147483648
 */
 
-void	ScalarConverter::printFloatBits(__attribute__((unused)) number val) 
+void	ScalarConverter::printFloatBits(__attribute__((unused)) const float & f) 
 {
-	size_t	len = sizeof(float);
-	std::cout << len << std::endl;
+	//size_t	len = sizeof(f) * 8;
+
 }
 
-void	ScalarConverter::printDoubleBits(__attribute__((unused)) number val)
+void	ScalarConverter::printDoubleBits(__attribute__((unused)) const double & d)
 {
-	size_t	len = sizeof(double);
-	std::cout << len << std::endl;
+	//size_t	len = sizeof(d) * 8;
+
 }
 
-void	ScalarConverter::printIntBits(__attribute__((unused)) number val)
+void	ScalarConverter::printIntBits(__attribute__((unused)) const int & i)
 {
-	size_t	len = sizeof(int);
-	std::cout << len << std::endl;
+	//size_t	len = sizeof(i) * 8;
+
 }
 
-void	ScalarConverter::printCharBits(__attribute__((unused)) number val)
+void	ScalarConverter::printCharBits(__attribute__((unused))const char & c)
 {
-	size_t	len = sizeof(char);
-	std::cout << len << std::endl;
+	size_t	len = sizeof(c) * 8;
+
+	std::cout << "char: " << static_cast<int>(c) << ":\t";
+	for (int i = static_cast<int>(len) - 1; i >= 0; --i)
+	{
+		std::cout << ((c >> i) & 1);
+		if (i == static_cast<int>(len) - 1)
+			std::cout << '.';
+	}
+	std::cout << std::endl;
 }

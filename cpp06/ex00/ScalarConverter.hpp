@@ -52,10 +52,18 @@ class ScalarConverter
 {
 	public:
 	
+		//	main class function
 		static void		convert(std::string lit);
+
+		//	bits representation
+		static void		printFloatBits(__attribute__((unused)) const float & f);
+		static void		printDoubleBits(__attribute__((unused)) const double & d);
+		static void		printIntBits(__attribute__((unused)) const int & i);
+		static void		printCharBits(__attribute__((unused)) const char & c);
 
 	private:
 
+		//	contructors unusable
 		ScalarConverter();
 		~ScalarConverter();
 		ScalarConverter(__attribute__((unused)) const ScalarConverter & src);
@@ -73,11 +81,7 @@ class ScalarConverter
 		static void		IntTo(number val);
 		static void		CharTo(number val);
 
-		//	prints bits representation
-		static void		printFloatBits(__attribute__((unused)) number val);
-		static void		printDoubleBits(__attribute__((unused)) number val);
-		static void		printIntBits(__attribute__((unused)) number val);
-		static void		printCharBits(__attribute__((unused)) number val);
+
 };
 
 #endif

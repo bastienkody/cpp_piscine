@@ -3,6 +3,7 @@
 // def
 Character::Character()
 {
+	std::cout << "const par copie" << std::endl;
 	for (int i = 0; i < MAX_SLOTS; ++i)
 		_inventory[i] = NULL;
 }
@@ -26,8 +27,14 @@ Character::Character(const std::string name) : _name(name)
 Character::Character(const Character &src)
 {
 	_name = src._name;
+
 	for (int i = 0; i < MAX_SLOTS; ++i)
-		_inventory[i] = src._inventory[i]->clone();	// clone them
+	{
+		if (src._inventory[i] == NULL)
+			_inventory[i] = NULL;
+		else
+			_inventory[i] = src._inventory[i]->clone();	// clone them
+	}
 }
 
 // copy operator (deep on slots)
@@ -38,7 +45,12 @@ Character & Character::operator=(const Character &rhs)
 		if (_inventory[i])
 			delete _inventory[i];				// free own inventory
 	for (int i = 0; i < MAX_SLOTS; ++i)
-		_inventory[i] = rhs._inventory[i]->clone();	// clone them
+	{
+		if (rhs._inventory[i] == NULL)
+			_inventory[i] = NULL;
+		else
+			_inventory[i] = rhs._inventory[i]->clone();	// clone them
+	}
 	return (*this);
 }
 

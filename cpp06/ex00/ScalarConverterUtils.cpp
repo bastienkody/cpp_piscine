@@ -1,9 +1,6 @@
 #include"ScalarConverter.hpp"
 
-/*
-	DATATYPE FUNCTIONS
-*/
-
+/*	DATATYPE FUNCTIONS	*/
 DataType ScalarConverter::findDataType(std::string lit)
 {
 	if (lit.size() == 1 && !isdigit(lit[0]) && isprint(lit[0])) 
@@ -36,8 +33,9 @@ void printDataType(DataType dataType)
 	}
 }
 
+
 /*
-	BOOL TYPECHECK FUNCTIONS
+	BOOL TYPECHECK FUNCTION	
 	use of stringstream handles overflows
 */
 

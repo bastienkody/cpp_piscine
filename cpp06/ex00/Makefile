@@ -6,7 +6,7 @@ vpath %.cpp ${SRCS_NAME}
 
 SRCS		=	ScalarConverter.cpp \
 				ScalarConverterUtils.cpp \
-				ScalarConverterPrintBits.cpp \
+				ScalarConverterBits.cpp \
 				main.cpp
 				
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}

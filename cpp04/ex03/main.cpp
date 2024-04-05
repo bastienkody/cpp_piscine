@@ -94,7 +94,7 @@ int	main(void)
 	scadirac->equip(new Ice());
 	scadirac->equip(new Ice());
 	scadirac->equip(new Cure());
-	scadirac->equip(new Cure());
+	//scadirac->equip(new Cure());
 
 	*vigier = *scadirac;
 
@@ -105,6 +105,8 @@ int	main(void)
 	std::cout << "-----------------------------" << std::endl;
 
 	Character	*bocal= new Character(*scadirac);
+	Character	bocal2(*scadirac);
+
 	delete scadirac; // deleting scadirac let us test deep copy operator of Materia by vigier, and also via copy constructor for bocal
 
 	vigier->use(0, *niel);

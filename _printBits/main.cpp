@@ -2,12 +2,15 @@
 #include <string>
 #include <limits>
 
-//	prototypes
+//	printBits prototypes
 void	printFloatBits(__attribute__((unused)) const float & f);
 void	printFloatBits2(__attribute__((unused)) const float & f);
 void	printDoubleBits(__attribute__((unused)) const double & d);
 void	printIntBits(__attribute__((unused)) const int & i);
 void	printCharBits(__attribute__((unused)) const char & c);
+
+//	precision test prototypes
+bool	intFloatPreciseEnough(int nb);
 
 //	zero - max - min
 void	zeroMaxMin(void)
@@ -24,11 +27,17 @@ void	zeroMaxMin(void)
 	printFloatBits(std::numeric_limits<float>::min());
 	printFloatBits(std::numeric_limits<float>::max());
 	printFloatBits(-std::numeric_limits<float>::max());
+	printFloatBits(std::numeric_limits<float>::quiet_NaN());
+	printFloatBits(std::numeric_limits<float>::infinity());
+	printFloatBits(-std::numeric_limits<float>::infinity());
 
 	printDoubleBits(0);
 	printDoubleBits(std::numeric_limits<double>::min());
 	printDoubleBits(std::numeric_limits<double>::max());
 	printDoubleBits(-std::numeric_limits<double>::max());
+	printDoubleBits(std::numeric_limits<double>::quiet_NaN());
+	printDoubleBits(std::numeric_limits<double>::infinity());
+	printDoubleBits(-std::numeric_limits<double>::infinity());
 }
 
 //	amplitudes
@@ -78,7 +87,14 @@ int	main(void)
 {
 	if (false)	charAmplitude();
 	if (false)	intAmplitude();
-	if (false) floatAmplitude();
+	if (false)	floatAmplitude();
 
-	if (true)	zeroMaxMin();
+	if (false)	zeroMaxMin();
+
+	if (true)
+	{
+		int	tab[] = {8388608, 16777216, 16777217, 16777218, 2147483647};
+		for (int i = 0; i < 5; ++i)
+			 intFloatPreciseEnough(tab[i]);
+	}
 }

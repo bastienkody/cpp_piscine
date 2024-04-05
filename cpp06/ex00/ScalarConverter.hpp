@@ -5,6 +5,8 @@
 #include<iomanip>
 #include<string>
 #include<limits>
+#include<cstdlib>
+#include<cmath>
 #include <sstream>
 
 
@@ -60,6 +62,9 @@ class ScalarConverter
 		static void		printDoubleBits(__attribute__((unused)) const double & d);
 		static void		printIntBits(__attribute__((unused)) const int & i);
 		static void		printCharBits(__attribute__((unused)) const char & c);
+
+		//	floating precision
+		static bool		intFloatPreciseEnough(int nb);
 
 	private:
 

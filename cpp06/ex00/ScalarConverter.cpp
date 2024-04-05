@@ -27,6 +27,7 @@ void ScalarConverter::convert(std::string lit)
 /*
 	float -> char	: checks limits
 	float -> int 	: checks limits + precision (ko if possible loss) TO BE CHANGED
+		- added sstream conv to val.int to send that int to intFloatPrecision
 	float -> float	: ras same type
 	float -> double	: ras promotion
 	str   -> float	: possible loss of precision unchecked !!
@@ -37,8 +38,10 @@ void	ScalarConverter::FloatTo(number val)
 	if (litClean[litClean.size() - 1] == 'f')
 		litClean.erase(litClean.end() - 1);
 
-	std::stringstream	ss_float(litClean);
+	std::stringstream	ss_int(litClean);
+	ss_int >> val.l_int; // for intFloatPrecision()
 
+	std::stringstream	ss_float(litClean);
 	if (!val.literal.compare("-inff"))
 		val.l_float = -std::numeric_limits<float>::infinity();
 	else if (!val.literal.compare("+inff"))
@@ -60,9 +63,10 @@ void	ScalarConverter::FloatTo(number val)
 	//int
 	if (val.l_float >= static_cast<float>(std::numeric_limits<signed int>::min()) && val.l_float <= static_cast<float>(std::numeric_limits<signed int>::max()))
 	{
-		std::cout << "int:\t" << static_cast<int>(val.l_float);
-		if (val.l_float == static_cast<float>(static_cast<int>(val.l_float)))
-			std::cout << " (possible loose of precision)";
+		if (intFloatPreciseEnough(val.l_int))
+			std::cout << "int:\t" << static_cast<int>(val.l_float);
+		else
+			std::cout << "int:\timpossible (lack of precision)";
 		std::cout << std::endl;
 	}
 	else	

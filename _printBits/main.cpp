@@ -19,6 +19,16 @@ void	zeroMaxMin(void)
 	printIntBits(0);
 	printIntBits(std::numeric_limits<signed int>::min());
 	printIntBits(std::numeric_limits<signed int>::max());
+
+	printFloatBits(0);
+	printFloatBits(std::numeric_limits<float>::min());
+	printFloatBits(std::numeric_limits<float>::max());
+	printFloatBits(-std::numeric_limits<float>::max());
+
+	printDoubleBits(0);
+	printDoubleBits(std::numeric_limits<double>::min());
+	printDoubleBits(std::numeric_limits<double>::max());
+	printDoubleBits(-std::numeric_limits<double>::max());
 }
 
 //	amplitudes
@@ -54,11 +64,21 @@ void	intAmplitude(void)
 		printIntBits(i);
 }
 
+void	floatAmplitude(void)
+{
+	float	f = 1;
+	while (f < std::numeric_limits<float>::max())
+	{
+		printFloatBits(f);
+		f *= 2;
+	}
+}
+
 int	main(void)
 {
-	//if (false)	charAmplitude();
-	//if (true)	intAmplitude();
-	//if (false)	zeroMaxMin();
-	printFloatBits(3);
-	printFloatBits2(3);
+	if (false)	charAmplitude();
+	if (false)	intAmplitude();
+	if (false) floatAmplitude();
+
+	if (true)	zeroMaxMin();
 }

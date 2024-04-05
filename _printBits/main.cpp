@@ -4,6 +4,7 @@
 
 //	prototypes
 void	printFloatBits(__attribute__((unused)) const float & f);
+void	printFloatBits2(__attribute__((unused)) const float & f);
 void	printDoubleBits(__attribute__((unused)) const double & d);
 void	printIntBits(__attribute__((unused)) const int & i);
 void	printCharBits(__attribute__((unused)) const char & c);
@@ -53,10 +54,11 @@ void	intAmplitude(void)
 		printIntBits(i);
 }
 
-
 int	main(void)
 {
-	if (false)	charAmplitude();
-	if (true)	intAmplitude();
-	if (false)	zeroMaxMin();
+	//if (false)	charAmplitude();
+	//if (true)	intAmplitude();
+	//if (false)	zeroMaxMin();
+	printFloatBits(3);
+	printFloatBits2(3);
 }

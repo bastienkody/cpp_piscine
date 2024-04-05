@@ -3,11 +3,35 @@
 #include<string>
 #include<limits>
 
-void	printFloatBits(__attribute__((unused)) float f) 
+void	printFloatBits(__attribute__((unused)) const float & f)
 {
-	// needs to be casted before accessing bits
+	size_t				len = sizeof(f) * 8;
+	const unsigned char	*raw = reinterpret_cast<const unsigned char *>(&f);
 
+	std::cout << "float: " << std::left << std::setw(5) << f << ":\t";
+	for (int i = static_cast<int>(len) - 1; i >= 0; --i)
+	{
+		std::cout << (((raw[i / 8]) >> (i % 8)) & 1);
+		if (i == static_cast<int>(len) -1 || i == static_cast<int>(len) -1 - 8)
+			std::cout << '.';
+	}
+	std::cout << std::endl;
 }
+
+void	printFloatBits2(__attribute__((unused)) const float & f)
+{
+	size_t				len = sizeof(f) * 8;
+
+	std::cout << "float2: " << std::left << std::setw(5) << f << ":\t";
+	for (int i = static_cast<int>(len) - 1; i >= 0; --i)
+	{
+		std::cout << (((reinterpret_cast<const unsigned int *>(&f)[0]) >> i) & 1);
+		if (i == static_cast<int>(len) -1 || i == static_cast<int>(len) - 1 - 8)
+			std::cout << '.';
+	}
+	std::cout << std::endl;
+}
+
 
 void	printDoubleBits(__attribute__((unused)) const double & d)
 {
@@ -19,7 +43,7 @@ void	printIntBits(__attribute__((unused)) const int & i)
 {
 	size_t	len = sizeof(i) * 8;
 
-	std::cout << "int: " << std::left << std::setw(15) << static_cast<int>(i) << ":\t";
+	std::cout << "int: " << std::left << std::setw(15) << i << ":\t";
 	for (int j = static_cast<int>(len) - 1; j >= 0; --j)
 	{
 		std::cout << ((i >> j) & 1);

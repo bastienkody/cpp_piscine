@@ -94,7 +94,7 @@ int	main(void)
 	scadirac->equip(new Ice());
 	scadirac->equip(new Ice());
 	scadirac->equip(new Cure());
-	//scadirac->equip(new Cure());
+	//scadirac->equip(new Cure()); test des copies de character avec un slot a NULL
 
 	*vigier = *scadirac;
 

@@ -23,6 +23,11 @@ Character::Character(const std::string name) : _name(name)
 		_inventory[i] = NULL;
 }
 
+/*	
+	Mod post ehcange zara : pour les copies d'inventory, il faut check les NULL, 
+	car clone() appelle new sur une materia, et celle si est NULL : segfault.
+*/
+
 // copy (deep on slots)
 Character::Character(const Character &src)
 {

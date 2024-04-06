@@ -3,7 +3,11 @@ BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS		=	main.cpp
+SRCS		=	main.cpp \
+				intFloatPrecision.cpp \
+				strFloatPrecision.cpp \
+				strDoublePrecision.cpp 
+				
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###

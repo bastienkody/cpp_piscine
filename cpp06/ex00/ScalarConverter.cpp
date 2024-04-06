@@ -18,8 +18,18 @@ void ScalarConverter::convert(std::string lit)
 	{	
 		case CHAR:		{ CharTo(val); break; }
 		case INT:		{ IntTo(val); break; }
-		case FLOAT:		{ FloatTo(val); break; }
-		case DOUBLE:	{ DoubleTo(val); break; }
+		case FLOAT:		
+		{ 
+			// check float precision
+			FloatTo(val);
+			break; 
+		}
+		case DOUBLE:	
+		{
+			// check double precision
+			DoubleTo(val); 
+			break;
+		}
 		default:		{ std::cerr << BAD_TYPE << std::endl; break ; }
 	}
 }

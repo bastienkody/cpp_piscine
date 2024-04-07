@@ -36,16 +36,13 @@
 	except the one just before the '.')
 		- strNormalizeInteger()
 
-	A SIGNLE EXCEPTION IS STILL PASSING : 
+	A single float exception was still passing (now corrected by sign bit check) : 
 	2147483648.f -> stored as: 2147483648 in float
 	Conv to int: -2147483648 (overflow)
 	Float limits check does not work (i guess it is beause intmax cannot be
 	genuinely stored as float, it sees after cast int max as it 2147483648 wich 
 	directly ovflw to int min if converted?)
 	No limits check pb for int/double -> char
-	I can just check the sign bit for that special case, instead of doing an
-	exception for that specific number. 
-
 */
 
 bool	ScalarConverter::intFloatPreciseEnough(int nb)
@@ -68,6 +65,12 @@ bool	ScalarConverter::intFloatPreciseEnough(int nb)
 	if (r1 == static_cast<double>(u_nb))
 		return true;
 	return false;
+}
+
+bool	ScalarConverter::doubleFloatPreciseEnough(__attribute__((unused))double d)
+{
+	// ouais c plus dur la
+	return true;
 }
 
 std::string	ScalarConverter::strNormalizeInteger(std::string src)

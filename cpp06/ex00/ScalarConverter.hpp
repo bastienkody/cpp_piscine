@@ -85,6 +85,7 @@ class ScalarConverter
 
 		//	floating precision check
 		static bool			intFloatPreciseEnough(int nb);
+		static bool			doubleFloatPreciseEnough(double d);
 		static std::string	strNormalizeFloatings(std::string src, size_t floatings);
 		static std::string	strNormalizeInteger(std::string src);
 		static bool			strFloatPreciseEnough(std::string str);

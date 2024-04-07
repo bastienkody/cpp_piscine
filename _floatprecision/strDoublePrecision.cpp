@@ -3,18 +3,14 @@
 /* 
 	-->  sstream << d met 6 floating (idem float)
 
-	On va rester sur 6 decimaux comme le float. 
-	J'arrive pas à trouver un pattern max ; j'ai des precision pour deverser un
-	sstring dans un double jusqu'a plus de 500 digits apres virgule ...
-	De base le sstream en met 6, peut importe la taille du double
+	On remet autant de décimaux que src avait (size_t floatings)
 */
 
-//	normalize 6 float digits (== sstream >> f). src has no 'f' but a single '.'
-std::string	strNormalizeFloatingsDouble(std::string src)
+std::string	strNormalizeFloatings(std::string src, size_t floatings)
 {
 	std::string	str(src);
 	
-	while (str.size() - str.find('.') - 1 < 6)
+	while (str.size() - str.find('.') - 1 < floatings)
 		str += '0';
 	return (str);
 }
@@ -22,18 +18,18 @@ std::string	strNormalizeFloatingsDouble(std::string src)
 //	can d genuinely store str (loss of precision?)
 bool	strDoublePreciseEnough(std::string str)
 {
+	size_t				floatings = str.size() - str.find('.') - 1;
 	std::stringstream	ss_double(str);
 	double				d;
 	ss_double >> d;
 
 	std::stringstream	ss_re_double;
-	ss_re_double << std::fixed << d;
+	ss_re_double << std::fixed << std::setprecision(floatings) << d;
 
-	//std::cout << "str:\t" << strSixFloatings(str) << std::endl;
 	std::cout << "ssre:\t" << ss_re_double.str() << std::endl;
-	std::cout << "str:\t" << strNormalizeFloatingsDouble(str) << std::endl;
+	std::cout << "str:\t" << strNormalizeFloatings(str, floatings) << std::endl;
 
-	if (ss_re_double.str().compare(strNormalizeFloatingsDouble(str)) == 0)
+	if (ss_re_double.str().compare(strNormalizeFloatings(str, floatings)) == 0)
 		return true;
 	return false;
 }

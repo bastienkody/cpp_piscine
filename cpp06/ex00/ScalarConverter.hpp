@@ -19,16 +19,16 @@
 	d'une instance uniquement -> obj.function()
 */
 
-/*	CHOICES
-	- a single digit is reco as an int, not a char (ie: "1" == (int)1 not (int)49)
-		this can easily be changed is the parsing (lit.size==1 && isprint(lit[0]))
-	- spaces not manually handled, might get accepted via sstream flush but probably not
-	- leading '-' or '+' are handled via sstream conv ('-' ok, '+' nsp)
-
-*/
-
 
 #define BAD_TYPE "Input type is not recognized"
+
+#define _CHAR_MIN std::numeric_limits<signed char>::min()
+#define _CHAR_MAX std::numeric_limits<signed char>::max()
+#define _INT_MIN std::numeric_limits<signed int>::min()
+#define _INT_MAX std::numeric_limits<signed int>::max()
+#define _FLOAT_MIN -std::numeric_limits<float>::max()
+#define _FLOAT_MAX std::numeric_limits<float>::max()
+
 
 enum DataType
 {
@@ -63,30 +63,32 @@ class ScalarConverter
 		static void		printIntBits(__attribute__((unused)) const int & i);
 		static void		printCharBits(__attribute__((unused)) const char & c);
 
-		//	floating precision
-		static bool		intFloatPreciseEnough(int nb);
-
 	private:
 
-		//	contructors unusable
+		//	unusable contructors 
 		ScalarConverter();
 		~ScalarConverter();
 		ScalarConverter(__attribute__((unused)) const ScalarConverter & src);
 		ScalarConverter & operator=(const ScalarConverter & rhs);
 
-		//	check for input type recog
+		//	input type recog
 		static DataType findDataType(std::string lit);
 		static bool		isFloat(std::string lit);
 		static bool		isDouble(std::string lit);
 		static bool		isInt(std::string lit);
 
-		//	prints converted input if possible, else err msg
+		//	prints converted input
 		static void		FloatTo(number val);
 		static void		DoubleTo(number val);
 		static void		IntTo(number val);
 		static void		CharTo(number val);
 
-
+		//	floating precision check
+		static bool			intFloatPreciseEnough(int nb);
+		static std::string	strNormalizeFloatings(std::string src, size_t floatings);
+		static std::string	strNormalizeInteger(std::string src);
+		static bool			strFloatPreciseEnough(std::string str);
+		static bool			strDoublePreciseEnough(std::string str);
 };
 
 #endif

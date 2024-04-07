@@ -13,7 +13,7 @@
 	There are normnalize and denormalized numbers
 	The exponant is bias : it permits to differ from normalized, to store 0,
 	infinity and nan
-
+*/
 
 
 

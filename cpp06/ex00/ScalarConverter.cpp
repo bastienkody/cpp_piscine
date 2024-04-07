@@ -18,40 +18,22 @@ void ScalarConverter::convert(std::string lit)
 	{	
 		case CHAR:		{ CharTo(val); break; }
 		case INT:		{ IntTo(val); break; }
-		case FLOAT:		
-		{ 
-			// check float precision
-			FloatTo(val);
-			break; 
-		}
-		case DOUBLE:	
-		{
-			// check double precision
-			DoubleTo(val); 
-			break;
-		}
+		case FLOAT:		{ FloatTo(val); break; }
+		case DOUBLE:	{ DoubleTo(val); break; }
 		default:		{ std::cerr << BAD_TYPE << std::endl; break ; }
 	}
 }
 
 /*
+	str   -> float	: precision warning
 	float -> char	: checks limits
-	float -> int 	: checks limits + precision (ko if possible loss) TO BE CHANGED
-		- added sstream conv to val.int to send that int to intFloatPrecision
-	float -> float	: ras same type
-	float -> double	: ras promotion
-	str   -> float	: possible loss of precision unchecked !!
+	float -> int 	: checks limits + check sign bit for int_max+1
+	float -> float	: 
+	float -> double	: promotion
 */
 void	ScalarConverter::FloatTo(number val)
 {
-	std::string			litClean(val.literal);
-	if (litClean[litClean.size() - 1] == 'f')
-		litClean.erase(litClean.end() - 1);
-
-	std::stringstream	ss_int(litClean);
-	ss_int >> val.l_int; // for intFloatPrecision()
-
-	std::stringstream	ss_float(litClean);
+	//conv to float
 	if (!val.literal.compare("-inff"))
 		val.l_float = -std::numeric_limits<float>::infinity();
 	else if (!val.literal.compare("+inff"))
@@ -59,45 +41,46 @@ void	ScalarConverter::FloatTo(number val)
 	else if (!val.literal.compare("nanf"))
 		val.l_float = std::numeric_limits<float>::quiet_NaN();
 	else
+	{
+		std::string	litClean(val.literal);
+		if (litClean[litClean.size() - 1] == 'f')
+			litClean.erase(litClean.end() - 1);
+		std::stringstream	ss_float(litClean);
 		ss_float >> val.l_float;
+		if (strFloatPreciseEnough(litClean) == false)
+			std::cout << "Floating precision warning: cannot genuinely store " << val.literal << " as a float" << std::endl;
+	}
 
 	//char
-	if (val.l_float >= static_cast<float>(std::numeric_limits<signed char>::min()) && val.l_float <= static_cast<float>(std::numeric_limits<signed char>::max()))
+	if (val.l_float >= static_cast<float>(_CHAR_MIN) && val.l_float <= static_cast<float>(_CHAR_MAX))
 	{
 		val.l_char = static_cast<char>(val.l_float);
 		if (isprint(val.l_char)) 	std::cout << "char:\t" << val.l_char << std::endl;
-		else 						std::cout << "char:\tnon displayable" << std::endl;
+		else 						std::cout << "char:\tnon displayable\t(int:" << static_cast<int>(val.l_char) << ')' << std::endl;
 	}
 	else
 		std::cout << "char:\timpossible" << std::endl;
 	//int
-	if (val.l_float >= static_cast<float>(std::numeric_limits<signed int>::min()) && val.l_float <= static_cast<float>(std::numeric_limits<signed int>::max()))
-	{
-		if (intFloatPreciseEnough(val.l_int))
-			std::cout << "int:\t" << static_cast<int>(val.l_float);
-		else
-			std::cout << "int:\timpossible (lack of precision)";
-		std::cout << std::endl;
-	}
-	else	
+	if (val.l_float >= static_cast<float>(_INT_MIN) && val.l_float <= static_cast<float>(_INT_MAX) &&
+		((static_cast<int>(val.l_float) >> 31 & 1) == (reinterpret_cast<unsigned int *>(&val.l_float)[0] >> 31 & 1)))
+			std::cout << "int:\t" << static_cast<int>(val.l_float) << std::endl;
+	else
 		std::cout << "int:\timpossible" << std::endl;
-	//float
+	//float - double
 	std::cout << "float:\t" << std::fixed  << val.l_float << 'f' << std::endl;
-	//double
 	std::cout << "double:\t" << std::fixed  << static_cast<double>(val.l_float) << std::endl;
 }
 
 /*
 	double -> char	: checks limits
-	double -> int 	: checks limits + precision (ko if possible loss)
-	double -> float	: checks limits + precision message (need to recheck bc outputs a lot)
-	double -> doubl	: same type
-	str    -> doubl	: possible loss of precision unchecked !!
+	double -> int 	: checks limits + no precision matter until int_max
+	double -> float	: checks limits + precision check TO DO
+	double -> doubl	: 
+	str    -> doubl	: precision checked
 */
 void	ScalarConverter::DoubleTo(number val)
 {
-	std::stringstream	ss_double(val.literal);
-
+	//conv to double
 	if (!val.literal.compare("-inf"))
 		val.l_double = -std::numeric_limits<double>::infinity();
 	else if (!val.literal.compare("+inf"))
@@ -105,19 +88,24 @@ void	ScalarConverter::DoubleTo(number val)
 	else if (!val.literal.compare("nan"))
 		val.l_double = std::numeric_limits<double>::quiet_NaN();
 	else
+	{
+		std::stringstream	ss_double(val.literal);
 		ss_double >> val.l_double;
+		if (strDoublePreciseEnough(val.literal) == false)
+			std::cout << "Floating precision warning: cannot genuinely store " << val.literal << " as a double" << std::endl;
+	}
 
 	//char
-	if (val.l_double >= static_cast<double>(std::numeric_limits<signed char>::min()) && val.l_double <= static_cast<double>(std::numeric_limits<signed char>::max()))
+	if (val.l_double >= static_cast<double>(_CHAR_MIN) && val.l_double <= static_cast<double>(_CHAR_MAX))
 	{
 		val.l_char = static_cast<char>(val.l_double);
 		if (isprint(val.l_char))	std::cout << "char:\t" << val.l_char << std::endl;
-		else						std::cout << "char:\tnon displayable" << std::endl;
+		else						std::cout << "char:\tnon displayable\t(int:" << static_cast<int>(val.l_char) << ')' << std::endl;
 	}
 	else
 		std::cout << "char:\timpossible" << std::endl;
 	//int
-	if (val.l_double >= static_cast<double>(std::numeric_limits<signed int>::min()) && val.l_double <= static_cast<double>(std::numeric_limits<signed int>::max()))
+	if (val.l_double >= static_cast<double>(_INT_MIN) && val.l_double <= static_cast<double>(_INT_MAX))
 		std::cout << "int:\t" << static_cast<int>(val.l_double) << std::endl; 
 	else 
 		std::cout << "int:\timpossible" << std::endl;
@@ -126,7 +114,7 @@ void	ScalarConverter::DoubleTo(number val)
 		std::cout << "float:\t" << std::fixed << static_cast<float>(val.l_double) << 'f' << std::endl;
 	else
 	{
-		if (val.l_double >= static_cast<double>(-std::numeric_limits<float>::max()) && val.l_double <= static_cast<double>(std::numeric_limits<float>::max()))
+		if (val.l_double >= static_cast<double>(_FLOAT_MIN) && val.l_double <= static_cast<double>(_FLOAT_MAX))
 			std::cout << "float:\t" << std::fixed << static_cast<float>(val.l_double) << 'f';
 		if (val.l_double != static_cast<double>(static_cast<float>(val.l_double))) 
 			std::cout << " (possible loose of precision)";
@@ -138,10 +126,10 @@ void	ScalarConverter::DoubleTo(number val)
 
 /*
 	int -> char		: checks limits
-	int -> int 		: same type
-	int -> float	: promotion, but precision message !
-	int -> double	: promotion, no lack of precision until int_Max so no msg
-	str -> int		: should be no loss of precision, overflow handled
+	int -> int 		: 
+	int -> float	: promotion, but precision matter for > 2^24 
+	int -> double	: promotion, no lack of precision until int_max 
+	str -> int		: no loss of precision, overflow handled
 */
 void	ScalarConverter::IntTo(number val)
 {
@@ -149,11 +137,11 @@ void	ScalarConverter::IntTo(number val)
 	ss_int >> val.l_int;
 
 	//char
-	if (val.l_int >= static_cast<int>(std::numeric_limits<signed char>::min()) && val.l_int <= static_cast<int>(std::numeric_limits<signed char>::max()))
+	if (val.l_int >= static_cast<int>(_CHAR_MIN) && val.l_int <= static_cast<int>(_CHAR_MAX))
 	{
 		val.l_char = static_cast<char>(val.l_int);
 		if (isprint(val.l_char))	std::cout << "char:\t" << val.l_char << std::endl;
-		else						std::cout << "char:\tnon displayable" << std::endl;
+		else						std::cout << "char:\tnon displayable\t(int:" << static_cast<int>(val.l_char) << ')' << std::endl;
 	}
 	else 
 		std::cout << "char:\timpossible" << std::endl;
@@ -161,8 +149,8 @@ void	ScalarConverter::IntTo(number val)
 	std::cout << "int:\t"<< val.l_int << std::endl;
 	//float
 	std::cout << "float:\t" << std::fixed << std::setprecision(1) << static_cast<float>(val.l_int) << 'f' ;
-	if (val.l_int != static_cast<int>(static_cast<float>(val.l_int)))
-		std::cout << " (possible loose of precision)";
+	if (!intFloatPreciseEnough(val.l_int))
+		std::cout << " (warning: approximative value: floating lack of precision)";
 	std::cout << std::endl;
 	//double
 	std::cout << "double:\t" << std::fixed << std::setprecision(1) << static_cast<double>(val.l_int)<< std::endl;

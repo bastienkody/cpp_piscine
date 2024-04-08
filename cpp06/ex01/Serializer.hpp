@@ -25,6 +25,4 @@ class Serializer
 		Serializer & operator=(__attribute__((unused))const Serializer & rhs);
 };
 
-std::ostream& operator<<(std::ostream& os, const Serializer &rhs);
-
 #endif

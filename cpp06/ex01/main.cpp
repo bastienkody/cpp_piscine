@@ -19,4 +19,6 @@ int	main(void)
 	std::cout << "addr:\t" << Serializer::deserialize(Serializer::serialize(&data))<< std::endl;
 	std::cout << "dptr:\t" << Serializer::deserialize(Serializer::serialize(dptr))->value << std::endl;
 	std::cout << "addr:\t" << Serializer::deserialize(Serializer::serialize(dptr)) << std::endl;
+
+	delete dptr;
 }

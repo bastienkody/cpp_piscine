@@ -7,6 +7,7 @@ int	main(void)
 	Base::identify(ptr);
 	Base::identify(*ptr);
 
+	delete ptr;
 
 //	Error tests
 	Base	*nul	= NULL;
@@ -15,4 +16,6 @@ int	main(void)
 	Base::identify(nul);
 	Base::identify(d);
 	Base::identify(*d);
+
+	delete d;
 }

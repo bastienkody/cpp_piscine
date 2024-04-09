@@ -1,6 +1,9 @@
 #include"ScalarConverter.hpp"
 
-/*	DATATYPE FUNCTIONS	*/
+/*
+	DATATYPE FUNCTIONS
+	with enum DataType
+*/
 DataType ScalarConverter::findDataType(std::string lit)
 {
 	if (lit.size() == 1 && !isdigit(lit[0]) && isprint(lit[0])) 
@@ -55,7 +58,7 @@ bool	ScalarConverter::isFloat(std::string lit)
 	return false;
 }
 
-// DOUBLE : loose of precision possible
+// DOUBLE
 bool	ScalarConverter::isDouble(std::string lit)
 {
 	std::stringstream	ss_double(lit);

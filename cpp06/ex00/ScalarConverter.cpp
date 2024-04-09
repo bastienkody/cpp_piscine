@@ -72,11 +72,11 @@ void	ScalarConverter::FloatTo(number val)
 }
 
 /*
+	str    -> doubl	: precision checked
 	double -> char	: checks limits
 	double -> int 	: checks limits + no precision matter until int_max
-	double -> float	: checks limits + precision check TO DO
+	double -> float	: checks limits + precision check done via strFloatPrecise(val.literal)
 	double -> doubl	: 
-	str    -> doubl	: precision checked
 */
 void	ScalarConverter::DoubleTo(number val)
 {
@@ -109,15 +109,15 @@ void	ScalarConverter::DoubleTo(number val)
 		std::cout << "int:\t" << static_cast<int>(val.l_double) << std::endl; 
 	else 
 		std::cout << "int:\timpossible" << std::endl;
-	//float
+	//float + impossibnle pour ovlfw
 	if (!val.literal.compare("-inf") || !val.literal.compare("+inf") || !val.literal.compare("nan"))
 		std::cout << "float:\t" << std::fixed << static_cast<float>(val.l_double) << 'f' << std::endl;
 	else
 	{
 		if (val.l_double >= static_cast<double>(_FLOAT_MIN) && val.l_double <= static_cast<double>(_FLOAT_MAX))
 			std::cout << "float:\t" << std::fixed << static_cast<float>(val.l_double) << 'f';
-		if (val.l_double != static_cast<double>(static_cast<float>(val.l_double))) 
-			std::cout << " (possible loose of precision)";
+		if (!strFloatPreciseEnough(val.literal))
+			std::cout << " (warning: approximative value: floating lack of precision)";
 		std::cout << std::endl;
 	}	
 	//double
@@ -125,11 +125,11 @@ void	ScalarConverter::DoubleTo(number val)
 }
 
 /*
+	str -> int		: no loss of precision, overflow handled
 	int -> char		: checks limits
 	int -> int 		: 
 	int -> float	: promotion, but precision matter for > 2^24 
 	int -> double	: promotion, no lack of precision until int_max 
-	str -> int		: no loss of precision, overflow handled
 */
 void	ScalarConverter::IntTo(number val)
 {
@@ -157,11 +157,11 @@ void	ScalarConverter::IntTo(number val)
 }
 
 /*
-	char -> char	: same type
+	str -> char		: sstream bugs so using index (size==1 check done before)
+	char -> char	: 
 	char -> int 	: promotion
 	char -> float	: promotion, no lack of precision until char max
 	char -> double	: promotion, no lack of precision until char max
-	str -> char		: sstream bugs so using index (size==1 check done before)
 */
 void	ScalarConverter::CharTo(number val)
 {

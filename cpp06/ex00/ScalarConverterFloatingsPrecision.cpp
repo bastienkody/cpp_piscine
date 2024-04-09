@@ -64,13 +64,8 @@ bool	ScalarConverter::intFloatPreciseEnough(int nb)
 
 	if (r1 == static_cast<double>(u_nb))
 		return true;
+	//std::cout << "under:" << r1 - step << " upper:" << r1 << std::endl;
 	return false;
-}
-
-bool	ScalarConverter::doubleFloatPreciseEnough(__attribute__((unused))double d)
-{
-	// ouais c plus dur la
-	return true;
 }
 
 std::string	ScalarConverter::strNormalizeInteger(std::string src)
@@ -107,12 +102,6 @@ bool	ScalarConverter::strFloatPreciseEnough(std::string str)
 	std::stringstream	ss_re_float;
 	ss_re_float << std::fixed << std::setprecision(floatings)  << f;
 
-/*
-	std::cout << "flotin:\t" <<  floatings << std::endl;
-	std::cout << "str:\t" << strNormalizeFloatings(strNormalizeInteger(str), floatings) << std::endl;
-	std::cout << "ssre:\t" << ss_re_float.str() << std::endl;
-*/
-
 	if (ss_re_float.str().compare(strNormalizeFloatings(strNormalizeInteger(str), floatings)) == 0)
 		return true;
 	return false;
@@ -129,72 +118,7 @@ bool	ScalarConverter::strDoublePreciseEnough(std::string str)
 	std::stringstream	ss_re_double;
 	ss_re_double << std::fixed << std::setprecision(floatings) << d;
 
-/*
-	std::cout << "flotin:\t" <<  floatings << std::endl;
-	std::cout << "ssre:\t" << ss_re_double.str() << std::endl;
-	std::cout << "str:\t" << strNormalizeFloatings(strNormalizeInteger(str), floatings) << std::endl;
-*/
-
 	if (ss_re_double.str().compare(strNormalizeFloatings(strNormalizeInteger(str), floatings)) == 0)
 		return true;
 	return false;
-}
-
-
-void	ScalarConverter::printFloatBits(__attribute__((unused)) const float & f) 
-{
-	size_t				len = sizeof(f) * 8;
-	const unsigned char	*raw = reinterpret_cast<const unsigned char *>(&f);
-
-	std::cout << "float: " << std::fixed << std::left << std::setw(15) << f << ":\t";
-	for (int i = static_cast<int>(len) - 1; i >= 0; --i)
-	{
-		std::cout << (((raw[i / 8]) >> (i % 8)) & 1);
-		if (i == static_cast<int>(len) -1 || i == static_cast<int>(len) -1 - 8)
-			std::cout << '.';
-	}
-	std::cout << std::endl;
-}
-
-void	ScalarConverter::printDoubleBits(__attribute__((unused)) const double & d)
-{
-	size_t				len = sizeof(d) * 8;
-	const unsigned char	*raw = reinterpret_cast<const unsigned char *>(&d);
-
-	std::cout << "double: " << std::fixed << std::left << std::setw(30) << d << ":\t";
-	for (int i = static_cast<int>(len) - 1; i >= 0; --i)
-	{
-		std::cout << (((raw[i / 8]) >> (i % 8)) & 1);
-		if (i == static_cast<int>(len) -1 || i == static_cast<int>(len) -1 - 11)
-			std::cout << '.';
-	}
-	std::cout << std::endl;
-}
-
-void	ScalarConverter::printIntBits(__attribute__((unused)) const int & i)
-{
-	size_t	len = sizeof(i) * 8;
-
-	std::cout << "int: " << std::left << std::setw(13) << i << ":\t";
-	for (int j = static_cast<int>(len) - 1; j >= 0; --j)
-	{
-		std::cout << ((i >> j) & 1);
-		if (j == static_cast<int>(len) - 1)
-			std::cout << '.';
-	}
-	std::cout << std::endl;
-}
-
-void	ScalarConverter::printCharBits(__attribute__((unused))const char & c)
-{
-	size_t	len = sizeof(c) * 8;
-
-	std::cout << "char: " << std::left << std::setw(5) << static_cast<int>(c) << ":\t";
-	for (int i = static_cast<int>(len) - 1; i >= 0; --i)
-	{
-		std::cout << ((c >> i) & 1);
-		if (i == static_cast<int>(len) - 1)
-			std::cout << '.';
-	}
-	std::cout << std::endl;
 }

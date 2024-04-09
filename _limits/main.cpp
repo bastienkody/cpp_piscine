@@ -50,7 +50,7 @@ void	float_precision_test_INTMAX()
 	float f = 10000000;
 
 	std::cout<< "FLOAT" << std::endl;
-	while (++f < 2147483647)
+	while (++f < 2147483648)
 		std::cout << std::fixed << f - 1 << std::endl;
 }
 

@@ -11,6 +11,8 @@ void ScalarConverter::convert(std::string lit)
 {
 	number	val;
 
+	if (lit.size() > 1 && (lit.find('e') != std::string::npos || lit.find('E') != std::string::npos))
+		{std::cout << NO_SCIENTIFIC << std::endl; return; }
 	val.literal = lit;
 	val.l_type = findDataType(lit);
 	printDataType(val.l_type);
@@ -48,7 +50,7 @@ void	ScalarConverter::FloatTo(number val)
 		std::stringstream	ss_float(litClean);
 		ss_float >> val.l_float;
 		if (strFloatPreciseEnough(litClean) == false)
-			std::cout << "Floating precision warning: cannot genuinely store " << val.literal << " as a float" << std::endl;
+			std::cout << WARN_PRECISION << val.literal << " as a float\033[m" << std::endl;
 	}
 
 	//char
@@ -62,7 +64,7 @@ void	ScalarConverter::FloatTo(number val)
 		std::cout << "char:\timpossible" << std::endl;
 	//int
 	if (val.l_float >= static_cast<float>(_INT_MIN) && val.l_float <= static_cast<float>(_INT_MAX) &&
-		((static_cast<int>(val.l_float) >> 31 & 1) == (reinterpret_cast<unsigned int *>(&val.l_float)[0] >> 31 & 1)))
+		 (static_cast<int>(val.l_float) == 0 || ((static_cast<int>(val.l_float) >> 31 & 1) == (reinterpret_cast<unsigned int *>(&val.l_float)[0] >> 31 & 1)) ) )
 			std::cout << "int:\t" << static_cast<int>(val.l_float) << std::endl;
 	else
 		std::cout << "int:\timpossible" << std::endl;
@@ -92,7 +94,7 @@ void	ScalarConverter::DoubleTo(number val)
 		std::stringstream	ss_double(val.literal);
 		ss_double >> val.l_double;
 		if (strDoublePreciseEnough(val.literal) == false)
-			std::cout << "Floating precision warning: cannot genuinely store " << val.literal << " as a double" << std::endl;
+			std::cout << WARN_PRECISION << val.literal << " as a double\033[m" << std::endl;
 	}
 
 	//char
@@ -115,10 +117,14 @@ void	ScalarConverter::DoubleTo(number val)
 	else
 	{
 		if (val.l_double >= static_cast<double>(_FLOAT_MIN) && val.l_double <= static_cast<double>(_FLOAT_MAX))
+		{
 			std::cout << "float:\t" << std::fixed << static_cast<float>(val.l_double) << 'f';
-		if (!strFloatPreciseEnough(val.literal))
-			std::cout << " (warning: approximative value: floating lack of precision)";
-		std::cout << std::endl;
+			if (!strFloatPreciseEnough(val.literal))
+				std::cout << FLOAT_LACK ;
+			std::cout << std::endl;
+		}
+		else
+			std::cout << "float:\timpossible" << std::endl;
 	}	
 	//double
 	std::cout << "double:\t" << std::fixed  << val.l_double << std::endl;
@@ -150,7 +156,7 @@ void	ScalarConverter::IntTo(number val)
 	//float
 	std::cout << "float:\t" << std::fixed << std::setprecision(1) << static_cast<float>(val.l_int) << 'f' ;
 	if (!intFloatPreciseEnough(val.l_int))
-		std::cout << " (warning: approximative value: floating lack of precision)";
+		std::cout << FLOAT_LACK ;
 	std::cout << std::endl;
 	//double
 	std::cout << "double:\t" << std::fixed << std::setprecision(1) << static_cast<double>(val.l_int)<< std::endl;

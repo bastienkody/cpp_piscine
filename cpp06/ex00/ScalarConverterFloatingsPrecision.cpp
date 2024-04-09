@@ -35,6 +35,7 @@
 	I manually normalize interger part (get rid of leading whitespace and 0, 
 	except the one just before the '.')
 		- strNormalizeInteger()
+		it also need to check if there is a leading sign
 
 	A single float exception was still passing (now corrected by sign bit check) : 
 	2147483648.f -> stored as: 2147483648 in float
@@ -75,8 +76,12 @@ std::string	ScalarConverter::strNormalizeInteger(std::string src)
 
 	while (src[i] == '0' || isspace(src[i]))
 		++i;
+	if (src[i] == '-')
+		str = src[i++];
+	if (src[i] == '+')
+		i++;			// leading '+' is discarded, not leading '-'
 	if (src[i] == '.')
-		str = "0";
+		str += "0";
 	while (i != src.size())
 		str += src[i++];
 	return (str);
@@ -102,6 +107,8 @@ bool	ScalarConverter::strFloatPreciseEnough(std::string str)
 	std::stringstream	ss_re_float;
 	ss_re_float << std::fixed << std::setprecision(floatings)  << f;
 
+	//std::cout << "str normalized:" << strNormalizeFloatings(strNormalizeInteger(str), floatings);
+
 	if (ss_re_float.str().compare(strNormalizeFloatings(strNormalizeInteger(str), floatings)) == 0)
 		return true;
 	return false;
@@ -117,6 +124,8 @@ bool	ScalarConverter::strDoublePreciseEnough(std::string str)
 
 	std::stringstream	ss_re_double;
 	ss_re_double << std::fixed << std::setprecision(floatings) << d;
+
+	//std::cout << "str normalized:" << strNormalizeFloatings(strNormalizeInteger(str), floatings);
 
 	if (ss_re_double.str().compare(strNormalizeFloatings(strNormalizeInteger(str), floatings)) == 0)
 		return true;

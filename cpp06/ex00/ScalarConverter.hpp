@@ -52,6 +52,9 @@
 
 
 #define BAD_TYPE "Input type is not recognized"
+#define NO_SCIENTIFIC "Please use standard decimal number notation (0-9, no scientific)"
+#define WARN_PRECISION "\033[33mFloating precision warning: cannot genuinely store "
+#define FLOAT_LACK " \033[33m(warning: approximative value: floating lack of precision)\033[m"
 
 #define _CHAR_MIN std::numeric_limits<signed char>::min()
 #define _CHAR_MAX std::numeric_limits<signed char>::max()

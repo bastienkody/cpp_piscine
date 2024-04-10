@@ -1,14 +1,14 @@
 ##		SOURCE FILES	###
-HEADERS		=	whatever.hpp Test.hpp
+HEADERS		=	main.hpp
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS		=	main.cpp Test.cpp
+SRCS		=	main.cpp vector.cpp
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
-NAME		=	template00
+NAME		=	stl00
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 

@@ -3,7 +3,6 @@
 // def
 Character::Character()
 {
-	std::cout << "const par copie" << std::endl;
 	for (int i = 0; i < MAX_SLOTS; ++i)
 		_inventory[i] = NULL;
 }

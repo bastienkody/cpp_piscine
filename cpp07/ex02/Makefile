@@ -1,10 +1,10 @@
 ##		SOURCE FILES	###
-HEADERS		=	Array.hpp Array.tpp
+HEADERS		=	Array.hpp Array.tpp Test.hpp
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS		=	main.cpp
+SRCS		=	main.cpp Test.cpp
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###

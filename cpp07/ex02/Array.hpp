@@ -13,6 +13,7 @@ class Array
 		Array(const unsigned int n);
 		Array(const Array & src);
 		Array & operator=(const Array & rhs);
+		T &	operator[](unsigned int index) const;
 
 		class BadIndex: public std::exception
 		{

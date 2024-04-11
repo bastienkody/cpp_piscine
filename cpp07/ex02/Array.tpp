@@ -47,3 +47,19 @@ std::ostream & operator<<(std::ostream& os, const Array<T> &rhs)
 {
 	return (os << rhs.getSize());
 } 
+
+//	operator []
+template<typename T>
+T &	Array<T>::operator[](unsigned int index) const
+{
+	if (index >= _size)
+		throw BadIndex();
+	return (_array[index]);
+}
+
+//	Exception Bad Index
+template<typename T>
+const char* Array<T>::BadIndex::what() const throw()
+{
+	return ("BadIndexEception");
+}

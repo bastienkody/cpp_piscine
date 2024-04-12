@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<string>
+#include<cstdlib>
 
 template<typename T>
 class Array

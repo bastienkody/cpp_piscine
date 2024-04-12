@@ -2,6 +2,7 @@
 #include "Array.tpp"
 #include "Test.hpp"
 
+/*	Custom main	*/
 int	main(void)
 {
 	//	int array
@@ -44,4 +45,67 @@ int	main(void)
 	std::cout << "test[0]:\t" << test[0] << std::endl;
 	std::cout << "test2[0]:\t" << test2[0] << std::endl;
 	std::cout << "test3[0]:\t" << test3[0] << std::endl;
+	std::cout << "-----------------------------------------------" << std::endl;
+
+	try {std::cout << "test[-1]:\t" << test[-1] << std::endl;}
+	catch(const std::exception& e) {std::cerr << e.what() << '\n';}
+	try {std::cout << "test2[-45]:\t" << test2[-45] << std::endl;}
+	catch(const std::exception& e) {std::cerr << e.what() << '\n';}
+	try {std::cout << "test3[34]:\t" << test3[34] << std::endl;}
+	catch(const std::exception& e) {std::cerr << e.what() << '\n';}
 }
+
+
+
+/*	Main sujet
+#define MAX_VAL 750
+int main(int, char**)
+{
+	Array<int> numbers(MAX_VAL);
+	int* mirror = new int[MAX_VAL];
+	srand(time(NULL));
+	for (int i = 0; i < MAX_VAL; i++)
+	{
+		const int value = rand();
+		numbers[i] = value;
+		mirror[i] = value;
+	}
+	//SCOPE
+	{
+		Array<int> tmp = numbers;
+		Array<int> test(tmp);
+	}
+
+	for (int i = 0; i < MAX_VAL; i++)
+	{
+		if (mirror[i] != numbers[i])
+		{
+			std::cerr << "didn't save the same value!!" << std::endl;
+			return 1;
+		}
+	}
+	try
+	{
+		numbers[-2] = 0;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		numbers[MAX_VAL] = 0;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	for (int i = 0; i < MAX_VAL; i++)
+	{
+		numbers[i] = rand();
+	}
+	delete [] mirror;
+	return 0;
+}
+*/

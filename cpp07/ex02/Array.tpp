@@ -20,8 +20,9 @@ Array<T>::Array(const unsigned int nb)	// protected against alloc error
 template <typename T>
 Array<T>::Array(const Array & src)
 {
-	Array(src.size());		// using param construct that protect malloc
-	for (unsigned int i = 0; i < src.size(); ++i)
+	try {_size = src.size(); _array = new T [_size]; }
+	catch (std::exception & e) { std::cout << e.what() << std::endl; }
+	for (unsigned int i = 0; i < _size; ++i)
 		this->_array[i] = src._array[i];
 }
 
@@ -30,9 +31,9 @@ template <typename T>
 Array<T> & Array<T>::operator=(const Array & rhs)
 {
 	delete [] this->_array;
-	try { this->_array = new T [rhs.size()]; }
+	try {_size = rhs.size(); this->_array = new T [_size]; }
 	catch (std::exception & e) { std::cout << e.what() << std::endl; }
-	for (unsigned int i = 0; i < rhs.size(); ++i)
+	for (unsigned int i = 0; i < _size; ++i)
 		this->_array[i] = rhs._array[i];
 	return (*this);
 }

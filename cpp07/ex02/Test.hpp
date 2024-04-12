@@ -13,9 +13,6 @@ class Test
 		Test(const Test & src);
 		Test & operator=(const Test & rhs);
 
-		bool		operator>=(const Test & rhs);
-		bool		operator<=(const Test & rhs);
-
 		void		setNb(const int a);
 		int			getNb() const;
 

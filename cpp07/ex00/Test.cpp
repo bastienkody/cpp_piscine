@@ -10,8 +10,7 @@ Test::~Test() {}
 Test::Test(const int a, const std::string name) : _nb(a), _name(name) {}
 
 //	Copy constructor (via copy operator)
-Test::Test(const Test & src)
-{ *this = src; }
+Test::Test(const Test & src) { *this = src; }
 
 //	Copy operator
 Test & Test::operator=(const Test & rhs)
@@ -25,22 +24,17 @@ Test & Test::operator=(const Test & rhs)
 }
 
 //	Getter on _name
-std::string	Test::getName() const
-{ return (_name); }
+std::string	Test::getName() const { return (_name); }
 
 //	Getter on _nb
-int	Test::getNb() const
-{ return (_nb); }
+int	Test::getNb() const { return (_nb); }
 
 //	Setter on _nb
-void Test::setNb(const int a)
-{ _nb = a; }
+void Test::setNb(const int a) { _nb = a; }
 
 //	os stream << redefinition
 std::ostream & operator<<(std::ostream& os, const Test &rhs)
-{
-	return (os << rhs.getName() << ", with nb:" << rhs.getNb());
-}
+{ return (os << rhs.getName() << ", with nb:" << rhs.getNb());}
 
 /*
 	Equality operators redefinition

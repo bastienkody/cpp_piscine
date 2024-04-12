@@ -28,6 +28,8 @@
 		- double: "." + check err (ie 2..) + check ovflw + warn precision
 		- int: si pas autre type et pas d'overflow
 	leading whitespaces and single sign are accepted. 
+	can't accept scientific notation bc I check the input str vs return of 
+	sstream using std::fixed filter ...
 
 	Pour les check de precision float au type reco:
 		- je clean dans str les potentiels leadings 0
@@ -42,12 +44,6 @@
 		- sauf pour int->float ou j'ai code une fonction logique (bornes/step)
 		- seule exception : le 2147483648.f qui passe dans les limites du int
 		mais qui ovflw vers intmin. Je check le bit de sign du coup. 
-
-
-	-.1f   ecritureb scientiufic
-
-
-
 */
 
 

@@ -12,7 +12,7 @@ void ScalarConverter::convert(std::string lit)
 	number	val;
 
 	if (lit.size() > 1 && (lit.find('e') != std::string::npos || lit.find('E') != std::string::npos))
-		{std::cout << NO_SCIENTIFIC << std::endl; return; }
+		{ std::cout << NO_SCIENTIFIC << std::endl; return; }
 	val.literal = lit;
 	val.l_type = findDataType(lit);
 	printDataType(val.l_type);
@@ -69,8 +69,8 @@ void	ScalarConverter::FloatTo(number val)
 	else
 		std::cout << "int:\timpossible" << std::endl;
 	//float - double
-	std::cout << "float:\t" << std::fixed  << val.l_float << 'f' << std::endl;
-	std::cout << "double:\t" << std::fixed  << static_cast<double>(val.l_float) << std::endl;
+	std::cout << "float:\t" << std::fixed << val.l_float << 'f' << std::endl;
+	std::cout << "double:\t" << std::fixed << static_cast<double>(val.l_float) << std::endl;
 }
 
 /*

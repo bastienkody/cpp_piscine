@@ -9,7 +9,7 @@ int	main(void)
 
 	delete ptr;
 
-//	Error tests
+/*	Error tests
 	Base	*nul	= NULL;
 	Base	*d		= new D(); 
 
@@ -18,4 +18,5 @@ int	main(void)
 	Base::identify(*d);
 
 	delete d;
+*/
 }

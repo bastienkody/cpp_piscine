@@ -18,6 +18,15 @@ Span & Span::operator=(const Span & rhs)
 	return (*this);
 }
 
+//	getter on specific index of _vect
+int		Span::getNumber(const uint i) const
+{
+	if (i > _max)
+		throw BadIndex();
+	return _vect[i];
+}
+
+//	add single number (iterator range is templated in .hpp)
 void	Span::addNumber(const int nb)
 {
 	if (_vect.size() < _max)
@@ -26,12 +35,35 @@ void	Span::addNumber(const int nb)
 		throw NoSpaceLeft();
 }
 
-void	Span::addNumber(std::vector<int>::iterator begin, std::vector<int>::iterator end)
-{
-}
-
 //	exception
 const char* Span::NoSpaceLeft::what() const throw()
 { return ("Storage capacity is full"); }
 const char* Span::NeedAtLeastTwoValues::what() const throw()
 { return ("Cannot perform span with less than two values"); }
+const char* Span::BadIndex::what() const throw()
+{ return ("Bad index"); }
+
+//	array triee, on y stocke les differences, on ret la + petite except la 1ere
+int		Span::shortestSpan() const
+{
+	if (_vect.size() < 2)
+		throw NeedAtLeastTwoValues();
+
+	std::vector<int>	tmp = _vect;
+	std::sort(tmp.begin(), tmp.end());
+	std::adjacent_difference(tmp.begin(), tmp.end(), tmp.begin());
+
+	return *std::min_element(tmp.begin() + 1, tmp.end()) ;
+}
+
+//	array triee : on ret (biggest - smallest)
+int		Span::longestSpan() const
+{
+	if (_vect.size() < 2)
+		throw NeedAtLeastTwoValues();
+
+	std::vector<int>	tmp = _vect;
+	std::sort(tmp.begin(), tmp.end());
+
+	return tmp.back() - tmp.front();
+}

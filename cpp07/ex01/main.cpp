@@ -8,9 +8,11 @@ void	intArr()
 	int		arr[] = {0, 10, 22};
 	size_t	len = sizeof(arr) / sizeof(arr[0]);
 
-	iter<int, void>(arr, len, printEndl);
+	iter<int, void>(arr, len, print); std::cout << std::endl;
 	iter<int, void>(arr, len, incr);
-	iter<int, void>(arr, len, printEndl);
+	iter<int, void>(arr, len, print); std::cout << std::endl;
+	iter<int, int>(arr, len, decr);
+	iter<int, void>(arr, len, print); std::cout << std::endl;
 	printSep();
 }
 
@@ -19,7 +21,7 @@ void	charArr()
 	char	arr[] = {'A', 'c', 'x', 'Z'};
 	size_t	len = sizeof(arr) / sizeof(arr[0]);
 
-	iter<char, void>(arr, len, printEndl);
+	iter<char, void>(arr, len, print); std::cout << std::endl;
 	iter<char, void>(arr, len, isUpper);
 	iter<char, void>(arr, len, incr);
 	iter<char, void>(arr, len, isUpper);

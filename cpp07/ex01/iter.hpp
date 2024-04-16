@@ -10,7 +10,7 @@
 	Applies ptr function sur len first elements of array
 */
 template <typename T, typename F>
-void	iter(T *arr, size_t len, void (*fct)(T&))
+void	iter(T *arr, size_t len, F (*fct)(T&))
 {
 	if (!arr || !fct)
 		return ;
@@ -24,6 +24,12 @@ void	iter(T *arr, size_t len, void (*fct)(T&))
 */
 template <typename T>
 void	incr(T &a) { ++a; }
+
+template <typename T>
+int	decr(T &a) { --a; return 0; }
+
+template <typename T>
+void	print(T &a) { std::cout << a << ' '; }
 
 template <typename T>
 void	printEndl(T &a) { std::cout << a << std::endl; }

@@ -1,6 +1,8 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
+#define SEP "##########################################################"
+
 #include<iostream>
 #include<string>
 #include<cstdlib>

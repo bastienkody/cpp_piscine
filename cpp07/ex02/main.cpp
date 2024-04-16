@@ -2,8 +2,10 @@
 #include "Array.tpp"
 #include "Test.hpp"
 
+void	printSepDouble(){std::cout<<SEP<<std::endl<<SEP<<std::endl;}
+
 /*	Custom main	*/
-int	main(void)
+void	mainCustom(void)
 {
 	//	int array
 	Array<int> array(2);
@@ -57,9 +59,9 @@ int	main(void)
 
 
 
-/*	Main sujet
+//	Main sujet
 #define MAX_VAL 750
-int main(int, char**)
+void mainSujetFT(void)
 {
 	Array<int> numbers(MAX_VAL);
 	int* mirror = new int[MAX_VAL];
@@ -81,7 +83,7 @@ int main(int, char**)
 		if (mirror[i] != numbers[i])
 		{
 			std::cerr << "didn't save the same value!!" << std::endl;
-			return 1;
+			return ;
 		}
 	}
 	try
@@ -106,6 +108,10 @@ int main(int, char**)
 		numbers[i] = rand();
 	}
 	delete [] mirror;
-	return 0;
 }
-*/
+
+int	main(void)
+{
+	if (true) {mainSujetFT(); printSepDouble();}
+	if (true) {mainCustom(); printSepDouble();}
+}

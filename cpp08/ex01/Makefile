@@ -4,7 +4,7 @@ BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS		=	main.cpp span.cpp
+SRCS		=	main.cpp Span.cpp
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###

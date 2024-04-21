@@ -10,7 +10,16 @@
 	Applies ptr function sur len first elements of array
 */
 template <typename T, typename F>
-void	iter(T *arr, size_t len, F (*fct)(T&))
+void	iter_bad(T *arr, size_t len, F (*fct)(T&))
+{
+	if (!arr || !fct)
+		return ;
+	for (size_t i = 0; i < len; ++i)
+		fct((arr[i]));
+}
+
+template <typename T, typename F>
+void	iter(T *arr, size_t len, F fct)
 {
 	if (!arr || !fct)
 		return ;

@@ -44,7 +44,7 @@ const char* Span::BadIndex::what() const throw()
 { return ("Bad index"); }
 
 //	array triee, on y stocke les differences, on ret la + petite except la 1ere
-int		Span::shortestSpan() const
+u_int		Span::shortestSpan() const
 {
 	if (_vect.size() < 2)
 		throw NeedAtLeastTwoValues();
@@ -57,7 +57,7 @@ int		Span::shortestSpan() const
 }
 
 //	array triee : on ret (biggest - smallest)
-int		Span::longestSpan() const
+u_int		Span::longestSpan() const
 {
 	if (_vect.size() < 2)
 		throw NeedAtLeastTwoValues();

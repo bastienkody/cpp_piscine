@@ -50,8 +50,8 @@ class Span
 			}
 		}
 
-		int		shortestSpan() const ;
-		int		longestSpan() const ;
+		u_int		shortestSpan() const ;
+		u_int		longestSpan() const ;
 
 		class NoSpaceLeft : public std::exception
 		{

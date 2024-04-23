@@ -1,5 +1,5 @@
 ##		SOURCE FILES	###
-HEADERS		=	MutantStack.hpp MutantStack.tpp
+HEADERS		=	MutantStack.hpp
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}

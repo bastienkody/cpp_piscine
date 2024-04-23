@@ -7,12 +7,13 @@
 
 /*
 	CONSTURCTORS:
-		- Default : should i call std::stack() ?  
-			->  priori pas besoin
-		- Copy : use of operator (does nothing) in copy constr 
-			-> it must copy the underlying container. 
-			-> can be simply accessed via "mutant.stack"
-		- param : can be a problem since i dont define one : can it use the one of stack ?
+		- Default : should i call std::stack() ?
+			->  a priori pas besoin
+		- Copy : use of operator  in copy constr 
+			-> it must copy the underlying container
+			-> can be simply accessed via "mutant.c"
+			-> member .c : note that cpp.com does not mention it, cppref does !!
+		- param : does not exists for stack ?
 */
 
 template <typename T>
@@ -26,7 +27,7 @@ class MutantStack:	public std::stack<T>
 		{
 			*this = src;
 		};
-		MutantStack & operator=(__attribute__((unused))const MutantStack<T> & rhs)
+		MutantStack & operator=(const MutantStack<T> & rhs)
 		{
 			this->c = rhs.c;
 			return (*this);

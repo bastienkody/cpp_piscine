@@ -37,6 +37,19 @@ void	exceptionsTests()
 
 }
 
+void	addNumberRangeTest()
+{
+	std::vector<int>	v(5, 102);
+	Span			s(5);
+
+	s.addNumber(v.begin(), v.end());
+
+	for (u_int i = 0; i<5; ++i)
+		std::cout << s.getNumber(i) << " - ";
+	std::cout << std::endl;
+
+}
+
 void	tenThousandsOneNumber()
 {
 	Span	span(10001);
@@ -58,4 +71,5 @@ int	main(void)
 	if (true) {mainSujet(); printSep();}
 	if (true) {tenThousandsOneNumber();printSep();}
 	if (true) {exceptionsTests();printSep();}
+	if (true) {addNumberRangeTest();printSep();}
 }

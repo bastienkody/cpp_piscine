@@ -7,7 +7,6 @@ BitcoinExchange::BitcoinExchange()
 BitcoinExchange::~BitcoinExchange()
 {
 	_db.clear();
-	_input.clear();
 }
 BitcoinExchange::BitcoinExchange(const BitcoinExchange & src)
 {
@@ -16,10 +15,7 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange & src)
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange & rhs)
 {
 	if(this != &rhs)
-	{
 		_db = rhs._db;
-		_input = rhs._input;
-	}
 	return (*this);
 }
 
@@ -43,11 +39,11 @@ void	BitcoinExchange::readDb()
 	}
 }
 
-/*	input reader to _input (only discard enmpty lines; throw excp if empty file)	*/
-void	BitcoinExchange::readInput(const std::string filename)
+/*	*/
+void	BitcoinExchange::processInput(const std::string filename)
 {
 	std::fstream	inputFile;
-	std::string		line, date, price;
+	std::string		line, date, value;
 
 	inputFile.open(filename, std::fstream::in);
 	if (inputFile.fail())
@@ -55,45 +51,39 @@ void	BitcoinExchange::readInput(const std::string filename)
 
 	while (getline(inputFile, line))
 	{
-		if (line.size() == 0)
+		if (line.size() == 0 || line.compare("date | value") == 0)
 			continue;
 		if (line.find('|') == std::string::npos)
-			_input.insert(std::pair<std::string, std::string>(line, ""));
+			trimWs(line), conversion(std::pair<std::string, std::string>(line, ""));
 		else
 		{
-			trimWhitespaces(date.assign(line.begin(), line.begin() + line.find('|')));
-			trimWhitespaces(price.assign(line.begin() + line.find('|') + 1, line.end()));
-			_input.insert(std::pair<std::string, std::string>(date, price));
+			trimWs(date.assign(line.begin(), line.begin() + line.find('|')));
+			trimWs(value.assign(line.begin() + line.find('|') + 1, line.end()));
+			conversion(std::pair<std::string, std::string>(date, value));
 		}
 	}
-	if (_input.size() == 0)
-		throw std::invalid_argument("Empty input file");
 }
 
 /*	Conversions with format checks ; all possibly title lines skipped	*/
-void	BitcoinExchange::conversion()
+void	BitcoinExchange::conversion(std::pair<std::string, std::string> pair)
 {
-	double		val;
+	double		value;
 	std::time_t	date;
 
-	for (std::multimap<std::string, std::string>::reverse_iterator rit = _input.rbegin(); rit != _input.rend(); ++ rit)
-	{
-		if (rit->first == "date" && rit->second == "value")
-			continue;
-		std::cout << rit->first << "\t=>\t" << rit->second << "\t=\t";
-		try {
-			date = checkDate(rit->first);
-			val = checkValue(rit->second);
-		}
-		catch(const std::exception& e) {
-			std::cerr << e.what() << std::endl;
-			continue;
-		}
-		std::cout << std::fixed << std::setprecision(2) << val * getValueAtDateOrLower(date) << std::endl;
+	std::cout << pair.first << "\t=>\t" << pair.second << "\t=\t";
+	try {
+		if ((date = checkDate(pair.first)) < getLowestDateFromDb())
+			throw std::invalid_argument("Invalid date: before 2009-01-02");
+		if ((value = checkValue(pair.second)) == -0)
+			value = 0;
 	}
+	catch(const std::exception& e) {
+		std::cerr << e.what() << std::endl; return;
+	}
+	std::cout << std::fixed << std::setprecision(2) << value * getValueAtDateOrLower(date) << std::endl;
 }
 
-/*	format + validity + t < now + t > lowest db date ==> exceptions		*/
+/*	format + validity + t < now	*/
 time_t	BitcoinExchange::checkDate(std::string str) const
 {
 	std::stringstream	s(str);
@@ -117,10 +107,10 @@ time_t	BitcoinExchange::checkDate(std::string str) const
 	char	buf[11];
 	strftime(buf, sizeof(buf), "%Y-%m-%d", localtime(&sec));
 
-	std::string str2(buf);
-	if (str.compare(str2) != 0 || sec > time(NULL) || sec < getLowestDateFromDb())
+	if (str.compare(buf) != 0)
 		throw std::invalid_argument("Invalid date format");
-	
+	if (sec > time(NULL))
+		throw std::invalid_argument("Invalid date format: in the future?");
 	return sec;
 }
 
@@ -169,20 +159,15 @@ std::time_t	BitcoinExchange::getLowestDateFromDb() const
 	return smallest;
 }
 
-/*	Printers	*/
+/*	utils	*/
 void	BitcoinExchange::printDb() const
 {
 	for (std::multimap<std::time_t, double>::const_iterator it = _db.begin(); it != _db.end(); ++it)
 		std::cout << it->first << "-->" << it->second << std::endl;
 }
-void	BitcoinExchange::printInput() const
-{
-	for (std::map<std::string, std::string>::const_iterator it = _input.begin(); it != _input.end(); ++it)
-		std::cout << it->first << "-->" << it->second << std::endl;
-}
 
 /*	Whitespaces trimmer	(l and r)	*/
-void	BitcoinExchange::trimWhitespaces(std::string &s)
+void	BitcoinExchange::trimWs(std::string &s)
 {
 	std::string::const_iterator	it = s.begin();
 	while(it != s.end() && isspace(*it))

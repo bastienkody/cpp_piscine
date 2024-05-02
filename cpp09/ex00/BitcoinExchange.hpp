@@ -34,24 +34,19 @@
 class BitcoinExchange
 {
 	public:
-
 		BitcoinExchange();
 		~BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange & src);
 		BitcoinExchange & operator=(const BitcoinExchange & rhs);
 
 		void	readDb();
-		void	readInput(const std::string filename);
-
 		void	printDb() const;
-		void	printInput() const;
-		void	trimWhitespaces(std::string &s);
-
-		void	conversion();
+		void	trimWs(std::string &s);
+		void	conversion(std::pair<std::string, std::string> pair);
+		void	processInput(const std::string filename);
 
 	private:
 		std::multimap<std::time_t, double>	_db;
-		std::multimap<std::string, std::string>	_input;
 
 		time_t	checkDate(std::string src) const;
 		double	checkValue(std::string src) const;

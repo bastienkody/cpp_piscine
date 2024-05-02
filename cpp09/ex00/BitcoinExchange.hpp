@@ -48,7 +48,7 @@ class BitcoinExchange
 	private:
 		std::multimap<std::time_t, double>	_db;
 
-		time_t	checkDate(std::string src) const;
+		std::time_t	checkDate(std::string src) const;
 		double	checkValue(std::string src) const;
 
 		std::time_t	getLowestDateFromDb() const;

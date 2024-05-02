@@ -64,7 +64,7 @@ void	BitcoinExchange::processInput(const std::string filename)
 	}
 }
 
-/*	Conversions with format checks ; all possibly title lines skipped	*/
+/*	Conversions with format checks ; all possibly title lines skipped; -0 case	*/
 void	BitcoinExchange::conversion(std::pair<std::string, std::string> pair)
 {
 	double		value;
@@ -92,7 +92,7 @@ time_t	BitcoinExchange::checkDate(std::string str) const
 
 	s >> year >> dash >> month >> dash >> day;
 	if (s.fail() || !s.eof())
-		throw std::invalid_argument("Invalid date format");
+		throw std::invalid_argument("Invalid date: format");
 
 	std::tm		tm;
 	memset(&tm, 0, sizeof(tm));
@@ -102,15 +102,15 @@ time_t	BitcoinExchange::checkDate(std::string str) const
 
 	std::time_t	sec = mktime(&tm);
 	if (sec == -1)
-		throw std::runtime_error("Invalid date format (mktime failed)");
+		throw std::runtime_error("Invalid date: mktime failed");
 
 	char	buf[11];
 	strftime(buf, sizeof(buf), "%Y-%m-%d", localtime(&sec));
 
 	if (str.compare(buf) != 0)
-		throw std::invalid_argument("Invalid date format");
+		throw std::invalid_argument("Invalid date: format");
 	if (sec > time(NULL))
-		throw std::invalid_argument("Invalid date format: in the future?");
+		throw std::invalid_argument("Invalid date: in the future?");
 	return sec;
 }
 

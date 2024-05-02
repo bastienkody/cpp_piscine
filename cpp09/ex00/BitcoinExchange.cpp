@@ -25,10 +25,10 @@ BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange & rhs)
 
 
 /*	data.csv reader into _db, no parse/format error check	*/
-bool	BitcoinExchange::readDb()
+void	BitcoinExchange::readDb()
 {
-	std::fstream	dbFile;
-	std::string		line, date, price;
+	std::fstream		dbFile;
+	std::string			line, date, price;
 
 	dbFile.open(DB_NAME, std::fstream::in);
 	if (dbFile.fail())
@@ -39,13 +39,12 @@ bool	BitcoinExchange::readDb()
 	{
 		date.assign(line.begin(), line.begin() + line.find(','));
 		price.assign(line.begin() + line.find(',') + 1, line.end());
-		_db.insert(std::pair<time_t, double>(checkDate(date), atof(price.c_str())));
+		_db.insert(std::pair<time_t, double>(checkDate(date), strtod(price.c_str(), NULL)));
 	}
-	return true;
 }
 
 /*	input reader to _input (only discard enmpty lines; throw excp if empty file)	*/
-bool	BitcoinExchange::readInput(const std::string filename)
+void	BitcoinExchange::readInput(const std::string filename)
 {
 	std::fstream	inputFile;
 	std::string		line, date, price;
@@ -69,7 +68,6 @@ bool	BitcoinExchange::readInput(const std::string filename)
 	}
 	if (_input.size() == 0)
 		throw std::invalid_argument("Empty input file");
-	return true;
 }
 
 /*	Conversions with format checks ; all possibly title lines skipped	*/
@@ -91,7 +89,7 @@ void	BitcoinExchange::conversion()
 			std::cerr << e.what() << std::endl;
 			continue;
 		}
-		std::cout << val * getValueAtDateOrLower(date) << std::endl;
+		std::cout << std::fixed << std::setprecision(2) << val * getValueAtDateOrLower(date) << std::endl;
 	}
 }
 
@@ -150,14 +148,10 @@ double	BitcoinExchange::checkValue(std::string src) const
 double	BitcoinExchange::getValueAtDateOrLower(std::time_t t) const
 {
 	std::multimap<std::time_t, double>::const_iterator it = _db.lower_bound(t);
-	//std::cout << " [" << t << ", " << it->first << "] ";
 
-	if (it == _db.end())
-		return -1; // should be impossible bc checkDate checks lowest _db date
-	else if (it->first == t)
-		return it->second;
-	else
-		--it; return it->second;
+	if (it->first != t)
+		--it; // to get lower one if not perfect date match
+	return it->second;
 }
 
 /*	ersatz for c++11 std::min_element (used by checkDate)	*/

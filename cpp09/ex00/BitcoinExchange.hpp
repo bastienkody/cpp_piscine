@@ -40,8 +40,8 @@ class BitcoinExchange
 		BitcoinExchange(const BitcoinExchange & src);
 		BitcoinExchange & operator=(const BitcoinExchange & rhs);
 
-		bool	readDb();
-		bool	readInput(const std::string filename);
+		void	readDb();
+		void	readInput(const std::string filename);
 
 		void	printDb() const;
 		void	printInput() const;

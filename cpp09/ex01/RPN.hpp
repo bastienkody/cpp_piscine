@@ -5,6 +5,7 @@
 #include<string>
 #include<sstream>
 #include<stack>
+#include<deque>
 
 /*
 	A - RPN is treated in kinda LIFO : depoping in reverse order (vs storing) 

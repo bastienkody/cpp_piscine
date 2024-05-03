@@ -21,26 +21,26 @@ RPN & RPN::operator=(const RPN & rhs)
 void	RPN::printStack()
 {
 	while(_stack.empty() == false)
-		{std::cout << _stack.top() << std::endl; _stack.pop();}
+		{std::cout << _stack.top(); _stack.pop();}
 }
 
 //	parametric constructor, read av[1] into _stack, throw 
 RPN::RPN(const std::string data)
 {
 	std::string					tmp;
-	std::string::const_iterator it = data.begin();
+	std::string::const_reverse_iterator rit = data.rbegin();
 
-	if (it == data.end())
+	if (rit == data.rend())
 		throw std::invalid_argument("Error: empty argument");
 
-	while(it != data.end())
+	while(rit != data.rend())
 	{
-		while(it != data.end() && isspace(*it))
-			++it;
-		while(it != data.end() && !isspace(*it))
+		while(rit != data.rend() && isspace(*rit))
+			++rit;
+		while(rit != data.rend() && !isspace(*rit))
 		{
-			tmp += *it;
-			++it;
+			tmp += *rit;
+			++rit;
 		}
 		if (isValidDigit(tmp) == false && isValidOperator(tmp) == false)
 			throw std::invalid_argument("Error: bad operator/operand: " + tmp);
@@ -49,17 +49,28 @@ RPN::RPN(const std::string data)
 	}
 }
 
+std::string	copy(std::string src)
+{
+	std::string res;
+
+	for (std::string::const_iterator it = src.begin(); it != src.end(); ++it)
+		res += *it;
+	return res;
+}
+
 void	RPN::calculate()
 {
 	std::stack<std::string>	buf;
-	std::stringstream		sstr;
+	std::stringstream		sstr2;
 	double					lhs, rhs, res;
 	char					op;
 
 	while(_stack.size() != 1)
 	{
+		//std::cout << "stack size + top:" << _stack.size() << " : " << _stack.top() << std::endl;
 		while(_stack.size() > 1 && isValidOperator(_stack.top()) == false)
 		{
+			//std::cout << _stack.top() << std::endl;
 			buf.push(_stack.top());
 			_stack.pop();
 		}
@@ -68,16 +79,16 @@ void	RPN::calculate()
 		std::cout << "buf size before l/rhs : " << buf.size() << std::endl;
 		lhs = extractStrFromStackToDouble(buf);
 		rhs = extractStrFromStackToDouble(buf);
-		sstr << doOperation(lhs, rhs, op);
-		_stack.push(sstr.str());
-		sstr.clear();
+		sstr2 << doOperation(lhs, rhs, op);
+		_stack.push(sstr2.str());
+		sstr2.clear();
 	}
 
-	sstr << _stack.top();
+	std::stringstream sstr(_stack.top());
 	sstr >> res;
 	if (sstr.fail() || !sstr.eof())
 		throw std::invalid_argument("Error (sstr >> res)");
-	std::cout << res << std::endl;
+	std::cout << "res:" << res << std::endl;
 }
 
 double	RPN::doOperation(double lhs, double rhs, char op) const

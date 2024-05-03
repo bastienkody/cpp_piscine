@@ -9,9 +9,8 @@
 
 #define DB_NAME "data.csv"
 
-
 /*
-	using std::multimap
+	using std::multimap for the _db only (input is processed as read)
 		it is key/value with ok doublons key
 		it is sorted in kinda alphanum by keys
 		[] operator ko
@@ -49,7 +48,7 @@ class BitcoinExchange
 		std::multimap<std::time_t, double>	_db;
 
 		std::time_t	checkDate(std::string src) const;
-		double	checkValue(std::string src) const;
+		double		checkValue(std::string src) const;
 
 		std::time_t	getLowestDateFromDb() const;
 		double		getValueAtDateOrLower(std::time_t t) const;

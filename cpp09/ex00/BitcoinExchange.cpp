@@ -64,7 +64,7 @@ void	BitcoinExchange::processInput(const std::string filename)
 	}
 }
 
-/*	Conversions with format checks ; all possibly title lines skipped; -0 case	*/
+/*	Conversions with format checks ; all possibly title lines skipped; -0 value case	*/
 void	BitcoinExchange::conversion(std::pair<std::string, std::string> pair)
 {
 	double		value;

@@ -67,19 +67,19 @@ class RPN
 	public:
 
 		~RPN();
-		RPN(const std::string data);	// thrower
+		RPN(const std::string data);
 		RPN(const RPN & src);
 		RPN & operator=(const RPN & rhs);
 
 		void	printStack(); // for debugging, it empties the stack
-		void	calculate();	//throw
 
 	private:
 
 		RPN();	// unusable default constructor
 
+		void	calculate();
 		double	doOperation(double lhs, double rhs, char op) const;
-		double	extractStrFromStackToDouble();	//throw
+		double	extractStrFromStackToDouble();
 		bool	isValidOperator(std::string val) const;
 		bool	isValidDigit(std::string val) const;
 

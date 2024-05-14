@@ -8,7 +8,6 @@ int	main(int ac, char **av)
 	try {
 		RPN	rpn(av[1]);
 		//rpn.printStack();
-		rpn.calculate();
 	}
 	catch(const std::exception& e) {
 		std::cerr << e.what() << '\n';

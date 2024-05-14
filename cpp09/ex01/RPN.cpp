@@ -43,20 +43,22 @@ RPN::RPN(const std::string data)
 			tmp += *it;
 			++it;
 		}
+		if (tmp.empty() == true)
+			continue;
 		if (isValidDigit(tmp) == false && isValidOperator(tmp) == false)
 			throw std::invalid_argument("Error: bad operator/operand: " + tmp);
 		_stack.push(tmp);
-		std::cout << "just inserted " << tmp << std::endl;
+		//std::cout << "just inserted " << tmp << std::endl;
 		tmp.clear();
 		calculate();
 	}
 	if (_stack.size() != 1)
-		throw std::invalid_argument("Bad argument format (more than one entry in _stack after all input processed)");
+		throw std::invalid_argument("Error: bad argument format (stack.size != 1 after all input processed)");
 	double	res;
 	ssres << _stack.top();
 	ssres >> res;
 	if (ssres.fail() || !ssres.eof())
-		throw std::invalid_argument("Error: final result is not a double (ssres >> res)");
+		throw std::invalid_argument("Error: final result does not fit into a double ");
 	std::cout << "res:" << res << std::endl;
 }
 
@@ -79,7 +81,7 @@ void	RPN::calculate()
 	ssres << doOperation(lhs, rhs, op);
 	ssres >> res;
 	if (ssres.fail() == true || ssres.eof() == false)
-		throw std::runtime_error("Result of an operation does not fit in a double");
+		throw std::runtime_error("Error: result of an operation does not fit in a double");
 	ssres << res;	
 	_stack.push(ssres.str());
 	ssres.clear();
@@ -87,7 +89,7 @@ void	RPN::calculate()
 
 double	RPN::doOperation(double lhs, double rhs, char op) const
 {
-	std::cout << lhs << op << rhs << std::endl;
+	//std::cout << lhs << op << rhs << std::endl;
 	switch (op)
 	{
 		case '+':
@@ -99,14 +101,14 @@ double	RPN::doOperation(double lhs, double rhs, char op) const
 		case '/':
 			return (lhs / rhs);
 		default:
-			throw std::runtime_error("default reached in doOperation, ABNORMAL");
+			throw std::runtime_error("default reached in doOperation, SHOULD BE IMPOSSIBLE");
 	}
 }
 
 double	RPN::extractStrFromStackToDouble()
 {
 	if (_stack.empty() == true)
-		throw std::invalid_argument("Error (buf empty)");
+		throw std::invalid_argument("Error: bad argument (unexpected empty stack)");
 
 	double					d;
 	std::stringstream		sstop(_stack.top());
@@ -114,10 +116,9 @@ double	RPN::extractStrFromStackToDouble()
 	_stack.pop();
 	sstop >> d;
 	if (sstop.fail() || !sstop.eof())
-		throw std::invalid_argument("Error (sstop >> d)");
+		throw std::invalid_argument("Error: bad argument (digit does not fit into a double)");
 	return d;
 }
-
 
 bool	RPN::isValidOperator(std::string val) const
 {

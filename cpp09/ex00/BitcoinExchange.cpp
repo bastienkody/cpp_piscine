@@ -45,7 +45,7 @@ void	BitcoinExchange::processInput(const std::string filename)
 	std::fstream	inputFile;
 	std::string		line, date, value;
 
-	inputFile.open(filename, std::fstream::in);
+	inputFile.open(filename.c_str(), std::fstream::in);
 	if (inputFile.fail())
 		throw std::runtime_error("Cannot open input file");
 
@@ -169,12 +169,12 @@ void	BitcoinExchange::printDb() const
 /*	Whitespaces trimmer	(l and r)	*/
 void	BitcoinExchange::trimWs(std::string &s)
 {
-	std::string::const_iterator	it = s.begin();
+	std::string::iterator	it = s.begin();
 	while(it != s.end() && isspace(*it))
 		++it;
 	s.erase(s.begin(), it);
 
-	std::string::const_reverse_iterator rit = s.rbegin();
+	std::string::reverse_iterator rit = s.rbegin();
 	while(rit != s.rend() && isspace(*rit))
 		++rit;
 	if (rit.base() != s.end())

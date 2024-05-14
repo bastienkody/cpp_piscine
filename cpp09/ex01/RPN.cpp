@@ -17,82 +17,77 @@ RPN & RPN::operator=(const RPN & rhs)
 	return (*this);
 }
 
-//	empties the stack be carefull
+//	it empties the stack, be carefull
 void	RPN::printStack()
 {
 	while(_stack.empty() == false)
 		{std::cout << _stack.top(); _stack.pop();}
 }
 
-//	parametric constructor, read av[1] into _stack, throw 
+//	parametric constructor, runs the "main"/whole process
 RPN::RPN(const std::string data)
 {
-	std::string					tmp;
-	std::string::const_reverse_iterator rit = data.rbegin();
+	std::string				tmp;
+	std::stringstream		ssres;
+	std::string::const_iterator it = data.begin();
 
-	if (rit == data.rend())
+	if (it == data.end())
 		throw std::invalid_argument("Error: empty argument");
 
-	while(rit != data.rend())
+	while(it != data.end())
 	{
-		while(rit != data.rend() && isspace(*rit))
-			++rit;
-		while(rit != data.rend() && !isspace(*rit))
+		while(it != data.end() && isspace(*it))
+			++it;
+		while(it != data.end() && !isspace(*it))
 		{
-			tmp += *rit;
-			++rit;
+			tmp += *it;
+			++it;
 		}
 		if (isValidDigit(tmp) == false && isValidOperator(tmp) == false)
 			throw std::invalid_argument("Error: bad operator/operand: " + tmp);
 		_stack.push(tmp);
+		std::cout << "just inserted " << tmp << std::endl;
 		tmp.clear();
+		calculate();
 	}
+	if (_stack.size() != 1)
+		throw std::invalid_argument("Bad argument format (more than one entry in _stack after all input processed)");
+	double	res;
+	ssres << _stack.top();
+	ssres >> res;
+	if (ssres.fail() || !ssres.eof())
+		throw std::invalid_argument("Error: final result is not a double (ssres >> res)");
+	std::cout << "res:" << res << std::endl;
 }
 
-std::string	copy(std::string src)
-{
-	std::string res;
-
-	for (std::string::const_iterator it = src.begin(); it != src.end(); ++it)
-		res += *it;
-	return res;
-}
-
+//	treats a single operation (extract 3 val then insert the res) if top is operator
+//	inserted res is checked (fits in a double via sstream)
 void	RPN::calculate()
 {
-	std::stack<std::string>	buf;
-	std::stringstream		sstr2;
-	double					lhs, rhs, res;
-	char					op;
+	std::stringstream	ssres;
+	char				op;
+	double				lhs, rhs, res;
 
-	while(_stack.size() != 1)
-	{
-		//std::cout << "stack size + top:" << _stack.size() << " : " << _stack.top() << std::endl;
-		while(_stack.size() > 1 && isValidOperator(_stack.top()) == false)
-		{
-			//std::cout << _stack.top() << std::endl;
-			buf.push(_stack.top());
-			_stack.pop();
-		}
-		op = _stack.top()[0];
-		_stack.pop();
-		std::cout << "buf size before l/rhs : " << buf.size() << std::endl;
-		lhs = extractStrFromStackToDouble(buf);
-		rhs = extractStrFromStackToDouble(buf);
-		sstr2 << doOperation(lhs, rhs, op);
-		_stack.push(sstr2.str());
-		sstr2.clear();
-	}
+	if (isValidOperator(_stack.top()) == false)
+		return ;
 
-	std::stringstream sstr(_stack.top());
-	sstr >> res;
-	if (sstr.fail() || !sstr.eof())
-		throw std::invalid_argument("Error (sstr >> res)");
-	std::cout << "res:" << res << std::endl;
+	op = _stack.top()[0];
+	_stack.pop();
+	rhs = extractStrFromStackToDouble();
+	lhs = extractStrFromStackToDouble();
+
+	ssres << doOperation(lhs, rhs, op);
+	ssres >> res;
+	if (ssres.fail() == true || ssres.eof() == false)
+		throw std::runtime_error("Result of an operation does not fit in a double");
+	ssres << res;	
+	_stack.push(ssres.str());
+	ssres.clear();
 }
 
 double	RPN::doOperation(double lhs, double rhs, char op) const
 {
+	std::cout << lhs << op << rhs << std::endl;
 	switch (op)
 	{
 		case '+':
@@ -108,15 +103,15 @@ double	RPN::doOperation(double lhs, double rhs, char op) const
 	}
 }
 
-double	RPN::extractStrFromStackToDouble(std::stack<std::string> &buf) const
+double	RPN::extractStrFromStackToDouble()
 {
-	if (buf.empty() == true)
+	if (_stack.empty() == true)
 		throw std::invalid_argument("Error (buf empty)");
 
 	double					d;
-	std::stringstream		sstop(buf.top());
+	std::stringstream		sstop(_stack.top());
 
-	buf.pop();
+	_stack.pop();
 	sstop >> d;
 	if (sstop.fail() || !sstop.eof())
 		throw std::invalid_argument("Error (sstop >> d)");
@@ -128,7 +123,7 @@ bool	RPN::isValidOperator(std::string val) const
 {
 	std::string	ok[4] = {"+", "-", "/", "*"};
 
-	for (uint i = 0; i < 4; ++i)
+	for (unsigned int i = 0; i < 4; ++i)
 		if (val.compare(ok[i]) == 0)
 			return true;
 	return false;

@@ -72,14 +72,14 @@ class RPN
 		RPN & operator=(const RPN & rhs);
 
 		void	printStack(); // for debugging, it empties the stack
-		void	calculate();
+		void	calculate();	//throw
 
 	private:
 
 		RPN();	// unusable default constructor
 
 		double	doOperation(double lhs, double rhs, char op) const;
-		double	extractStrFromStackToDouble(std::stack<std::string> &buf) const;
+		double	extractStrFromStackToDouble();	//throw
 		bool	isValidOperator(std::string val) const;
 		bool	isValidDigit(std::string val) const;
 

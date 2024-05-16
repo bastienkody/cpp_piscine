@@ -27,8 +27,7 @@ void	RPN::printStack()
 //	parametric constructor, runs the "main"/whole process
 RPN::RPN(const std::string data)
 {
-	std::string				tmp;
-	std::stringstream		ssres;
+	std::string					tmp;
 	std::string::const_iterator it = data.begin();
 
 	if (it == data.end())
@@ -54,16 +53,10 @@ RPN::RPN(const std::string data)
 	}
 	if (_stack.size() != 1)
 		throw std::invalid_argument("Error: bad argument format (stack.size != 1 after all input processed)");
-	double	res;
-	ssres << _stack.top();
-	ssres >> res;
-	if (ssres.fail() || !ssres.eof())
-		throw std::invalid_argument("Error: final result does not fit into a double ");
-	std::cout << "res:" << res << std::endl;
+	std::cout << extractStrFromStackToDouble() <<  std::endl;
 }
 
-//	treats a single operation (extract 3 val then insert the res) if top is operator
-//	inserted res is checked (fits in a double via sstream)
+//	if top is operator : extract, doOp, put res (checked via sstream) in stack
 void	RPN::calculate()
 {
 	std::stringstream	ssres;

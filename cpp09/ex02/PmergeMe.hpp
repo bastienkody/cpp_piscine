@@ -8,14 +8,16 @@
 #include<algorithm>
 
 // prototypes utils
-int	conv_to_int(std::string entry);
+int		conv_to_int(std::string entry);
+void	pairing(std::vector<struct nb> &vec);
 void	print_lst(std::list<struct nb> lst);
 void	print_vec(std::vector<struct nb> vec);
 
 struct nb{
-	int	val;
-	char	type;
-	int	index;
+	int		val;					// the number value 
+	bool	is_greateast_from_pair;	// a or b from pair
+	int		index;					// pair index
+	unsigned long int		pair_id;	// pair id to retrieve its peer
 
 	bool operator==(const nb &rhs) const;
 	bool operator>(const nb &rhs) const;
@@ -33,11 +35,13 @@ class PmergeMe
 		PmergeMe & operator=(const PmergeMe & rhs);
 
 		std::vector<struct nb> const & getVec() const;
+		std::vector<struct nb> & getVecMod();
 
 		void	add_to_vec(struct nb);
 		
 	private:
 		std::vector<struct nb>	_vec;
+		
 		
 };
 

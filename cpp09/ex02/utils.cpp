@@ -30,3 +30,17 @@ void print_lst(std::list<struct nb> lst)
 	}
 	std::cout<<std::endl;
 }
+
+bool	comp(const nb & a, const nb & b)
+{
+	return a > b;
+}
+
+// assign pair_id and is_greteast_from_peer
+void	pairing(std::vector<struct nb> &vec)
+{
+	size_t	size_odd = vec.size() % 2 == 0;
+
+	std::cout << size_odd << std::endl;
+	
+}

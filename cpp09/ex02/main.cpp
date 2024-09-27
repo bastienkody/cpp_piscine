@@ -24,6 +24,7 @@ int	main(int ac, char **av)
 
 	print_vec(v.getVec());
 	print_lst(l.getLst());
+	pairing(v.getVecMod());
 
 	return 0;
 }

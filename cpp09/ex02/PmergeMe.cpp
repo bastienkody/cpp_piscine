@@ -13,7 +13,6 @@ bool  nb::operator<(const nb &rhs) const
 	return this->val < rhs.val;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////
 PmergeMe::PmergeMe() {}
 PmergeMe::~PmergeMe() {}
@@ -27,6 +26,7 @@ PmergeMe & PmergeMe::operator=(const PmergeMe & rhs)
 	return (*this);
 }
 std::vector<struct nb> const & PmergeMe::getVec() const {return (_vec);}
+std::vector<struct nb> & PmergeMe::getVecMod(){return (_vec);}
 void PmergeMe::add_to_vec(struct nb nb)
 {
 	if (std::find(_vec.begin(), _vec.end(), nb) != _vec.end())
@@ -34,4 +34,5 @@ void PmergeMe::add_to_vec(struct nb nb)
 	_vec.push_back(nb);
 }
 ///////////////////////////////////////////////////////////////////////////////////////
+
 

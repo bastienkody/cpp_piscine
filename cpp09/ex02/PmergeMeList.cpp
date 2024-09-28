@@ -15,6 +15,7 @@ PmergeMeList & PmergeMeList::operator=(const PmergeMeList & rhs)
 	return (*this);
 }
 std::list<struct nb> const & PmergeMeList::getLst() const {return (_lst);}
+std::list<struct nb> & PmergeMeList::getLstMod() {return (_lst);}
 void PmergeMeList::add_to_lst(struct nb nb)
 {
 	if (std::find(_lst.begin(), _lst.end(), nb) != _lst.end())

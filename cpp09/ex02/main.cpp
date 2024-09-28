@@ -7,9 +7,9 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return std::cerr << "Expecting a sequence of positive integers" << std::endl, 2;
 
-	PmergeMe	v;
+	PmergeMe		v;
 	PmergeMeList	l;
-	nb	nb;
+	nb				nb;
 
 	for (int i=1; i<ac; ++i)
 	{
@@ -22,9 +22,14 @@ int	main(int ac, char **av)
 		}
 	}
 
-	print_vec(v.getVec());
-	print_lst(l.getLst());
-	pairing(v.getVecMod());
+	print_cont_val(v.getVec());
+	print_cont_val(l.getLst());
+
+	pairingT(v.getVecMod());
+	pairingT(l.getLstMod());
+
+	print_cont_detail(v.getVec());
+	print_cont_detail(l.getLst());
 
 	return 0;
 }

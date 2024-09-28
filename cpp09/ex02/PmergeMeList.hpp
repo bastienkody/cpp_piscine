@@ -13,6 +13,7 @@ class PmergeMeList
 		PmergeMeList & operator=(const PmergeMeList & rhs);
 
 		std::list<struct nb> const & getLst() const;
+		std::list<struct nb> & getLstMod();
 
 		void	add_to_lst(struct nb);
 		

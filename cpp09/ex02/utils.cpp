@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <algorithm>
 #include <iterator>
 #include <sstream>
 
@@ -19,3 +20,7 @@ bool	comp(const nb & a, const nb & b)
 	return a > b;
 }
 
+std::vector<struct nb>::iterator	binary_search(std::vector<nb>::iterator first, std::vector<nb>::iterator last, const struct nb &val)
+{
+	return std::upper_bound(first, last, val);
+}

@@ -12,9 +12,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 /*	STRUCT NB	*/
 struct nb{
-	int		val;						// the number value 
+	int		val;						// the number value
 	bool	is_greateast_from_pair;		// a or b from pair
-	bool	is_solo;					// a or b from pair
+	bool	is_solo;
 	int		index;						// pair index
 	unsigned long int		pair_id;	// pair id to retrieve its peer
 
@@ -26,6 +26,7 @@ typedef struct nb nb;
 
 ///////////////////////////////////////////////////////////////////////////////
 /*	UTILS PROTOTYPES	*/
+std::vector<nb>::iterator	binary_search(std::vector<nb>::iterator first, std::vector<nb>::iterator last, const struct nb &val);
 int		conv_to_int(std::string entry);
 bool	comp(const nb & a, const nb & b);
 
@@ -36,8 +37,7 @@ void	pairingT(T & cont)
 {
 	unsigned int	pair_id = 0;
 
-	typename T::iterator it;
-	typename T::iterator next;
+	typename T::iterator it, next;
 	for (it = cont.begin(); it != cont.end(); std::advance(it, 2))
 	{
 		next = it;
@@ -64,6 +64,11 @@ void	pairingT(T & cont)
 		}
 		++pair_id;
 	}
+}
+template <typename T>
+typename T::iterator	b_search(typename T::iterator first, typename T::iterator last, const struct nb &val)
+{
+	return std::upper_bound(first, last, val);
 }
 template <typename T>
 void	print_cont_val(T & cont)

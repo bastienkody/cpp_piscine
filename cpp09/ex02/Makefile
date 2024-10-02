@@ -1,10 +1,10 @@
 ##		SOURCE FILES	###
-HEADERS		=	PmergeMe.hpp PmergeMeList.hpp
+HEADERS		=	PmergeMe.hpp
 BUILD_DIR	=	./build
 SRC_DIR 	= 	./
 vpath %.cpp ${SRCS_NAME}
 
-SRCS		=	main.cpp utils.cpp PmergeMe.cpp PmergeMeList.cpp
+SRCS		=	main.cpp PmergeMe.cpp
 OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###

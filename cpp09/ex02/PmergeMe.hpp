@@ -7,12 +7,13 @@
 #include<vector>
 #include<list>
 #include<algorithm>
+#include<ctime>
+#include<iomanip>
 
 ///////////////////////////////////////////////////////////////////////////////
 /*	STRUCT NB	*/
 struct nb{
 	int		val;						// the number value
-	bool	is_greatest_from_pair;		// a or b from pair
 	int		index;						// pair index (set after depairing)
 
 	bool operator==(const nb &rhs) const;
@@ -25,12 +26,13 @@ typedef struct nb nb;
 /*	UTILS PROTOTYPES	*/
 int		conv_to_int(std::string entry);
 bool	comp(const nb & a, const nb & b);
+int		jacob(int n);
 
 ///////////////////////////////////////////////////////////////////////////////
 /*	TEMPLATES	*/
-// pair comp in place (set greatest), stored in std::pair, set index-1 for odd element
+// pair comp, stored in Pair (first holds larger), set index-1 for odd element
 template <typename T, typename U>
-void	pairing(T & cont, U & Pair)
+void	pairing(T &cont, T &M, T &P, U &Pair)
 {
 	typename T::iterator it, next;
 	for (it = cont.begin(); it != cont.end(); std::advance(it, 2))
@@ -39,37 +41,22 @@ void	pairing(T & cont, U & Pair)
 		++next;
 		if (next == cont.end()) // last element unpaired
 		{
-			it->is_greatest_from_pair = false;
 			it->index = -1;
+			P.push_back(*it);
 			break;
 		}
-		if (comp(*it, *next) == true)
+		if (comp(*it, *next) == false)
 		{
-			it->is_greatest_from_pair = true;
-			next->is_greatest_from_pair = false;
+			M.push_back(*it);
+			P.push_back(*next);
 			Pair.push_back(std::pair<nb, nb>(*it, *next));
 		}
 		else
 		{
-			it->is_greatest_from_pair = false;
-			next->is_greatest_from_pair = true;
+			P.push_back(*it);
+			M.push_back(*next);
 			Pair.push_back(std::pair<nb, nb>(*next, *it));
 		}
-	}
-}
-
-// no use of T<std::pair> bc it does not hold the odd element (cont does)
-// should be done in pairing?
-template <typename T>
-void	separate_pairs(T &cont, T &M, T &P)
-{
-	typename T::const_iterator it;
-	for (it = cont.begin(); it != cont.end(); std::advance(it, 1))
-	{
-		if (it->is_greatest_from_pair == true)
-			M.push_back(*it);
-		else
-			P.push_back(*it);
 	}
 }
 
@@ -101,33 +88,62 @@ typename T::iterator	find_index(T &cont, int index)
 }
 
 template <typename T>
+T	get_next_jacob_group(T &P, int jacob_n, int index)
+{
+	T	group;
+	int size = jacob(jacob_n) + 1;
+
+/*	std::cout << "jacob size: " << size;
+	std::cout << ", n: " << jacob_n;
+	std::cout << ", index: " << index << std::endl;
+*/
+	typename T::iterator it = P.begin();
+	while (P.size() && size--)
+	{
+		it = find_index(P, index);
+		if (it == P.end())
+			it = find_index(P, -1); // odd element
+		group.push_back(*it);
+		P.erase(it);
+		++index;
+	}
+
+//	std::cout << "jacob group \n"; print_cont_val(group);
+	return group;
+}
+
+template <typename T>
 void	insert_P_in_M(T &M, T &P)
 {
-	int index = 0, max_index = M.size() - 1;
-	typename T::iterator itP, pos;
-
+	typename T::iterator itP, itG, pos;
 	// first index of P always at beginning of M (no comp needed)
 	itP = find_index(P, 0);
+//	std::cout << "inserted i0: " << itP->val << std::endl;
 	M.insert(M.begin(), *itP);
 	P.erase(itP);
 
-	// index from 1 to max index (jacob groups later)
-	while (++index <= max_index)
-	{
-		itP = find_index(P, index);
-		pos = std::upper_bound(M.begin(), find_index(M, index), *itP);
-		M.insert(pos, *itP);
-		P.erase(itP);
-	}
+	int index = 1;
+	int jacob_n = -1;
 
-	// remaining odd element in P
-	if (P.size() > 0)
+	T	group;
+	typename T::reverse_iterator rbeg;
+	while (P.size())
 	{
-		pos = std::upper_bound(M.begin(), find_index(M, index), *P.begin());
-		M.insert(pos, *P.begin());
-		P.erase(itP);
+		group = get_next_jacob_group(P, ++jacob_n, index);
+		for (rbeg=group.rbegin(); rbeg!=group.rend(); std::advance(rbeg,1))
+		{
+			//itG = find_index(group, index);
+			//if (itG == group.end())
+				//itG = find_index(group, -1); // odd element
+			if (rbeg->index == -1)
+				pos = std::upper_bound(M.begin(), M.end(), *rbeg, comp);
+			else
+				pos = std::upper_bound(M.begin(), find_index(M, rbeg->index), *rbeg, comp);
+//			std::cout << "inserting " << rbeg->val << " before " << pos->val << std::endl;
+			M.insert(pos, *rbeg);
+			++index;
+		}
 	}
-
 }
 
 template <typename T>
@@ -146,7 +162,7 @@ template <typename T>
 void	print_cont_detail(T & cont)
 {
 	for (typename T::const_iterator it = cont.begin(); it != cont.end(); ++it)
-		std::cout<<it->val<<"\t-->\tgret:"<<it->is_greatest_from_pair<<" index:"<<it->index<<std::endl;
+		std::cout<<it->val<<"\t-->\t"<<" index:"<<it->index<<std::endl;
 	std::cout<<"-------------------------"<<std::endl;
 }
 ///////////////////////////////////////////////////////////////////////////////
@@ -167,13 +183,14 @@ class PmergeMe
 		std::list<struct nb> &			getLstMod();
 		void							add_to_lst(struct nb);
 	
-		std::vector<struct nb>	fja(std::vector<struct nb> vec);
+		std::vector<struct nb>	fja_Vec(std::vector<struct nb> vec);
+		std::list<struct nb>	fja_Lst(std::list<struct nb> lst);
+
+		void					fja();
 		
 	private:
 		std::vector<struct nb>	_vec;
 		std::list<struct nb>	_lst;
-		
-		
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <algorithm>
 #include <cmath>
 #include <sstream>
 
@@ -17,7 +18,6 @@ int	conv_to_int(std::string entry)
 
 bool	comp(const nb & a, const nb & b)
 {
-	//std::cout << "comp" << a.val << "<" << b.val << std::endl;
 	return ++g_comp, a < b;
 }
 
@@ -25,10 +25,6 @@ int jacob(int n)
 {
 	return (std::pow(2, n+1) + std::pow(-1, n)) / 3;
 }
-
-
-// this test of 21 nb uses 67 comparisons (66 should be worst case)
-// ./PmergeMe 58 1 45 73 14 35 75 79 88 62 28 37 36 77 10 51 100 70 63 93 7
 
 int	main(int ac, char **av)
 {
@@ -49,14 +45,7 @@ int	main(int ac, char **av)
 		}
 	}
 
-	print_cont_val(p.getVec());
-	p.fja_Lst(p.getLstMod());
-	std::cout << "List Comparisons:" << g_comp  << std::endl;
-	g_comp = 0;
-	p.fja_Vec(p.getVecMod());
-	std::cout << "Vec Comparisons:" << g_comp << std::endl;
-
-
-//	p.fja();
+	p.fja();
+//	std::cout << "Comparisons:" << g_comp / 2 << std::endl;
 	return 0;
 }

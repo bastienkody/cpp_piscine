@@ -10,7 +10,7 @@ OBJS		=	${SRCS:%.cpp=$(BUILD_DIR)/%.o}
 ###		DEFINITIONS		###
 NAME		=	PmergeMe
 CXX		=	c++
-CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g3
+CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 ###		RULES		###
 $(BUILD_DIR)/%.o: %.cpp ${HEADERS}

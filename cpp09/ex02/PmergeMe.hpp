@@ -91,7 +91,7 @@ template <typename T>
 T	get_next_jacob_group(T &P, int jacob_n, int index)
 {
 	T	group;
-	int size = jacob(jacob_n) + 1;
+	int size = jacob(jacob_n + 1) - jacob(jacob_n) ;
 
 /*	std::cout << "jacob size: " << size;
 	std::cout << ", n: " << jacob_n;
@@ -108,7 +108,7 @@ T	get_next_jacob_group(T &P, int jacob_n, int index)
 		++index;
 	}
 
-//	std::cout << "jacob group \n"; print_cont_val(group);
+	//std::cout << "jacob group \n"; print_cont_val(group);
 	return group;
 }
 
@@ -132,14 +132,10 @@ void	insert_P_in_M(T &M, T &P)
 		group = get_next_jacob_group(P, ++jacob_n, index);
 		for (rbeg=group.rbegin(); rbeg!=group.rend(); std::advance(rbeg,1))
 		{
-			//itG = find_index(group, index);
-			//if (itG == group.end())
-				//itG = find_index(group, -1); // odd element
 			if (rbeg->index == -1)
 				pos = std::upper_bound(M.begin(), M.end(), *rbeg, comp);
 			else
 				pos = std::upper_bound(M.begin(), find_index(M, rbeg->index), *rbeg, comp);
-//			std::cout << "inserting " << rbeg->val << " before " << pos->val << std::endl;
 			M.insert(pos, *rbeg);
 			++index;
 		}

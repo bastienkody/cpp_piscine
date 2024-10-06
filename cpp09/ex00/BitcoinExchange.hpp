@@ -49,7 +49,7 @@ class BitcoinExchange
 		void	processInput(const std::string filename);
 
 	private:
-		std::multimap<std::time_t, double>	_db;
+		std::map<std::time_t, double>	_db;
 
 		std::time_t	checkDate(std::string src) const;
 		double		checkValue(std::string src) const;

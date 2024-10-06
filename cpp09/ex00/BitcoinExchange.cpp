@@ -137,7 +137,7 @@ double	BitcoinExchange::checkValue(std::string src) const
 /* multimap::lower_bound is shitty it returns the perfect or the next above	*/
 double	BitcoinExchange::getValueAtDateOrLower(std::time_t t) const
 {
-	std::multimap<std::time_t, double>::const_iterator it = _db.lower_bound(t);
+	std::map<std::time_t, double>::const_iterator it = _db.lower_bound(t);
 
 	if (it->first != t)
 		--it; // to get lower one if not perfect date match
@@ -147,7 +147,7 @@ double	BitcoinExchange::getValueAtDateOrLower(std::time_t t) const
 /*	ersatz for c++11 std::min_element (used by checkDate)	*/
 std::time_t	BitcoinExchange::getLowestDateFromDb() const
 {
-	std::multimap<std::time_t, double>::const_iterator	it = _db.begin();
+	std::map<std::time_t, double>::const_iterator	it = _db.begin();
 	std::time_t											smallest = it->first;
 
 	while (it != _db.end())
@@ -162,7 +162,7 @@ std::time_t	BitcoinExchange::getLowestDateFromDb() const
 /*	utils	*/
 void	BitcoinExchange::printDb() const
 {
-	for (std::multimap<std::time_t, double>::const_iterator it = _db.begin(); it != _db.end(); ++it)
+	for (std::map<std::time_t, double>::const_iterator it = _db.begin(); it != _db.end(); ++it)
 		std::cout << it->first << "-->" << it->second << std::endl;
 }
 

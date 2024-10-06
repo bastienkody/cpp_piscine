@@ -123,7 +123,7 @@ void	insert_P_in_M(T &M, T &P)
 	P.erase(itP);
 
 	int index = 1;
-	int jacob_n = -1;
+	int jacob_n = 0;
 
 	T	group;
 	typename T::reverse_iterator rbeg;
